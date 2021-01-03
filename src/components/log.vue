@@ -18,9 +18,11 @@
         />
 
         <div>
-         <router-link to="homepage"><button class="login-btn " id="login-btn">
-            Login
-          </button></router-link> 
+          <router-link to="homepage"
+            ><button class="login-btn" @click="doSomething()" id="login-btn">
+              Login
+            </button></router-link
+          >
         </div>
       </form>
     </div>
@@ -29,7 +31,11 @@
 
 <script>
 export default {
-  name: "log",
+  methods: {
+    doSomething() {
+      alert("Vue Pen");
+    },
+  },
   components: {},
   data() {
     return {

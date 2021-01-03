@@ -24,6 +24,7 @@
     "portal-vue": "^2.1.7",
     "sass": "^1.30.0",
     "superbvue": "^0.1.10",
+    "sweetalert2": "^10.12.7",
     "vue": "^3.0.0-beta.1",
     "vue-page-transition": "^0.2.2",
     "vue-router": "^4.0.0-alpha.6",

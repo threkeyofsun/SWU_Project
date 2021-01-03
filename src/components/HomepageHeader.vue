@@ -44,7 +44,7 @@
           <nav class="navigation ">
             <div class="menu">
               <ul class="nav-area mt-lg-5">
-                <li><router-link to="">Homepage</router-link></li>
+                <li><router-link to="homepage">Homepage</router-link></li>
                 <li><router-link to="">Event</router-link></li>
                 <li><router-link to="">Contact</router-link></li>
               </ul>
@@ -58,16 +58,28 @@
           </div>
         </div>
         <div class="col-3">
-          <div class="profile d-flex  flex-wrap justify-content-end ">
+          <div class="profile d-flex flex-wrap justify-content-end ">
             <img
               class="img-fluid profile-img  "
               v-bind:src="profile.img"
               alt="profile.img"
             />
-            <div class="username  ml-3 ">
-              <p class="firstname d-inline">Firstname</p>
-              <p class="lastname  d-inline ml-3">L.</p>
-              <i class="arrow down mb-1 ml-3"></i>
+            <div class="username px-3 mt-3">
+              <p class="firstname d-inline ">Firstname</p>
+              <p class="lastname  d-inline px-3">L.</p>
+              <i
+                class="arrow-down dropdown-toggle "
+                role="button"
+                data-bs-toggle="dropdown"
+              ></i>
+
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li><a class="dropdown-item" href="#">My Profile</a></li>
+                <li><a class="dropdown-item" href="#">Upcoming Activity</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">Create a New Event </a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -120,6 +132,7 @@ ul.lan-area {
   padding: 0px;
 }
 img.swu-inside {
+  position: relative;
   padding-left: 0px;
   margin: -75px 0px 0px -100px;
 }
@@ -130,7 +143,6 @@ img.swu-inside {
 /* profile --------------------------------------------------------*/
 
 .profile-img {
-  position: relative;
   border-radius: 50%;
   width: 70px;
   height: 70px;
@@ -153,9 +165,10 @@ img.swu-inside {
 .down:hover {
   border-width: 1px;
 }
-
+ul.dropdown-menu.show {
+  transform: translate3d(972px, 112px, 0px) !important;
+}
 /* Start Responsive nav */
-
 
 .ham {
   position: -webkit-sticky;
@@ -169,7 +182,6 @@ img.swu-inside {
 
 .slide-fade-enter-active {
   transition: all 0.5s ease-in;
-  
 }
 
 .slide-fade-leave-active {
@@ -223,4 +235,3 @@ img.ham2 {
   font-family: "Srinakharinwirot";
 }
 </style>
-
