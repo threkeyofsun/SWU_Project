@@ -1,0 +1,45 @@
+<template>
+  <!-- Login------------------------------------------------- -->
+
+  <div class="right-content ">
+    <div class="login-part">
+      <form id="login-form">
+        <input
+          type="text"
+          name="username"
+          v-model.trim="user.username"
+          placeholder="| Username"
+        />
+        <input
+          type="password"
+          name="password"
+          v-model="user.password"
+          placeholder="| Password"
+        />
+
+        <div>
+          <button class="login-btn " id="login-btn">
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "log",
+  components: {},
+  data() {
+    return {
+      user: {
+        username: "",
+        password: "",
+      },
+    };
+  },
+};
+</script>
+
+<style></style>
