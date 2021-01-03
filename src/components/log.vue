@@ -18,9 +18,9 @@
         />
 
         <div>
-          <button class="login-btn " id="login-btn">
+         <router-link to="homepage"><button class="login-btn " id="login-btn">
             Login
-          </button>
+          </button></router-link> 
         </div>
       </form>
     </div>

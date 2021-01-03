@@ -130,6 +130,7 @@ img.swu-inside {
 /* profile --------------------------------------------------------*/
 
 .profile-img {
+  position: relative;
   border-radius: 50%;
   width: 70px;
   height: 70px;

@@ -67,9 +67,11 @@ a:nth-child(1):hover {
 }
 .option hr {
   width: 175px;
-  height: 3px;
+  height: 4px !important;
   background-color: #629084;
+  opacity: 0.75;
 }
+
 .right-content {
   font-family: "THSaraban";
   text-align: -webkit-center;
@@ -164,9 +166,10 @@ select {
 .hr-foot {
   margin: auto auto 10px auto;
   width: 298px;
-  height: 2px;
+  height: 2px !important;
   border: 0px;
   background-color: rgba(165, 59, 59, 0.52);
+  opacity: 1;
 }
 .footer h6:not(#c) {
   font-size: 20px;
