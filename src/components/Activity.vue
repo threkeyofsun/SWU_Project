@@ -16,11 +16,25 @@
         <img src="/img/Mask-Group-25.png" class="card-img-top" alt="..." />
 
         <div class="card-body">
-          <p class="fs-6 fw-bold act-name">
-            Activity Name....
-          </p>
-          <br />
-          <p class="card-text float-start">Activity Description...…...</p>
+          <div class="row">
+            <div class="col-9">
+              <p class="fs-6 fw-bold act-name">
+                Activity Name....
+              </p>
+              <br />
+              <p class="card-text float-start">Activity Description...…...</p>
+            </div>
+            <!-- right -->
+            <div class="col-3 float-end">
+              <i class="fas fa-user-check "></i>
+             <br>
+             <div class="applicants">
+               <span>12</span><span>/</span><span>20</span>
+             </div>
+                
+              
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -40,7 +54,7 @@
         <img src="/img/Mask-Group-25.png" class="card-img-top" alt="..." />
 
         <div class="card-body">
-          <p class="fs-6 fw-bold act-name">
+          <p class="fs-6  fw-bold act-name">
             Activity Name....
           </p>
           <br />
@@ -77,9 +91,7 @@
 
 <script>
 export default {
-  props: {
-    
-  },
+  props: {},
   data() {
     return {
       page: 0,
@@ -142,5 +154,23 @@ br + p {
   font-family: "THSaraban";
   clear: left;
   margin-left: 35px;
+}
+.applicants{
+  font-family: "THSaraban";
+}
+.fa-user-check{
+  margin-left: 10px;
+}
+/* Optional */
+/* .card {
+    filter: grayscale(80%);
+    opacity: 0.5;
+} */
+
+/* Responsive MD to LG */
+@media only screen and (max-width: 992px) {
+  .activity-card {
+    margin: 0 -45px;
+  }
 }
 </style>

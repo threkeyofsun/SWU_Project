@@ -33,7 +33,7 @@
 export default {
   methods: {
     doSomething() {
-      alert("Vue Pen");
+      alert("Wellcome");
     },
   },
   components: {},
