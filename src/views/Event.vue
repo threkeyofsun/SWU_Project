@@ -9,7 +9,7 @@
       </div>
 
 
-  <Activity />
+  <News />
 
      
     </div>
@@ -20,14 +20,14 @@
 <script>
 import HomepageHeader from "../components/HomepageHeader";
 import HPfooter from "../components/homepageFooter";
-import Activity from "../components/Activity";
+import News from "../components/News";
 
 
 export default {
   components: {
     HomepageHeader,
     HPfooter,
-    Activity
+    News
   },
   data() {
     return {

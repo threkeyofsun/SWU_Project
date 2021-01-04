@@ -1,7 +1,7 @@
 <template>
   <div class="row activity-card">
     <div class="col mt-5">
-      <div class="card">
+      <div class="card" style="width: 18rem;">
         <span class="badge time-badge ">Time</span>
         <span class="badge user-badge fw-light fs-6">
           <p class="firstname d-inline ">Firstname</p>
@@ -27,17 +27,19 @@
             <!-- right -->
             <div class="col-3 float-end mt-2">
               <i class="fas fa-user-check "></i>
-              <br />
-              <div class="applicants">
-                <span>12</span><span>/</span><span>20</span>
-              </div>
+             <br>
+             <div class="applicants">
+               <span>12</span><span>/</span><span>20</span>
+             </div>
+                
+              
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="col mt-5">
-      <div class="card" >
+      <div class="card" style="width: 18rem;">
         <span class="badge time-badge ">Time</span>
         <span class="badge user-badge fw-light fs-6">
           <p class="firstname d-inline ">Firstname</p>
@@ -61,7 +63,7 @@
       </div>
     </div>
     <div class="col mt-5">
-      <div class="card">
+      <div class="card" style="width: 18rem;">
         <span class="badge time-badge ">Time</span>
         <span class="badge user-badge fw-light fs-6">
           <p class="firstname d-inline ">Firstname</p>
@@ -111,7 +113,6 @@ export default {
   border-radius: 23px 0px 23px 23px;
   box-shadow: 0px 0px 28px #c6b8b8, -20px -20px 28px #ffffff;
   border: none;
-  width: 18rem;
 }
 .activity-card {
   text-align: -webkit-center;
@@ -154,10 +155,10 @@ br + p {
   clear: left;
   margin-left: 35px;
 }
-.applicants {
+.applicants{
   font-family: "THSaraban";
 }
-.fa-user-check {
+.fa-user-check{
   margin-left: 10px;
 }
 /* Optional */
@@ -170,15 +171,6 @@ br + p {
 @media only screen and (max-width: 992px) {
   .activity-card {
     margin: 0 -45px;
-  }
-}
-@media only screen and (max-width: 380px) {
-  .card {
-    width: 15rem;
-  }
-  img.card-img-top {
-    width: 15rem;
-    height: 11rem;
   }
 }
 </style>

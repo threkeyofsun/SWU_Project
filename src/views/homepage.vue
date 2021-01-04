@@ -2,7 +2,7 @@
   <HomepageHeader />
 
   <section class="content">
-    <div class="cover-img">
+    <div class="cover-img d-none d-md-block">
       <img class="cover" v-bind:src="cover.img" alt="Responsive image" />
     </div>
     <p class="text-center wellcome-text  my-5">Announcement</p>

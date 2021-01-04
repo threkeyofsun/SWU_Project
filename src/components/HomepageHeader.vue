@@ -92,12 +92,14 @@
             </ul>
           </div>
         </div>
-              <hr class="hr-header" />
-
+        <hr class="hr-header" />
       </div>
     </div>
-
   </header>
+
+  <div class="cover-img d-md-none">
+    <img class="cover" v-bind:src="cover.img" alt="Responsive image" />
+  </div>
 </template>
 
 <script>
@@ -106,6 +108,10 @@ export default {
   data() {
     return {
       isHidden: true,
+      cover: {
+        img:
+          "https://gswuacth-my.sharepoint.com/personal/nattawade_inala_g_swu_ac_th/Documents/Adobe%20XD%20Design%20I/Object%20Ver.I/Mask%20Group%2013@2x.png",
+      },
 
       profile: {
         img:
@@ -118,6 +124,12 @@ export default {
 
 <style scoped>
 @import "../assets/styles/header-footer-homepage.css";
+img.cover {
+  width: 100%;
+  height: auto;
+  margin-top: -129px;
+  position: relative;
+}
 
 hr.hr-header {
   box-shadow: 0px 4px 9px 5px rgba(173, 173, 172, 1);
@@ -244,5 +256,10 @@ img.ham2 {
 .respon-menu {
   font-size: 7vw;
   font-family: "Srinakharinwirot";
+}
+@media (max-width: 767px) {
+  img.cover {
+    margin-top: -31px;
+  }
 }
 </style>
