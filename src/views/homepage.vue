@@ -81,10 +81,15 @@ export default {
 </style>
 
 <style scoped>
+.hp-underline{
+  border-bottom: solid 2px cornflowerblue;
+}
+
 img.cover {
   width: 100%;
   height: auto;
   margin-top: -129px;
+  position: relative;
 }
 .wellcome-text {
   font-size: 3vw;

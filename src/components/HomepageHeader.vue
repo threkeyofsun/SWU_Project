@@ -45,7 +45,7 @@
             <div class="menu">
               <ul class="nav-area mt-lg-5">
                 <li><router-link to="homepage">Homepage</router-link></li>
-                <li><router-link to="">Event</router-link></li>
+                <li><router-link to="event">Event</router-link></li>
                 <li><router-link to="">Contact</router-link></li>
               </ul>
             </div>
@@ -92,8 +92,11 @@
             </ul>
           </div>
         </div>
+              <hr class="hr-header" />
+
       </div>
     </div>
+
   </header>
 </template>
 
@@ -116,9 +119,16 @@ export default {
 <style scoped>
 @import "../assets/styles/header-footer-homepage.css";
 
+hr.hr-header {
+  box-shadow: 0px 4px 9px 5px rgba(173, 173, 172, 1);
+  opacity: 0.3;
+  margin-top: -119px;
+}
+
 .eng {
   color: #a53b3b;
 }
+
 .navbar-area,
 .language-menu {
   font-family: "Srinakharin";
@@ -132,6 +142,7 @@ ul.lan-area {
   padding: 0px;
 }
 img.swu-inside {
+  z-index: 999;
   position: relative;
   padding-left: 0px;
   margin: -75px 0px 0px -100px;

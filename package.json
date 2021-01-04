@@ -28,6 +28,7 @@
     "vue": "^3.0.0-beta.1",
     "vue-page-transition": "^0.2.2",
     "vue-router": "^4.0.0-alpha.6",
+    "vue-sliding-pagination": "^1.1.2",
     "vue-sweetalert2": "^4.1.1",
     "vuex": "^4.0.0-alpha.1"
   },

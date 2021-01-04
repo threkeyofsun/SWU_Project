@@ -1,0 +1,146 @@
+<template>
+  <div class="row activity-card">
+    <div class="col mt-5">
+      <div class="card" style="width: 18rem;">
+        <span class="badge time-badge ">Time</span>
+        <span class="badge user-badge fw-light fs-6">
+          <p class="firstname d-inline ">Firstname</p>
+          <p class="lastname  d-inline px-2">L.</p>
+          <img
+            class=" profile-img  "
+            v-bind:src="profile.img"
+            alt="profile.img"
+          />
+        </span>
+
+        <img src="/img/Mask-Group-25.png" class="card-img-top" alt="..." />
+
+        <div class="card-body">
+          <p class="fs-6 fw-bold act-name">
+            Activity Name....
+          </p>
+          <br />
+          <p class="card-text float-start">Activity Description...…...</p>
+        </div>
+      </div>
+    </div>
+    <div class="col mt-5">
+      <div class="card" style="width: 18rem;">
+        <span class="badge time-badge ">Time</span>
+        <span class="badge user-badge fw-light fs-6">
+          <p class="firstname d-inline ">Firstname</p>
+          <p class="lastname  d-inline px-2">L.</p>
+          <img
+            class=" profile-img  "
+            v-bind:src="profile.img"
+            alt="profile.img"
+          />
+        </span>
+
+        <img src="/img/Mask-Group-25.png" class="card-img-top" alt="..." />
+
+        <div class="card-body">
+          <p class="fs-6 fw-bold act-name">
+            Activity Name....
+          </p>
+          <br />
+          <p class="card-text float-start">Activity Description...…...</p>
+        </div>
+      </div>
+    </div>
+    <div class="col mt-5">
+      <div class="card" style="width: 18rem;">
+        <span class="badge time-badge ">Time</span>
+        <span class="badge user-badge fw-light fs-6">
+          <p class="firstname d-inline ">Firstname</p>
+          <p class="lastname  d-inline px-2">L.</p>
+          <img
+            class=" profile-img  "
+            v-bind:src="profile.img"
+            alt="profile.img"
+          />
+        </span>
+
+        <img src="/img/photo-1003-full.jpeg" class="card-img-top" alt="..." />
+
+        <div class="card-body">
+          <p class="fs-6 fw-bold act-name">
+            Activity Name....
+          </p>
+          <br />
+          <p class="card-text float-start">Activity Description...…...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    
+  },
+  data() {
+    return {
+      page: 0,
+      pages: [],
+      perPage: 5,
+      displayedActivitys: [],
+      profile: {
+        img:
+          "https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg",
+      },
+    };
+  },
+};
+</script>
+
+<style scoped>
+/* Card Custom */
+.card {
+  border-radius: 23px 0px 23px 23px;
+  box-shadow: 0px 0px 28px #c6b8b8, -20px -20px 28px #ffffff;
+  border: none;
+}
+.activity-card {
+  text-align: -webkit-center;
+}
+img.card-img-top {
+  object-position: top;
+  object-fit: cover;
+  height: 265px;
+  width: 360px;
+  border-radius: 23px 0px 23px 23px;
+}
+.time-badge {
+  margin: 22px 30px;
+  position: absolute;
+  background-color: #ffffffba;
+  color: #636468;
+}
+.user-badge {
+  right: 0;
+  top: 45px;
+  position: absolute;
+  background-color: #ffffff8c;
+  color: #000000;
+  border-radius: 0px;
+  font-family: "THSaraban";
+  padding: 7px 7px;
+}
+.profile-img {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+}
+
+/* Card Text */
+.act-name {
+  float: left;
+}
+br + p {
+  font-family: "THSaraban";
+  clear: left;
+  margin-left: 35px;
+}
+</style>
