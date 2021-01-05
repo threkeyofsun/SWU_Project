@@ -1,90 +1,15 @@
 <template>
-  <div class="row activity-card">
-    <div class="col mt-5">
-      <div class="card" style="width: 18rem;">
-        <span class="badge time-badge ">Time</span>
-        <span class="badge user-badge fw-light fs-6">
-          <p class="firstname d-inline ">Firstname</p>
-          <p class="lastname  d-inline px-2">L.</p>
-          <img
-            class=" profile-img  "
-            v-bind:src="profile.img"
-            alt="profile.img"
-          />
-        </span>
-
-        <img src="/img/Mask-Group-25.png" class="card-img-top" alt="..." />
-
-        <div class="card-body">
-          <div class="row">
-            <div class="col-9">
-              <p class="fs-6 fw-bold act-name">
-                Activity Name....
-              </p>
-              <br />
-              <p class="card-text float-start">Activity Description...…...</p>
-            </div>
-            <!-- right -->
-            <div class="col-3 float-end mt-2">
-              <i class="fas fa-user-check "></i>
-             <br>
-             <div class="applicants">
-               <span>12</span><span>/</span><span>20</span>
-             </div>
-                
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col mt-5">
-      <div class="card" style="width: 18rem;">
-        <span class="badge time-badge ">Time</span>
-        <span class="badge user-badge fw-light fs-6">
-          <p class="firstname d-inline ">Firstname</p>
-          <p class="lastname  d-inline px-2">L.</p>
-          <img
-            class=" profile-img  "
-            v-bind:src="profile.img"
-            alt="profile.img"
-          />
-        </span>
-
-        <img src="/img/Mask-Group-25.png" class="card-img-top" alt="..." />
-
-        <div class="card-body">
-          <p class="fs-6  fw-bold act-name">
-            Activity Name....
-          </p>
-          <br />
-          <p class="card-text float-start">Activity Description...…...</p>
-        </div>
-      </div>
-    </div>
-    <div class="col mt-5">
-      <div class="card" style="width: 18rem;">
-        <span class="badge time-badge ">Time</span>
-        <span class="badge user-badge fw-light fs-6">
-          <p class="firstname d-inline ">Firstname</p>
-          <p class="lastname  d-inline px-2">L.</p>
-          <img
-            class=" profile-img  "
-            v-bind:src="profile.img"
-            alt="profile.img"
-          />
-        </span>
-
-        <img src="/img/photo-1003-full.jpeg" class="card-img-top" alt="..." />
-
-        <div class="card-body">
-          <p class="fs-6 fw-bold act-name">
-            Activity Name....
-          </p>
-          <br />
-          <p class="card-text float-start">Activity Description...…...</p>
-        </div>
-      </div>
+  <div class="card text-white my-5 ">
+    <span class="decorate-line"></span>
+    <span class="decorate-line2"></span>
+    <img src="/img/bg-12.png" class="card-img  " alt="..." />
+    <div class="card-img-overlay">
+      <h5 class="card-title">Card title</h5>
+      <p class="card-text">
+        This is a wider card with supporting text below as a natural lead-in to
+        additional content. This content is a little bit longer.
+      </p>
+      <p class="card-text">Last updated 3 mins ago</p>
     </div>
   </div>
 </template>
@@ -108,69 +33,59 @@ export default {
 </script>
 
 <style scoped>
-/* Card Custom */
 .card {
-  border-radius: 23px 0px 23px 23px;
-  box-shadow: 0px 0px 28px #c6b8b8, -20px -20px 28px #ffffff;
-  border: none;
+  border-radius: 19px;
 }
-.activity-card {
-  text-align: -webkit-center;
-}
-img.card-img-top {
-  object-position: top;
+.card-img {
+  border-radius: 19px;
+  max-height: 370px;
+  object-position: center;
   object-fit: cover;
-  height: 265px;
-  width: 360px;
-  border-radius: 23px 0px 23px 23px;
 }
-.time-badge {
-  margin: 22px 30px;
+.card-img-overlay {
+  z-index: 1;
+  top: auto;
+  right: auto;
+  bottom: 0;
+  left: auto;
+  padding: 2rem;
+}
+
+.card:after {
+  z-index: 0;
+  border-radius: 19px;
   position: absolute;
-  background-color: #ffffffba;
+  content: "";
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0%) 0%,
+    rgb(255 255 255 / 3%) 3%,
+    rgb(112 112 112 / 75%) 90%,
+    rgb(112 112 112 / 75%) 100%
+  );
+}
+.decorate-line {
+  width: 4px;
+  height: 86%;
+  z-index: 2;
+  right: 7%;
+  position: absolute;
+  background-color: #fffffffb;
   color: #636468;
 }
-.user-badge {
-  right: 0;
-  top: 45px;
+.decorate-line2 {
+  width: 93%;
+  height: 4px;
+  z-index: 2;
+  right: -1px;
+  top: 13%;
   position: absolute;
-  background-color: #ffffff8c;
-  color: #000000;
-  border-radius: 0px;
-  font-family: "THSaraban";
-  padding: 7px 7px;
-}
-.profile-img {
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-}
-
-/* Card Text */
-.act-name {
-  float: left;
-}
-br + p {
-  font-family: "THSaraban";
-  clear: left;
-  margin-left: 35px;
-}
-.applicants{
-  font-family: "THSaraban";
-}
-.fa-user-check{
-  margin-left: 10px;
-}
-/* Optional */
-/* .card {
-    filter: grayscale(80%);
-    opacity: 0.5;
-} */
-
-/* Responsive MD to LG */
-@media only screen and (max-width: 992px) {
-  .activity-card {
-    margin: 0 -45px;
-  }
+  background-color: #fffffffb;
+  color: #636468;
 }
 </style>
