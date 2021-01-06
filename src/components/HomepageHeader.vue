@@ -188,9 +188,7 @@ img.swu-inside {
 .down:hover {
   border-width: 1px;
 }
-ul.dropdown-menu.show {
-  transform: translate3d(972px, 112px, 0px) !important;
-}
+
 /* Start Responsive nav */
 
 .ham {

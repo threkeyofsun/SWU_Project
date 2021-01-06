@@ -42,18 +42,21 @@ export default {
 </script>
 
 <style scoped>
+
+
 .footer {
   background-image: linear-gradient(#ffffff, #cfcfcf);
 }
 .footer .ongkharak {
-    color: #323131
+  color: #323131;
 }
 
-.coppyright{
-    color: #747578;
+.coppyright {
+  color: #747578;
 }
 
-.footer .ongkharak .p{
-    color: #7C7D80;
+.footer .ongkharak .p {
+  color: #7c7d80;
 }
+
 </style>

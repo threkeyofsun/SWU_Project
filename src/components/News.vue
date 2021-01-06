@@ -1,15 +1,76 @@
 <template>
-  <div class="card text-white my-5 ">
-    <span class="decorate-line"></span>
-    <span class="decorate-line2"></span>
-    <img src="/img/bg-12.png" class="card-img  " alt="..." />
-    <div class="card-img-overlay">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">
-        This is a wider card with supporting text below as a natural lead-in to
-        additional content. This content is a little bit longer.
-      </p>
-      <p class="card-text">Last updated 3 mins ago</p>
+  <div class="postloop ">
+    <div class="card text-white  ">
+      <span class="decorate-line"></span>
+      <span class="decorate-line2"></span>
+      <span class="badge time-badge ">Time</span>
+      <span class="badge user-badge fw-light ">
+        <img
+          class=" profile-img  "
+          v-bind:src="profile.img"
+          alt="profile.img"
+        />
+        <p class="firstname d-inline mx-0 mx-md-2">Firstname</p>
+        <p class="lastname  d-inline ">L.</p>
+      </span>
+      <img src="/img/bg-12.png" class="card-img  " alt="..." />
+      <div class="card-img-overlay mx-auto">
+        <h3 class="card-title">Card title</h3>
+        <p class="card-text">
+          This is a wider card with supporting text below as a natural lead-in
+          to additional content. This content is a little bit longer.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="postloop ">
+    <div class="card text-white my-5 ">
+      <span class="decorate-line"></span>
+      <span class="decorate-line2"></span>
+      <span class="badge time-badge ">Time</span>
+      <span class="badge user-badge fw-light ">
+        <img
+          class=" profile-img  "
+          v-bind:src="profile.img"
+          alt="profile.img"
+        />
+        <p class="firstname d-inline mx-0 mx-md-2">Firstname</p>
+        <p class="lastname  d-inline ">L.</p>
+      </span>
+      <img src="/img/bg-12.png" class="card-img  " alt="..." />
+      <div class="card-img-overlay mx-auto">
+        <h3 class="card-title">Card title</h3>
+        <p class="card-text">
+          This is a wider card with supporting text below as a natural lead-in
+          to additional content. This content is a little bit longer.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="postloop ">
+    <div class="card text-white my-5 ">
+      <span class="decorate-line"></span>
+      <span class="decorate-line2"></span>
+      <span class="badge time-badge ">Time</span>
+      <span class="badge user-badge fw-light ">
+        <img
+          class=" profile-img  "
+          v-bind:src="profile.img"
+          alt="profile.img"
+        />
+        <p class="firstname d-inline mx-0 mx-md-2">Firstname</p>
+        <p class="lastname  d-inline ">L.</p>
+      </span>
+      <img src="/img/bg-12.png" class="card-img  " alt="..." />
+      <div class="card-img-overlay mx-auto">
+        <h3 class="card-title">Card title</h3>
+        <p class="card-text">
+          This is a wider card with supporting text below as a natural lead-in
+          to additional content. This content is a little bit longer.
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -34,11 +95,13 @@ export default {
 
 <style scoped>
 .card {
-  border-radius: 19px;
+  border-radius: 50px;
+  border: 1px solid rgb(255, 255, 255);
+  margin: 4rem auto;
 }
 .card-img {
-  border-radius: 19px;
-  max-height: 370px;
+  border-radius: 50px;
+  max-height: 414px;
   object-position: center;
   object-fit: cover;
 }
@@ -46,14 +109,19 @@ export default {
   z-index: 1;
   top: auto;
   right: auto;
-  bottom: 0;
-  left: auto;
-  padding: 2rem;
+  left: 15%;
+  padding: 0 6rem 0 22px;
+  font-family: "Srinakharinwirot";
+}
+
+.card-img-overlay p {
+  font-family: "THSaraban";
+  font-size: 32px;
 }
 
 .card:after {
   z-index: 0;
-  border-radius: 19px;
+  border-radius: 50px;
   position: absolute;
   content: "";
   height: 100%;
@@ -87,5 +155,120 @@ export default {
   position: absolute;
   background-color: #fffffffb;
   color: #636468;
+}
+
+/* Time and User Badge */
+.time-badge {
+  padding: 10px 15px;
+  border-radius: 0;
+  left: 7%;
+  top: 13%;
+  position: absolute;
+  background-color: #ffffff;
+  color: #636468;
+  font-family: "THSaraban";
+  font-size: 36px;
+}
+.user-badge {
+  font-size: 16px;
+  z-index: 2;
+  left: 0;
+  bottom: 25%;
+  position: absolute;
+  background-color: #ffffffe0;
+  color: #000000;
+  border-radius: 0px;
+  font-family: "THSaraban";
+  padding: 7px 7px;
+}
+.profile-img {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+}
+
+@media only screen and (max-width: 992px) {
+  .card-img-overlay {
+    bottom: 1px;
+    left: 17%;
+    padding: 1rem 2rem;
+  }
+  .card-img-overlay p {
+    font-size: 25px;
+    line-height: normal;
+  }
+  .time-badge {
+    font-size: 22px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .card-img-overlay {
+    bottom: 0px;
+    padding: 0rem 2rem 1% 10%;
+    left: 15%;
+    line-height: 1;
+  }
+  .card-img-overlay h3 {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+  .card-img-overlay p {
+    font-size: 16px;
+    line-height: normal;
+  }
+  .user-badge {
+    padding: 2px 5px;
+    font-size: 15px;
+  }
+  .user-badge p {
+    padding: 0px 2px;
+  }
+  .profile-img {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+  }
+  .card {
+    border-radius: 25px;
+  }
+  .card-img {
+    border-radius: 25px;
+  }
+  .card:after {
+    border-radius: 25px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .card-img-overlay {
+    bottom: 9%;
+    left: 26%;
+    padding: 0rem 9% 0rem 0rem;
+    font-size: 12px;
+  }
+  .user-badge {
+    padding: 2px 0px;
+    font-size: 12px;
+  }
+  .user-badge p {
+    padding: 0px 2px;
+  }
+  .profile-img {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+  }
+  .time-badge {
+    padding: 4px 7px;
+    font-size: 16px;
+  }
+  .card-img-overlay h3 {
+    font-size: 19px;
+  }
+  .card-img-overlay p {
+    font-size: 12px;
+    line-height: 0.9;
+  }
 }
 </style>
