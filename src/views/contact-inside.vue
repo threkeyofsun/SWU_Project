@@ -1,5 +1,8 @@
 <template>
 
+  <HomepageHeader />
+
+    
   <div class="about-content">
     <headerTemp />
 
@@ -30,36 +33,44 @@
     </div>
   </div>
 
-  <foot />
+  <HPfooter />
 </template>
 
 <script>
-import headerTemp from "../components/headerTemp";
-import foot from "../components/footer";
+import HomepageHeader from "../components/HomepageHeader";
+import HPfooter from "../components/homepageFooter";
 // @ is an alias to /src
 
 export default {
   components: {
-    headerTemp,
-    foot,
+  HomepageHeader,
+    HPfooter,
   },
 
   methods: {},
 };
 </script>
 
+
 <style scoped>
+@import "../assets/styles/login.css";
+
 .about-content{
   font-family: "THSaraban";
 }
 .footer {
-  
-    background-image: linear-gradient(#CECECE, #c0bdbdbe);
+  background-image: linear-gradient(#d4cdcd, #ffffff);
 }
+
 @media screen and (max-width: 674px) {
   .main-text{
     font-size: 25px;
    margin: 75px 50px;
   }
+    .footer {
+     background-image: linear-gradient(#99a4b3, #ffffff);
+    }
 }
+
+
 </style>

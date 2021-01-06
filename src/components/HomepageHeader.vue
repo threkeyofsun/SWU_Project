@@ -17,22 +17,42 @@
           <li><router-link to="/">English</router-link></li>
         </ul>
         <a @click="isHidden = !isHidden"
-          ><img class="ham2 d-inline" src="../image/ham-right.png"
+          ><img class="ham2 d-inline" src="../image/ham-left.png"
         /></a>
       </div>
+      <!-- profile -->
+      <div class="badge user-badge fw-light ">
+        <img
+          class=" profile-img  mx-1"
+          v-bind:src="profile.img"
+          alt="profile.img"
+        />
+        <p class="firstname d-inline px-1">Firstname</p>
+        <p class="lastname  d-inline px-1">L.</p>
+      </div>
+
       <hr class="hr-head" />
-      <div class="align-self-center mt-5 pt-5 text-center">
+      <div class="align-self-center ">
         <div>
-          <p class="respon-menu ">
+          <p class="respon-menu mt-2">
             <router-link to="/">Homepage </router-link>
           </p>
         </div>
         <div>
-          <p class="respon-menu mt-4">
+          <p class="respon-menu mt-2">
+            <router-link to="">Event</router-link>
+          </p>
+        </div>
+        <div>
+          <p class="respon-menu mt-2">
             <router-link to="">Contact Us</router-link>
           </p>
         </div>
       </div>
+      <hr class="hr-head" />
+      <p class="profile-menu">My Profile</p>
+      <p class="profile-menu">History</p>
+      <p class="profile-menu">Upcoming</p>
     </div>
   </transition>
   <!-- End of hamburger -->
@@ -46,7 +66,7 @@
               <ul class="nav-area mt-lg-5">
                 <li><router-link to="homepage">Homepage</router-link></li>
                 <li><router-link to="event">Event</router-link></li>
-                <li><router-link to="">Contact</router-link></li>
+                <li><router-link to="/ContactInside">Contact</router-link></li>
               </ul>
             </div>
           </nav>
@@ -123,7 +143,6 @@ export default {
 </script>
 
 <style scoped>
-@import "../assets/styles/header-footer-homepage.css";
 img.cover {
   width: 100%;
   height: auto;
@@ -191,6 +210,15 @@ img.swu-inside {
 
 /* Start Responsive nav */
 
+/* Profile */
+.user-badge {
+  color: #000000;
+  font-family: "THSaraban";
+  padding: 35px 7px;
+  font-size: 25px;
+  display: block;
+}
+/* End of profile */
 .ham {
   position: -webkit-sticky;
   position: sticky;
@@ -217,20 +245,19 @@ img.swu-inside {
 
 .responNav {
   position: fixed;
-
   margin: -31px 0px;
-  background-image: url("~@/image/mb-bg.png");
+  background-color: white;
   background-position: center;
   background-size: 462px 574px;
   color: #636468;
-  z-index: 100;
-  height: 574px;
+  z-index: 9999;
+  max-height: 690px;
 }
 
 .language-respon {
   font-family: "Srinakharinwirot";
   padding-top: 39px;
-  font-size: 5vw;
+  font-size: 3vw;
 }
 
 img.ham {
@@ -247,17 +274,46 @@ img.ham2 {
 
 .hr-head {
   margin: auto auto 10px auto;
-  width: 70%;
-  height: 3px;
-  background-color: #629084;
+  width: 75%;
+  height: 2px;
+  background-color: #b0d4cb;
+  opacity: 1;
 }
 .respon-menu {
-  font-size: 7vw;
+  margin-left: 25%;
+  font-size: 4vw;
   font-family: "Srinakharinwirot";
 }
+
+.hr-head + .align-self-center div:first-of-type {
+  margin: auto 45% auto 12%;
+  border-left: 0;
+  border-right: 0;
+  background-color: #769e94;
+  border-radius: 0px 36px 36px 0px;
+}
+.hr-head + .align-self-center div:first-of-type a {
+  color: white;
+  margin-left: 5%;
+}
+
+/* Start Profile menu */
+.profile-menu {
+  font-family: "THSaraban";
+  font-size: 5vw;
+  margin-left: 25%;
+  margin-top: 3%;
+}
+
+/* End Responsive Nav */
 @media (max-width: 767px) {
   img.cover {
     margin-top: -31px;
+  }
+  .profile-img {
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
   }
 }
 </style>

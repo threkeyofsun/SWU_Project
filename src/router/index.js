@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
+import Contact from "../views/Home.vue";
+import ContactInside from "../views/contact-inside.vue";
 import login from "../views/login.vue";
 import register from "../views/register.vue";
 import ToLogin from "../views/ToLogin.vue";
@@ -12,9 +13,14 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 const routes = [
   {
-    path: "/home",
-    name: "Home",
-    component: Home
+    path: "/Contact",
+    name: "Contact",
+    component: Contact
+  },
+  {
+    path: "/ContactInside",
+    name: "ContactInside",
+    component: ContactInside
   },
   {
     path: "/Event",

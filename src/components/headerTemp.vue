@@ -45,7 +45,7 @@
       <div class="main-menu">
         <ul class="nav-area ">
           <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/Home">Contact Us</router-link></li>
+          <li><router-link to="/Contact">Contact Us</router-link></li>
         </ul>
       </div>
     </nav>
