@@ -7,7 +7,7 @@
       <span class="badge user-badge fw-light ">
         <img
           class=" profile-img  "
-          v-bind:src="profile.img"
+          v-bind:src="profile.img[0]"
           alt="profile.img"
         />
         <p class="firstname d-inline mx-0 mx-md-2">Firstname</p>
@@ -32,13 +32,13 @@
       <span class="badge user-badge fw-light ">
         <img
           class=" profile-img  "
-          v-bind:src="profile.img"
+          v-bind:src="profile.img[1]"
           alt="profile.img"
         />
         <p class="firstname d-inline mx-0 mx-md-2">Firstname</p>
         <p class="lastname  d-inline ">L.</p>
       </span>
-      <img src="/img/bg-12.png" class="card-img  " alt="..." />
+      <img src="/img/photo-1003-full.jpeg" class="card-img  " alt="..." />
       <div class="card-img-overlay mx-auto">
         <h3 class="card-title">Card title</h3>
         <p class="card-text">
@@ -57,13 +57,13 @@
       <span class="badge user-badge fw-light ">
         <img
           class=" profile-img  "
-          v-bind:src="profile.img"
+          v-bind:src="profile.img[2]"
           alt="profile.img"
         />
         <p class="firstname d-inline mx-0 mx-md-2">Firstname</p>
         <p class="lastname  d-inline ">L.</p>
       </span>
-      <img src="/img/bg-12.png" class="card-img  " alt="..." />
+      <img src="/img/Mask-Group-28.png" class="card-img  " alt="..." />
       <div class="card-img-overlay mx-auto">
         <h3 class="card-title">Card title</h3>
         <p class="card-text">
@@ -86,7 +86,10 @@ export default {
       displayedActivitys: [],
       profile: {
         img:
-          "https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg",
+          ["https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRcBFvwWwx5kb2YQ3-hgYq_LuBMzL_mcm6Ww&usqp=CAU",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTj3K9YhP2F27Z6hMGZm6gKSuRNF-B07GQWg&usqp=CAU",]
+
       },
     };
   },
