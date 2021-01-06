@@ -63,7 +63,7 @@
         <p class="firstname d-inline mx-0 mx-md-2">Firstname</p>
         <p class="lastname  d-inline ">L.</p>
       </span>
-      <img src="/img/Mask-Group-28.png" class="card-img  " alt="..." />
+      <img src="/img/photo-11471-full.jpeg" class="card-img  " alt="..." />
       <div class="card-img-overlay mx-auto">
         <h3 class="card-title">Card title</h3>
         <p class="card-text">
@@ -85,11 +85,11 @@ export default {
       perPage: 5,
       displayedActivitys: [],
       profile: {
-        img:
-          ["https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg",
+        img: [
+          "https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg",
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRcBFvwWwx5kb2YQ3-hgYq_LuBMzL_mcm6Ww&usqp=CAU",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTj3K9YhP2F27Z6hMGZm6gKSuRNF-B07GQWg&usqp=CAU",]
-
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTj3K9YhP2F27Z6hMGZm6gKSuRNF-B07GQWg&usqp=CAU",
+        ],
       },
     };
   },
@@ -100,7 +100,7 @@ export default {
 .card {
   border-radius: 50px;
   border: 1px solid rgb(255, 255, 255);
-  margin: 4rem auto;
+  margin: 3rem auto;
 }
 .card-img {
   border-radius: 50px;
@@ -190,6 +190,18 @@ export default {
   height: 55px;
 }
 
+/* XXL */
+@media screen and (max-width: 1400px) {
+  .card-img {
+    max-height: 348px;
+  }
+}
+/* XL */
+@media screen and (max-width: 1200px) {
+  .card-img {
+    max-height: 315px;
+  }
+}
 @media only screen and (max-width: 992px) {
   .card-img-overlay {
     bottom: 1px;
@@ -203,9 +215,15 @@ export default {
   .time-badge {
     font-size: 22px;
   }
+  .card-img {
+    max-height: 243px;
+  }
 }
 
 @media only screen and (max-width: 768px) {
+  .card-img {
+    max-height: 174px;
+  }
   .card-img-overlay {
     bottom: 0px;
     padding: 0rem 2rem 1% 10%;
@@ -242,8 +260,17 @@ export default {
     border-radius: 25px;
   }
 }
+/* Extraaaaaaaaaaaa */
+@media only screen and (max-width: 525px) {
+  .card-img {
+     max-height: 157px;
+  }
+}
 
 @media only screen and (max-width: 450px) {
+  .card-img {
+    max-height: 96px;
+  }
   .card-img-overlay {
     bottom: 9%;
     left: 26%;
