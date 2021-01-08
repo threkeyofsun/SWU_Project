@@ -27,8 +27,8 @@
           v-bind:src="profile.img"
           alt="profile.img"
         />
-        <p class="firstname d-inline px-1">Firstname</p>
-        <p class="lastname  d-inline px-1">L.</p>
+        <p class="firstname d-inline px-1 align-bottom">Firstname</p>
+        <p class="lastname  d-inline px-1 align-bottom">L.</p>
       </div>
 
       <hr class="hr-head" />
@@ -64,8 +64,8 @@
           <nav class="navigation ">
             <div class="menu">
               <ul class="nav-area mt-lg-5">
-                <li><router-link to="homepage">Homepage</router-link></li>
-                <li><router-link to="event">Event</router-link></li>
+                <li><router-link to="/homepage">Homepage</router-link></li>
+                <li><router-link to="/event">Event</router-link></li>
                 <li><router-link to="/ContactInside">Contact</router-link></li>
               </ul>
             </div>
@@ -178,11 +178,11 @@ img.swu-inside {
   padding-left: 0px;
   margin: -75px 0px 0px -100px;
 }
+
+/* profile --------------------------------------------------------*/
 .profile {
   margin-top: 34px;
 }
-
-/* profile --------------------------------------------------------*/
 
 .profile-img {
   border-radius: 50%;

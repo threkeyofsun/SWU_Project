@@ -1,5 +1,6 @@
 <template>
   <div class="postloop ">
+    <router-link to="/event/news/123">
     <div class="card text-white  ">
       <span class="decorate-line"></span>
       <span class="decorate-line2"></span>
@@ -22,6 +23,7 @@
         </p>
       </div>
     </div>
+</router-link>
   </div>
 
   <div class="postloop ">

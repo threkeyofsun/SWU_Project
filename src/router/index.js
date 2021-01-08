@@ -6,7 +6,9 @@ import register from "../views/register.vue";
 import ToLogin from "../views/ToLogin.vue";
 import homepage from "../views/homepage.vue";
 import event from "../views/Event.vue";
-
+import AnnoucePage from "../views/Annouce-Post.vue";
+import NewsPage from "../views/News-Post.vue";
+import ActPost from "../views/Activities-Post.vue";
 
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -47,6 +49,22 @@ const routes = [
   name: "homepage",
   component: homepage
 },
+{
+  path: "/homepage/annoucement/:id",
+  name: "AnnouceDetailPage",
+  component: AnnoucePage
+},
+{
+  path: "/event/news/:id",
+  name: "NewsDetailPage",
+  component: NewsPage
+},{
+  path: "/event/activities/:id",
+  name: "ActDetailPage",
+  component: ActPost
+},
+
+
 ];
 
 const router = createRouter({

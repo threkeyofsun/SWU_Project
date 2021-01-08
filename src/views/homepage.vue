@@ -32,7 +32,7 @@
           :class="{ active: idx == 0 }"
           :key="banner"
         >
-          <router-link :to="announcement.announce[idx]">
+          <router-link :to="'/homepage/annoucement/' + announcement.id[idx]">
             <img :src="'/img/' + banner + '.jpeg'" alt="" class="img-fluid" />
           </router-link>
           <div class="carousel-caption d-none d-md-block">
@@ -82,6 +82,7 @@ export default {
       announcement: {
         banners: ["photo-989-full", "photo-1032-large", "photo-985-full"],
         announce: ["register", "/", "about"],
+        id:["Uniform-Term","Covid-19-situation","5875sdwe"]
       },
       cover: {
         img:
