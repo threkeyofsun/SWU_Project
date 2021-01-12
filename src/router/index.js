@@ -9,15 +9,26 @@ import event from "../views/Event.vue";
 import AnnoucePage from "../views/Annouce-Post.vue";
 import NewsPage from "../views/News-Post.vue";
 import ActPost from "../views/Activities-Post.vue";
-// Eample cart
-import CartPage from '../views/CartPage.vue';
-import ProductDetailPage from '../views/ProductDetailPage.vue';
-import ProductsPage from '../views/ProductsPage.vue';
+import Act from "../components/Activity.vue";
+import news from "../components/News.vue";
+
 
 import 'bootstrap/dist/css/bootstrap.css';
 
 
+
+
 const routes = [
+  {
+    path: "/News",
+    name: "news",
+    component: news
+  },
+  {
+    path: "/Activity",
+    name: "Act",
+    component: Act
+  },
   {
     path: "/Contact",
     name: "Contact",
@@ -67,23 +78,7 @@ const routes = [
   name: "ActDetailPage",
   component: ActPost
 },
-// Cart
-{
-  path: '/products',
-  name: 'Products',
-  component: ProductsPage,
-}, {
-  path: '/products/:id',
-  name: 'ProductDetail',
-  component: ProductDetailPage,
-}, {
-  path: '/cart',
-  name: 'Cart',
-  component: CartPage,
-}, {
-  path: '/',
-  redirect: '/products',
-}, 
+
 
 
 

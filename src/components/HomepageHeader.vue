@@ -35,17 +35,17 @@
       <div class="align-self-center ">
         <div>
           <p class="respon-menu mt-2">
-            <router-link to="/">Homepage </router-link>
+            <router-link to="/Homepage">Homepage </router-link>
           </p>
         </div>
         <div>
           <p class="respon-menu mt-2">
-            <router-link to="">Event</router-link>
+            <router-link to="/Event">Event</router-link>
           </p>
         </div>
         <div>
           <p class="respon-menu mt-2">
-            <router-link to="">Contact Us</router-link>
+            <router-link to="/ContactInside">Contact Us</router-link>
           </p>
         </div>
       </div>

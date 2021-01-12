@@ -85,6 +85,93 @@
       </div>
     </div>
   </div>
+
+  <div class="row activity-card">
+    <div class="col mt-5">
+      <div class="card">
+        <span class="badge time-badge ">Time</span>
+        <span class="badge user-badge fw-light fs-6">
+          <p class="firstname d-inline ">Firstname</p>
+          <p class="lastname  d-inline px-2">L.</p>
+          <img
+            class=" profile-img  "
+            v-bind:src="profile.img"
+            alt="profile.img"
+          />
+        </span>
+
+        <img src="/img/Mask-Group-25.png" class="card-img-top" alt="..." />
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <p class="fs-6 fw-bold act-name">
+                Activity Name....
+              </p>
+              <br />
+              <p class="card-text float-start">Activity Description...…...</p>
+            </div>
+            <!-- right -->
+            <div class="col-3 float-end mt-2">
+              <i class="fas fa-user-check "></i>
+              <br />
+              <div class="applicants">
+                <span>12</span><span>/</span><span>20</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col mt-5">
+      <div class="card" >
+        <span class="badge time-badge ">Time</span>
+        <span class="badge user-badge fw-light fs-6">
+          <p class="firstname d-inline ">Firstname</p>
+          <p class="lastname  d-inline px-2">L.</p>
+          <img
+            class=" profile-img  "
+            v-bind:src="profile.img"
+            alt="profile.img"
+          />
+        </span>
+
+        <img src="/img/Mask-Group-25.png" class="card-img-top" alt="..." />
+
+        <div class="card-body">
+          <p class="fs-6  fw-bold act-name">
+            Activity Name....
+          </p>
+          <br />
+          <p class="card-text float-start">Activity Description...…...</p>
+        </div>
+      </div>
+    </div>
+    <div class="col mt-5">
+      <div class="card">
+        <span class="badge time-badge ">Time</span>
+        <span class="badge user-badge fw-light fs-6">
+          <p class="firstname d-inline ">Firstname</p>
+          <p class="lastname  d-inline px-2">L.</p>
+          <img
+            class=" profile-img  "
+            v-bind:src="profile.img"
+            alt="profile.img"
+          />
+        </span>
+
+        <img src="/img/photo-1003-full.jpeg" class="card-img-top" alt="..." />
+
+        <div class="card-body">
+          <p class="fs-6 fw-bold act-name">
+            Activity Name....
+          </p>
+          <br />
+          <p class="card-text float-start">Activity Description...…...</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

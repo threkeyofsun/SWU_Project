@@ -1,4 +1,13 @@
 <template>
+  <HomepageHeader />
+
+  <section class="event-content">
+    <div class="container">
+      <div class="header-text mt-5 mb-sm-5 px-sm-4 text-center text-lg-start">
+        <router-link to="/event"><p class="fs-3 d-inline mx-4" >Activity</p></router-link>
+        <router-link to="/news"><p class="fs-3 d-inline mx-4 text-decoration-none">News</p></router-link>
+      </div>
+
   <div class="postloop ">
     <router-link to="/event/news/123">
     <div class="card text-white  ">
@@ -75,11 +84,22 @@
       </div>
     </div>
   </div>
+    </div>
+  </section>
+  <HPfooter />
 </template>
 
 <script>
+import HomepageHeader from "../components/HomepageHeader";
+import HPfooter from "../components/homepageFooter";
+
 export default {
+ 
   props: {},
+  components: {
+    HomepageHeader,
+    HPfooter,
+  },
   data() {
     return {
       page: 0,
@@ -98,6 +118,17 @@ export default {
 };
 </script>
 
+<style scoped>
+.header-text {
+  font-family: "Srinakharinwirot";
+}
+.has-dropdown li{
+  opacity: 0.2;
+}
+.is-open li{
+  opacity: 1;
+}
+</style>
 <style scoped>
 .card {
   border-radius: 50px;
