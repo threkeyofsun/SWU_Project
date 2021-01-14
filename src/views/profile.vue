@@ -1,6 +1,8 @@
 <template>
   <HomepageHeader />
-
+<section class="sidebar">
+<router-link to="">profile</router-link>
+</section>
   <div class="container">
     <p class="mt-5 mb-4 anounce-title">User Detail</p>
     <div class="posting">
@@ -10,15 +12,22 @@
           src="/img/Mask-Group-25.png"
           alt="profile.img"
         />
-        <p class="firstname d-inline px-2 ">Firstname</p>
-        <p class="lastname  d-inline px-1">L.</p>
-        <p class="time-badge">Jan 7, 2020</p>
+        <p class="firstname pt-4 "><b> Upload your image here</b></p>
+        <button type="button" class="btn btn-light">Upload</button>
       </div>
     </div>
     <hr />
     <!-- Detail -->
-    <div class="detail my-4">
-      <p>Announcement Details</p>
+    
+    <div class="detail my-4 ml-md-5">
+      <h5 >Name: &nbsp;&nbsp;&nbsp; {{ user.first_name }}&nbsp; &nbsp;  {{ user.last_name }}</h5>
+      <h5 class="d-sm-inline">Faculty:&nbsp;&nbsp;&nbsp; {{ user.faculty }} </h5>
+      <span class="d-sm-inline d-none mx-4"></span>
+      <h5 class="d-sm-inline"> Major:&nbsp;&nbsp;&nbsp; {{ user.majors }}</h5>
+      <h5>Email: &nbsp;&nbsp;&nbsp; {{ user.email }}</h5>
+      <h5>Phone-Number:&nbsp;&nbsp;&nbsp;{{ user.phone_number }}</h5>
+      <h5>Status:&nbsp;&nbsp;&nbsp;{{ user.s_type }}</h5>
+      <h5>{{ user.s_type }}-Id: {{ user.s_id }}</h5>
     </div>
     <hr />
   </div>
@@ -27,25 +36,48 @@
 </template>
 
 <script>
+import axios from "axios";
 import HomepageHeader from "../components/HomepageHeader";
 import HPfooter from "../components/homepageFooter";
-
 export default {
-  setup() {
-    return { HomepageHeader, HPfooter };
-  },
+    name: 'ProductDetailPage',
+    components: {  
+      HomepageHeader,
+      HPfooter,
+    },
+    data() {
+      return {
+        user: {}
+      };
+    },
+    async created() {
+      const result = await axios.get(`/api/user/${this.$route.params.s_id}`);
+      this.user = result.data;
+    }
 };
 </script>
 
 <style scoped>
+.sidebar{
+  position: fixed;
+  background-color: #f8ca00;
+  height: 100%;
+  
+}
+.detail{
+  font-family: "THSaraban";
+}
 .container {
   max-width: 680px;
   width: 100%;
 }
+.posting {
+  text-align-last: center;
+}
 .profile-img {
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
 }
 .user-badge {

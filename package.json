@@ -20,6 +20,7 @@
     "express": "^4.17.1",
     "jquery": "^3.5.1",
     "moment": "^2.29.1",
+    "mongodb": "^3.6.3",
     "popper.js": "^1.16.1",
     "portal-vue": "^2.1.7",
     "sass": "^1.30.0",

@@ -11,6 +11,9 @@ import NewsPage from "../views/News-Post.vue";
 import ActPost from "../views/Activities-Post.vue";
 import Act from "../components/Activity.vue";
 import news from "../components/News.vue";
+import Profile_test from "../views/profile.vue";
+
+
 
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -19,6 +22,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 
 const routes = [
+  {
+    path: "/user/:s_id",
+    name: "profile",
+    component: Profile_test
+  },
   {
     path: "/News",
     name: "news",
