@@ -3,7 +3,7 @@
 
   <section class="content">
     <div class="cover-img d-none d-md-block">
-      <img class="cover" v-bind:src="cover.img" alt="Responsive image" />
+      <img class="cover" src="/img/MaskGroup132x.png" alt="Responsive image" />
     </div>
     <p class="text-center wellcome-text  my-3">Announcement</p>
     <hr class="hr-main" />

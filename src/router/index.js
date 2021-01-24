@@ -12,16 +12,16 @@ import ActPost from "../views/Activities-Post.vue";
 import Act from "../components/Activity.vue";
 import news from "../components/News.vue";
 import Profile_test from "../views/profile.vue";
-
-
-
+import NewsForm from "../views/NewsForm-dbTest.vue";
 
 import 'bootstrap/dist/css/bootstrap.css';
 
-
-
-
 const routes = [
+  {
+    path: "/Create_News",
+    name: "NewsForm",
+    component: NewsForm
+  },
   {
     path: "/user/:s_id",
     name: "profile",

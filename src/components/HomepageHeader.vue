@@ -50,7 +50,7 @@
         </div>
       </div>
       <hr class="hr-head" />
-      <p class="profile-menu">My Profile</p>
+      <router-link to="/user/en60109010501"><p class="profile-menu text-dark">My Profile</p></router-link>
       <p class="profile-menu">History</p>
       <p class="profile-menu">Upcoming</p>
     </div>
@@ -94,7 +94,7 @@
               ></i>
 
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <li><a class="dropdown-item" href="#">My Profile</a></li>
+                <li> <router-link class="dropdown-item" to="/user/en60109010501">My Profile</router-link> </li>
                 <li><a class="dropdown-item" href="#">Upcoming Activity</a></li>
                 <li>
                   <a class="dropdown-item" href="#">Create a New Event </a>
@@ -118,7 +118,7 @@
   </header>
 
   <div class="cover-img d-md-none">
-    <img class="cover" v-bind:src="cover.img" alt="Responsive image" />
+    <img class="cover" src="/img/MaskGroup132x.png"/>
   </div>
 </template>
 
