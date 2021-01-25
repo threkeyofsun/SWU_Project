@@ -2,47 +2,154 @@
   <HomepageHeader />
 
   <div class="container">
-    <div class="posting">
-      
+    <form class="ac-req-form">
+      <div class="posting">
+        <div class="coverpost">
+          <label>
+            <!-- radio image -->
+            <input type="radio" name="test" value="small" checked />
+            <img class="radioim" src="/img/Mask-Group-25.png" />
+          </label>
+          <label>
+            <input type="radio" name="test" value="big" />
+            <img class="radioim" src="/img/Mask-Group-25.png" />
+          </label>
+          <label>
+            <input type="radio" name="test" value="big" />
+            <img class="radioim" src="/img/Mask-Group-25.png" />
+          </label>
+          <label>
+            <input type="radio" name="test" value="big" />
+            <img class="radioim" src="/img/Mask-Group-25.png" />
+          </label>
+        </div>
+        <div class="badge user-badge">
+          <h3>OR</h3>
 
-      <form>
-        <label>
-          <!-- radio image -->
-          <input type="radio" name="test" value="small" checked />
-          <img class="radioim" src="/img/Mask-Group-25.png" />
-        </label>
-        <label>
-          <input type="radio" name="test" value="big" />
-          <img class="radioim" src="/img/Mask-Group-25.png" />
-        </label> 
-        <label>
-          <input type="radio" name="test" value="big" />
-          <img class="radioim" src="/img/Mask-Group-25.png" />
-        </label>
-         <label>
-          <input type="radio" name="test" value="big" />
-          <img class="radioim" src="/img/Mask-Group-25.png" />
-        </label>
-<div class="badge user-badge">
-        <img
-          class=" profile-img  "
-          src="/img/Mask-Group-25.png"
-          alt="profile.img"
-        />
-        <p class="firstname pt-4 "><b> Upload your cover image here</b></p>
-        <button type="button" class="btn btn-light">Upload</button>
+          <img
+            class=" profile-img  "
+            src="/img/Mask-Group-25.png"
+            alt="profile.img"
+          />
+          <p class="firstname pt-4 "><b> Upload your cover image here</b></p>
+          <input
+            type="file"
+            class="form-control-file btn btn-light"
+            id="exampleFormControlFile1"
+          />
+        </div>
       </div>
 
-        <div class="row">
-          <div class="col">
-            <input type="text" class="form-control" placeholder="First name" />
+      <div class="ATinput">
+        <div class="row my-4">
+          <div class="col-3">
+            <label for="title" class="form-label">Activity Title</label>
           </div>
-          <div class="col">
-            <input type="text" class="form-control" placeholder="Last name" />
+          <div class="col-9">
+            <input type="input" class="form-input" id="title" placeholder="" />
           </div>
         </div>
-      </form>
-    </div>
+
+        <h5>Applicant Qualification</h5>
+        <div class="row my-4 form-group ">
+          <div class="col-1 col-sm-2">
+            <label for="example-number-input">Number</label>
+          </div>
+
+          <div class="col-sm-2 col-6 mx-2 mx-sm-none">
+            <input
+              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+              maxlength="3"
+              v-model="value"
+              :min="1"
+              :max="100"
+              class="form-input "
+              type="number"
+              id="example-number-input"
+            />
+          </div>
+
+          <div class="col-1 col-sm-2 mx-0 px-0">
+            <label for="st-year">Student Year</label>
+          </div>
+          <div class="col-5 mx-0 px-0">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="flexCheckDefault" checked
+            />
+            <label class="form-check-label mx-2" for="flexCheckDefault" >
+              1
+            </label>
+            <input
+              class=" form-check-input"
+              type="checkbox"
+              value=""
+              id="flexCheckDefault" checked
+            />
+            <label class="form-check-label mx-2" for="flexCheckDefault">
+              2
+            </label>
+            <input
+              class=" form-check-input"
+              type="checkbox"
+              value=""
+              id="flexCheckDefault" checked
+            />
+            <label class="form-check-label mx-2" for="flexCheckDefault">
+              3
+            </label>
+            <input
+              class=" form-check-input"
+              type="checkbox"
+              value=""
+              id="flexCheckDefault" checked
+            />
+            <label class="form-check-label mx-2" for="flexCheckDefault">
+              4
+            </label>
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="flexCheckDefault" checked
+            />
+            <label class="form-check-label mx-2" for="flexCheckDefault">
+             <p> > 5 </p> 
+            </label>
+          </div>
+        </div>
+
+        <div class="row my-4">
+          <div class="col-3">
+            <label for="title" class="form-label">Short Description</label>
+          </div>
+          <div class="col-9">
+            <textarea
+              class="form-control"
+              placeholder="Leave a short description here"
+              id="floatingTextarea2"
+              style="height: 100px"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="row my-4">
+          <div class="col-12">
+            <label for="title" class="form-label">Detials</label>
+          </div>
+          <div class="col-12">
+            <textarea
+              class="form-control"
+              placeholder="Leave a short description here"
+              id="floatingTextarea2"
+              style="height: 100px"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </form>
     <hr />
     <!-- Detail -->
 
@@ -63,18 +170,62 @@ export default {
     HPfooter,
   },
   data() {
-    return {};
+    return {
+      quantity: 10,
+      mquantity: 50,
+      value: 1,
+      user: {
+        faculty: "0",
+      },
+    };
   },
 };
 </script>
 
 <style scoped>
+.selecfaculty {
+  box-shadow: none;
+  padding: 0rem 0.55rem;
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-input {
+  padding: 0rem 0.55rem;
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.ac-req-form {
+  font-family: "THSaraban";
+}
 .radioim {
-  opacity: 0.5;
+  opacity: 0.3;
   object-fit: cover;
-    height: 50px;
-    width: 50px;
-    border-radius: 0px;
+  height: 150px;
+  width: 150px;
+  border-radius: 0px;
+  margin: 5px;
 }
 /* HIDE RADIO */
 [type="radio"] {
@@ -89,7 +240,6 @@ export default {
   cursor: pointer;
 }
 
-
 /* CHECKED STYLES */
 [type="radio"]:checked + img {
   opacity: 1;
@@ -101,9 +251,7 @@ export default {
   background-color: #f8ca00;
   height: 100%;
 }
-.detail {
-  font-family: "THSaraban";
-}
+
 .container {
   max-width: 680px;
   width: 100%;
@@ -112,7 +260,7 @@ export default {
   text-align-last: center;
 }
 .profile-img {
-  border-radius: 50%;
+  border-radius: 23px 0px 23px 23px;
   width: 120px;
   height: 120px;
   object-fit: cover;
