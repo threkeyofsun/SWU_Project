@@ -5,7 +5,7 @@
     <div class="container">
       <div class="header-text mt-5 mb-sm-5 px-sm-4 text-center text-lg-start">
         <router-link to="/event"><p class="fs-3 d-inline mx-4" >Activity</p></router-link>
-        <router-link to="/news"><p class="fs-3 d-inline mx-4 text-decoration-none">News</p></router-link>
+        <p class="fs-3 d-inline mx-4 text-decoration-none" @click="$router.push('/news')">News</p>
       </div>
 
 <div class="row activity-card">
@@ -211,6 +211,9 @@ export default {
 </script>
 
 <style scoped>
+a.linknews{
+  text-decoration: none !important;
+}
 .header-text {
   font-family: "Srinakharinwirot";
 }

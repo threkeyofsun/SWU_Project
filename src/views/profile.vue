@@ -2,44 +2,63 @@
   <HomepageHeader />
 
   <div class="row ">
-    <div class="col-3 d-none d-md-block ">
-      <section class="sidebar ml-5">
-      <router-link class="text-dark" to=""><p >Profile</p></router-link>
-      <hr>
-      <p>My Activities</p>
-      <hr>
-      <div class="MAlink">
-        <p><router-link to=""> History</router-link></p>
-       <p> <router-link to=""> Upcoming</router-link></p>
-      </div>
-      <hr>
-      <p>Create Your Event</p>
-      <hr>
-      <div class="MAlink">
-       <p><router-link to=""> Activity Recruit</router-link></p>
-       <p> <router-link to="">  Create News post</router-link></p>
-        <p> <router-link to=""> Announcements</router-link></p>
-      </div>
-      <hr>
-      <div class="float-end fw-bold text-danger">
-        <p>Logout</p>
-      </div>
-      </section>
-      <span class="d-inline"></span>
-    </div>
+    <Sidebar />
+    <!--End of  Sidebar -->
 
     <div class="col-md-9 col-12">
       <div class="container">
         <p class="mt-5 mb-4 anounce-title">User Detail</p>
         <div class="posting">
           <div class="badge user-badge">
-            <img
-              class=" profile-img  "
-              src="/img/Mask-Group-25.png"
-              alt="profile.img"
-            />
-            <p class="firstname pt-4 "><b> Upload your image here</b></p>
-            <button type="button" class="btn btn-light">Upload</button>
+            <p class="firstname pt-4 ">
+              <b> Upload Your Profile Picture Below</b>
+            </p>
+
+            <form
+              @submit.prevent="sendFile"
+              action="upload"
+              method="post"
+              enctype="multipar/form-data"
+            >
+              <label class="file-label profile-badge ">
+                <input
+                  type="file"
+                  ref="file"
+                  @change="profileImage"
+                  class="file-input"
+                />
+
+                <span class="file-cta ">
+                  <span class="file-label">
+                    <div v-if="preview">
+                      <img :src="preview" class="profile-img mb-3" />
+                    </div>
+                    <div v-else>
+                      <img
+                        class=" profile-img mb-3 "
+                        src="/img/Mask-Group-25.png"
+                        alt="profile.img"
+                      />
+                    </div>
+                  </span>
+                </span>
+              </label>
+              <div>
+                <button
+                  type="button"
+                  class=" my-4 btn btn-light"
+                  @click="onUpload"
+                >
+                  Confirm
+                </button>
+              </div>
+              <div
+                v-if="alertMessage"
+                :class="`alertMessage ${error ? 'bg-danger' : 'bg-success'} `"
+              >
+                <div class="message-body">{{ alertMessage }}</div>
+              </div>
+            </form>
           </div>
         </div>
         <hr />
@@ -73,41 +92,79 @@
 import axios from "axios";
 import HomepageHeader from "../components/HomepageHeader";
 import HPfooter from "../components/homepageFooter";
+import Sidebar from "../components/sliderbar";
+
 export default {
   name: "ProductDetailPage",
   components: {
     HomepageHeader,
     HPfooter,
+    Sidebar,
   },
   data() {
     return {
       user: {},
+      preview: "",
+      image: "",
+      alertMessage: "",
+      selectedFile: "",
     };
   },
   async created() {
     const result = await axios.get(`/api/user/${this.$route.params.s_id}`);
     this.user = result.data;
   },
+  methods: {
+    profileImage() {
+      const selectedFile = this.$refs.file.files[0];
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+      const MAX_SIZE = 200000;
+      const tooLarge = selectedFile.size > MAX_SIZE;
+      
+      if (allowedTypes.includes(selectedFile.type) && !tooLarge) {
+        this.selectedFile = selectedFile;
+        this.error = false;
+        this.alertMessage = "";
+      } else {
+        this.error = true;
+        this.alertMessage = tooLarge
+          ? `Too large. Max size is ${MAX_SIZE / 1000}Kb`
+          : "Only images are allowed";
+      }
+    },
+    
+    async sendFile() {
+      const formdata = new FormData();
+      formdata.append('selectedFile', this.selectedFile);
+
+      try {
+        await axios.post('/api/posts/upload', formdata);
+        this.alertMessage = "File has been uploaded!";
+        this.selectedFile = "";
+        this.error = false;
+      } catch (err) {
+        this.alertMessage = err.response.data.error;
+        this.error = true;
+      }
+    },
+  },
 };
 </script>
 
 <style scoped>
-.sidebar{
-  font-family: "THSaraban";
-    margin: 35% 0% 0% 30%;
-    font-size: 4vh;
+/* Upload profile image */
+input.file-input {
+  display: none;
 }
-.MAlink {
-  margin-left: 25%;
-}
+/*  */
+
 .detail {
   font-family: "THSaraban";
 }
 .container {
-  
-    max-width: 680px;
-    width: 100%;
-    float: left;
+  max-width: 680px;
+  width: 100%;
+  float: left;
 }
 .posting {
   text-align-last: center;
@@ -117,6 +174,14 @@ export default {
   width: 120px;
   height: 120px;
   object-fit: cover;
+}
+.profile-badge {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+}
+.profile-badge:hover {
+  cursor: pointer;
 }
 .user-badge {
   font-weight: 400;
@@ -138,7 +203,6 @@ export default {
 .anounce-title {
   font-size: 26px;
 }
-
 
 @media screen and (max-width: 727.98px) and (min-width: 552px) {
   container {

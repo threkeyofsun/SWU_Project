@@ -17,12 +17,12 @@
           placeholder="| Password"
         />
 
-        <div>
-          <router-link to="homepage"
-            ><button class="login-btn" @click="doSomething()" id="login-btn">
+        <div class="btn-home">
+         
+            <button class="login-btn" @click="doSomething(), $router.push('/homepage')" id="login-btn">
               Login
-            </button></router-link
-          >
+            </button>
+          
         </div>
       </form>
     </div>
@@ -48,4 +48,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+
+</style>

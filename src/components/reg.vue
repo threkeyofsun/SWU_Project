@@ -144,11 +144,10 @@
         <!-- End of input -->
 
         <div class="mb-5 mb-xl-auto">
-          <router-link to="/successful"
-            ><button class="login-btn " id="login-btn">
+          <button class="login-btn " @click="doSomething(), $router.push('/homepage')" id="login-btn">
               Register
-            </button></router-link
-          >
+            </button>
+          
         </div>
       </form>
     </div>

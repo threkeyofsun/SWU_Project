@@ -60,9 +60,7 @@
       </a>
     </div>
   </section>
-      <hr class="hr-main my-4 " />    
-
-
+  <hr class="hr-main my-4 " />
 
   <HPfooter />
 </template>
@@ -79,10 +77,11 @@ export default {
 
   data() {
     return {
+       existentialQuestion: 'Am I truly an alligator?',
       announcement: {
         banners: ["photo-989-full", "photo-1032-large", "photo-985-full"],
         announce: ["register", "/", "about"],
-        id:["Uniform-Term","Covid-19-situation","5875sdwe"]
+        id: ["Uniform-Term", "Covid-19-situation", "5875sdwe"],
       },
       cover: {
         img:

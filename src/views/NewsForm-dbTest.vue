@@ -46,14 +46,19 @@
             <label for="title" class="form-label">Activity Title</label>
           </div>
           <div class="col-9">
-            <input type="input" class="form-input" id="title" placeholder="" />
+            <input
+              type="input"
+              class="form-control form-control-sm"
+              id="title"
+              placeholder=""
+            />
           </div>
         </div>
 
         <h5>Applicant Qualification</h5>
         <div class="row my-4 form-group ">
-          <div class="col-1 col-sm-2">
-            <label for="example-number-input">Number</label>
+          <div class="col-1 col-sm-3">
+            <label for="example-number-input">Applicant Number</label>
           </div>
 
           <div class="col-sm-2 col-6 mx-2 mx-sm-none">
@@ -68,25 +73,29 @@
               id="example-number-input"
             />
           </div>
+        </div>
 
-          <div class="col-1 col-sm-2 mx-0 px-0">
+        <div class="row">
+          <div class="col-1 col-sm-3 ">
             <label for="st-year">Student Year</label>
           </div>
-          <div class="col-5 mx-0 px-0">
+          <div class="col-8  mx-0 px-0">
             <input
               class="form-check-input"
               type="checkbox"
               value=""
-              id="flexCheckDefault" checked
+              id="flexCheckDefault"
+              checked
             />
-            <label class="form-check-label mx-2" for="flexCheckDefault" >
+            <label class="form-check-label mx-2" for="flexCheckDefault">
               1
             </label>
             <input
               class=" form-check-input"
               type="checkbox"
               value=""
-              id="flexCheckDefault" checked
+              id="flexCheckDefault"
+              checked
             />
             <label class="form-check-label mx-2" for="flexCheckDefault">
               2
@@ -95,7 +104,8 @@
               class=" form-check-input"
               type="checkbox"
               value=""
-              id="flexCheckDefault" checked
+              id="flexCheckDefault"
+              checked
             />
             <label class="form-check-label mx-2" for="flexCheckDefault">
               3
@@ -104,7 +114,8 @@
               class=" form-check-input"
               type="checkbox"
               value=""
-              id="flexCheckDefault" checked
+              id="flexCheckDefault"
+              checked
             />
             <label class="form-check-label mx-2" for="flexCheckDefault">
               4
@@ -113,11 +124,76 @@
               class="form-check-input"
               type="checkbox"
               value=""
-              id="flexCheckDefault" checked
+              id="flexCheckDefault"
+              checked
             />
             <label class="form-check-label mx-2" for="flexCheckDefault">
-             <p> > 5 </p> 
+              <p>More Than 5</p>
             </label>
+          </div>
+        </div>
+        <div class="row my-4">
+          <div class="col-3">
+            <label for="title" class="form-label">At Place</label>
+          </div>
+          <div class="col-9">
+            <input
+              type="input"
+              class="form-control form-control-sm"
+              id="title"
+              placeholder=""
+            />
+          </div>
+        </div>
+        <div class="row my-4">
+          <div class="col-2">
+            <label for="st-date" class="form-label">Start Date</label>
+          </div>
+          <div class="col-4">
+            <input
+              type="date"
+              class="form-control form-control-sm"
+              id="st-date"
+              value=""
+            />
+          </div>
+
+          <div class="col-2">
+            <label for="st-time" class="form-label">At Time</label>
+          </div>
+          <div class="col-4">
+            <input
+              type="time"
+              class="form-control form-control-sm"
+              id="st-time"
+              value=""
+            />
+          </div>
+        </div>
+
+        <div class="row my-4">
+          <div class="col-2">
+            <label for="st-date" class="form-label">End Date</label>
+          </div>
+          <div class="col-4">
+            <input
+              type="date"
+              class="form-control form-control-sm"
+              id="st-date"
+              value=""
+            />
+          </div>
+
+          <div class="col-2">
+            <label for="st-time" class="form-label">End Time</label>
+          </div>
+          <div class="col-4">
+            <input
+              type="time"
+              class="form-control form-control-sm"
+              id="st-time"
+              value=""
+            />
           </div>
         </div>
 
@@ -144,17 +220,16 @@
               class="form-control"
               placeholder="Leave a short description here"
               id="floatingTextarea2"
-              style="height: 100px"
+              style="height: 300px"
             ></textarea>
           </div>
         </div>
+
+
       </div>
     </form>
     <hr />
     <!-- Detail -->
-
-    <div class="detail my-4 ml-md-5"></div>
-    <hr />
   </div>
 
   <HPfooter />
@@ -177,12 +252,21 @@ export default {
       user: {
         faculty: "0",
       },
+    
+       
     };
   },
+  
 };
 </script>
 
 <style scoped>
+.form-control-sm {
+  min-height: calc(1em + 0.5rem + 1px);
+  padding: 0.15rem 0.25rem;
+  font-size: 0.875rem;
+  border-radius: 0.2rem;
+}
 .selecfaculty {
   box-shadow: none;
   padding: 0rem 0.55rem;

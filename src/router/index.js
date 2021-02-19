@@ -13,10 +13,16 @@ import Act from "../components/Activity.vue";
 import news from "../components/News.vue";
 import Profile_test from "../views/profile.vue";
 import NewsForm from "../views/NewsForm-dbTest.vue";
+import imageupload from "../views/image-upload.vue";
 
 import 'bootstrap/dist/css/bootstrap.css';
 
 const routes = [
+  {
+    path: "/imageupload",
+    name: "imageupload",
+    component: imageupload
+  },
   {
     path: "/Create_News",
     name: "NewsForm",
