@@ -14,10 +14,28 @@ import news from "../components/News.vue";
 import Profile_test from "../views/profile.vue";
 import NewsForm from "../views/NewsForm-dbTest.vue";
 import imageupload from "../views/image-upload.vue";
+import history from "../views/history.vue";
+import upcoming from "../views/upcoming.vue";
+import createnews from "../views/createnews.vue";
 
 import 'bootstrap/dist/css/bootstrap.css';
 
 const routes = [
+  {
+    path: "/createnews",
+    name: "createnews",
+    component: createnews
+  },
+  {
+    path: "/upcoming",
+    name: "upcoming",
+    component: upcoming
+  },
+  {
+    path: "/history",
+    name: "history",
+    component: history
+  },
   {
     path: "/imageupload",
     name: "imageupload",

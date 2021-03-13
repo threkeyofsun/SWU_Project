@@ -14,7 +14,7 @@
         <ul class="lan-area d-inline">
           <li>Thai</li>
           <p>|</p>
-          <li><router-link to="/">English</router-link></li>
+          <li><router-link class="text-danger" to="/">English</router-link></li>
         </ul>
         <a @click="isHidden = !isHidden"
           ><img class="ham2 d-inline" src="../image/ham-left.png"
@@ -35,24 +35,32 @@
       <div class="align-self-center ">
         <div>
           <p class="respon-menu mt-2">
-            <router-link to="/Homepage">Homepage </router-link>
+            <router-link class="homepage" to="/Homepage">
+              Homepage
+            </router-link>
           </p>
         </div>
         <div>
           <p class="respon-menu mt-2">
-            <router-link to="/Event">Event</router-link>
+            <router-link class="event" to="/Event">Event</router-link>
           </p>
         </div>
         <div>
           <p class="respon-menu mt-2">
-            <router-link to="/ContactInside">Contact Us</router-link>
+            <router-link class="contact" to="/ContactInside"
+              >Contact Us</router-link
+            >
           </p>
         </div>
       </div>
       <hr class="hr-head" />
-      <router-link to="/user/en60109010501"><p class="profile-menu text-dark">My Profile</p></router-link>
-      <p class="profile-menu">History</p>
-      <p class="profile-menu">Upcoming</p>
+      <router-link to="/user/en60109010501"
+        ><p class="profilepage profile-menu text-dark ">
+          My Profile
+        </p></router-link
+      >
+      <router-link to="/history"><p class="historypage profile-menu text-dark">History</p></router-link> 
+      <p class="upcomingpage profile-menu text-dark">Upcoming</p>
     </div>
   </transition>
   <!-- End of hamburger -->
@@ -94,7 +102,11 @@
               ></i>
 
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <li> <router-link class="dropdown-item" to="/user/en60109010501">My Profile</router-link> </li>
+                <li>
+                  <router-link class="dropdown-item" to="/user/en60109010501"
+                    >My Profile</router-link
+                  >
+                </li>
                 <li><a class="dropdown-item" href="#">Upcoming Activity</a></li>
                 <li>
                   <a class="dropdown-item" href="#">Create a New Event </a>
@@ -118,7 +130,7 @@
   </header>
 
   <div class="cover-img d-md-none">
-    <img class="cover" src="/img/MaskGroup132x.png"/>
+    <img class="cover" src="/img/MaskGroup132x.png" />
   </div>
 </template>
 
@@ -210,6 +222,61 @@ img.swu-inside {
 
 /* Start Responsive nav */
 
+.hr-head + .align-self-center div:first-of-type {
+  border-left: none;
+  border-right: none;
+  background-color: white;
+}
+.hr-head + .align-self-center div:first-of-type a {
+  color: #636468;
+}
+
+.router-link-active.router-link-exact-active.homepage {
+  padding: 0px 97px 0px 56px;
+  margin: -65px;
+  background-color: #769e94;
+  border-radius: 0px 36px 36px 0px;
+  color: white !important;
+}
+
+.router-link-active.router-link-exact-active.event {
+  padding: 0px 125px 0px 64px;
+  margin: -65px;
+  background-color: #769e94;
+  border-radius: 0px 36px 36px 0px;
+  color: white;
+}
+
+.router-link-active.router-link-exact-active.contact {
+  padding: 0px 97px 0px 56px;
+  margin: -65px;
+  background-color: #769e94;
+  border-radius: 0px 36px 36px 0px;
+  color: white !important;
+}
+
+.router-link-active.router-link-exact-active .profilepage {
+  margin: auto 175px 0px 62px;
+  border-radius: 0px 36px 36px 0px;
+  background-color: #b37d83;
+  color: rgb(255, 255, 255) !important;
+  padding: 0px 14px 0px 60px;
+}
+.router-link-active.router-link-exact-active .historypage {
+  margin: auto 175px 0px 62px;
+  border-radius: 0px 36px 36px 0px;
+  background-color: #b37d83;
+  color: rgb(255, 255, 255) !important;
+  padding: 0px 14px 0px 60px;
+}
+.router-link-active.router-link-exact-active .upcomingpage {
+  margin: auto 175px 0px 62px;
+  border-radius: 0px 36px 36px 0px;
+  background-color: #b37d83;
+  color: rgb(255, 255, 255) !important;
+  padding: 0px 14px 0px 60px;
+}
+
 /* Profile */
 .user-badge {
   color: #000000;
@@ -284,17 +351,8 @@ img.ham2 {
   font-size: 4vw;
   font-family: "Srinakharinwirot";
 }
-
-.hr-head + .align-self-center div:first-of-type {
-  margin: auto 45% auto 12%;
-  border-left: 0;
-  border-right: 0;
-  background-color: #769e94;
-  border-radius: 0px 36px 36px 0px;
-}
-.hr-head + .align-self-center div:first-of-type a {
-  color: white;
-  margin-left: 5%;
+ a {
+  text-decoration: none;
 }
 
 /* Start Profile menu */

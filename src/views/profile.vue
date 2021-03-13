@@ -11,7 +11,7 @@
         <div class="posting">
           <div class="badge user-badge">
             <p class="firstname pt-4 ">
-              <b> Upload Your Profile Picture Below</b>
+              <b>Upload Your Profile Picture Below</b>
             </p>
 
             <form
@@ -33,6 +33,7 @@
                     <div v-if="preview">
                       <img :src="preview" class="profile-img mb-3" />
                     </div>
+
                     <div v-else>
                       <img
                         class=" profile-img mb-3 "
@@ -51,12 +52,6 @@
                 >
                   Confirm
                 </button>
-              </div>
-              <div
-                v-if="alertMessage"
-                :class="`alertMessage ${error ? 'bg-danger' : 'bg-success'} `"
-              >
-                <div class="message-body">{{ alertMessage }}</div>
               </div>
             </form>
           </div>
@@ -81,6 +76,80 @@
           <h5>{{ user.s_type }}-Id: {{ user.s_id }}</h5>
         </div>
         <hr />
+        <div>
+          <p class="anounce-title">Activities Category Subscribe</p>
+          <p class="detail">**Select the box below for notification</p>
+
+          <form
+            @submit.prevent="sendFile"
+            action=""
+            method="post"
+            enctype="multipar/form-data"
+          >
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value="volunteer"
+                v-model="actType"
+                id="volunteer"
+              />
+
+              <label class="form-check-label detail" for="volunteer">
+                Volunteer Activities
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value="regular"
+                v-model="actType"
+                id="regular"
+              />
+              <label class="form-check-label detail" for="regular">
+                Regular Activities
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                v-model="actType"
+                value="force"
+                id="force"
+              />
+              <label class="form-check-label detail" for="force">
+                Force Activities
+              </label>
+            </div>
+
+            <button
+              :disabled="isEmpty"
+              class="btn btn-light my-3 detail"
+              type="submit"
+              value="submit"
+              @click="onUpload"
+            >
+              Upload
+            </button>
+          </form>
+
+<p>
+
+
+   {{dipimg.originalName}}
+
+</p>
+
+
+
+         
+          
+          
+        </div>
       </div>
     </div>
   </div>
@@ -95,7 +164,7 @@ import HPfooter from "../components/homepageFooter";
 import Sidebar from "../components/sliderbar";
 
 export default {
-  name: "ProductDetailPage",
+
   components: {
     HomepageHeader,
     HPfooter,
@@ -104,49 +173,27 @@ export default {
   data() {
     return {
       user: {},
+      actType: [],
+      checked: false,
       preview: "",
       image: "",
       alertMessage: "",
       selectedFile: "",
+      dipimg: {},
+      obj:{
+       'text-success':true,
+      }
     };
   },
   async created() {
     const result = await axios.get(`/api/user/${this.$route.params.s_id}`);
     this.user = result.data;
+    const result2 = await axios.get('/api/posts/files/Hi1615445287026.png');
+    this.dipimg = result2;
   },
-  methods: {
-    profileImage() {
-      const selectedFile = this.$refs.file.files[0];
-      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
-      const MAX_SIZE = 200000;
-      const tooLarge = selectedFile.size > MAX_SIZE;
-      
-      if (allowedTypes.includes(selectedFile.type) && !tooLarge) {
-        this.selectedFile = selectedFile;
-        this.error = false;
-        this.alertMessage = "";
-      } else {
-        this.error = true;
-        this.alertMessage = tooLarge
-          ? `Too large. Max size is ${MAX_SIZE / 1000}Kb`
-          : "Only images are allowed";
-      }
-    },
-    
-    async sendFile() {
-      const formdata = new FormData();
-      formdata.append('selectedFile', this.selectedFile);
-
-      try {
-        await axios.post('/api/posts/upload', formdata);
-        this.alertMessage = "File has been uploaded!";
-        this.selectedFile = "";
-        this.error = false;
-      } catch (err) {
-        this.alertMessage = err.response.data.error;
-        this.error = true;
-      }
-    },
+  methods: {},
+  computed: {
+    isEmpty: ({ actType }) => actType.length === 0,
   },
 };
 </script>
@@ -162,9 +209,8 @@ input.file-input {
   font-family: "THSaraban";
 }
 .container {
-  max-width: 680px;
-  width: 100%;
-  float: left;
+  max-width: 1028px;
+    width: 100%;
 }
 .posting {
   text-align-last: center;

@@ -23,6 +23,7 @@
             ref="file"
             @change="selectFile"
             class="file-input"
+            accept="image/*"
           />
 
           <span class="file-cta">
@@ -33,17 +34,36 @@
               Choose a file...
             </span>
           </span>
-          <span v-if="selectedFile" class="badge bg-secondary">{{
-            selectedFile.name
-          }}</span>
+          <span v-if="selectedFile" class="badge bg-secondary">
+            {{ selectedFile.name }} &nbsp; &nbsp;
+            <a
+              @click.prevent="selectedFile = ''"
+              class="d-inline btn-close delete"
+            ></a>
+          </span>
         </label>
+      </div>
+    </div>
+    
+    <div class="previewImage">
+      <div
+        class="image-input"
+        :style="{ 'background-image': `url(${imageData})` }"
+        @click="selectedFile"
+      >
+        <p
+          @input="onUpload"
+          :class="selectedFile ? '' : 'd-none'"
+          class="px-5 py-5"
+        ></p>
       </div>
     </div>
 
     <button
-      v-if="selectedFile"
       :class="
-        `message ${error ? 'disabled bg-secondary border-secondary' : ''}`
+        `message ${
+          selectedFile ? '' : 'disabled bg-secondary border-secondary'
+        }`
       "
       class="btn btn-primary mx-5 my-5 "
       type="submit"
@@ -61,13 +81,6 @@
     method="post"
     enctype="multipar/form-data"
   >
-    <!-- <div
-      v-if="message"
-      :class="`message ${error ? 'bg-danger' : 'bg-success'} `"
-    >
-      <div class="message-body">{{ message }}</div>
-    </div> -->
-
     <div class="field">
       <div class="file p-3 mb-3 mx-5 my-5 d-block text-white bg-warning">
         <label class="file-label">
@@ -139,7 +152,7 @@
     <div class="dropzone">
       <input
         type="file"
-        ref="file"
+        ref="drop"
         @change="senddropzoneFiles"
         class="input-field"
       />
@@ -150,7 +163,7 @@
 
       <p v-if="uploading" class="progress-bar">
         <progress :value="progress" class="progress bg-primary" max="100">
-           {{progress}} %
+          {{ progress }} %
         </progress>
       </p>
     </div>
@@ -158,11 +171,10 @@
     <div class="content">
       <ul>
         <li v-for="file in uploadFiles" :key="file.originalname">
-          {{file.originalname}}
+          {{ file.originalname }}
         </li>
       </ul>
     </div>
-
   </form>
 </template>
 
@@ -173,6 +185,9 @@ import _ from "lodash";
 export default {
   data() {
     return {
+      student: {
+        id: "12345678",
+      },
       uploadFiles: [],
       files: [],
       selectedFile: "",
@@ -181,12 +196,13 @@ export default {
       dropzonefile: "",
       uploading: false,
       progress: 0,
+      imageData: "",
     };
   },
   methods: {
     // Dropzone
     async senddropzoneFiles() {
-      const dropzonefile = this.$refs.file.files[0];
+      const dropzonefile = this.$refs.drop.files[0];
       const fdt = new FormData();
 
       fdt.append("dropzonefile", dropzonefile);
@@ -194,7 +210,8 @@ export default {
       try {
         this.uploading = true;
         const res = await axios.post("/api/posts/dropzone", fdt, {
-          onUploadProgress: e => this.progress = Math.round(e.loaded * 100 /e.total)
+          onUploadProgress: (e) =>
+            (this.progress = Math.round((e.loaded * 100) / e.total)),
         });
         this.uploadFiles.push(res.data.file);
         this.uploading = false;
@@ -272,7 +289,23 @@ export default {
         this.message = tooLarge
           ? `Too large. Max size is ${MAX_SIZE / 1000}Kb`
           : "Only images are allowed";
+        this.selectedFile = "";
       }
+
+      // Preview Image
+      const input = this.$refs.file;
+      const files = input.files;
+      if (files && files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.imageData = e.target.result;
+        };
+        reader.readAsDataURL(files[0]);
+        this.$emit("input", files[0]);
+      }
+    },
+    chooseImage() {
+      this.$refs.file.click();
     },
 
     async sendFile() {

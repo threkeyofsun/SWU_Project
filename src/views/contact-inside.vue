@@ -20,7 +20,7 @@
           <p>jittipat.thepta@g.swu.ac.th</p>
         </div>
          <div class="col-xl-4">
-          <h3>Mr.Wonsathorn Pornpirunroch</h3>
+          <h3>Mr.Wongsathorn Pornpirunroch</h3>
           <h3>Developer</h3>
           <p>wongsatorn.mos@g.swu.ac.th</p>
         </div>

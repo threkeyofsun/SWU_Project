@@ -36,7 +36,7 @@
             <img :src="'/img/' + banner + '.jpeg'" alt="" class="img-fluid" />
           </router-link>
           <div class="carousel-caption d-none d-md-block">
-            <p>{{ announcement.announce[idx] }}</p>
+            <p class="anTitle">{{ announcement.announce[idx] }}</p>
           </div>
         </div>
       </div>
@@ -80,7 +80,7 @@ export default {
        existentialQuestion: 'Am I truly an alligator?',
       announcement: {
         banners: ["photo-989-full", "photo-1032-large", "photo-985-full"],
-        announce: ["register", "/", "about"],
+        announce: ["Announcement form Admin I ", "Announcement form Admin II", "Announcement form Admin III "],
         id: ["Uniform-Term", "Covid-19-situation", "5875sdwe"],
       },
       cover: {
@@ -104,11 +104,21 @@ export default {
   border: 0px;
   opacity: 0.75;
   color: #a53b3b;
+  
 }
 .hp-underline {
   border-bottom: solid 2px cornflowerblue;
 }
-
+.carousel-caption {
+  font-size: xx-large;
+  background: #c0757591;
+  top: 0;
+  bottom: auto;
+  width: 100%;
+  right: 0%;
+  left: 0%;
+  
+}
 img.cover {
   width: 100%;
   height: auto;
@@ -123,6 +133,9 @@ img.cover {
 }
 .fixed-height {
   max-height: 800px;
+}
+.carousel-indicators li{
+  height: 10px;
 }
 
 @media (max-width: 767px) {

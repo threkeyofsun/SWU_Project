@@ -2,7 +2,13 @@
   <!-- Regis------------------------------------------------- -->
   <div class="right-content container-fluid ">
     <div class="regis-part">
-      <form id="regis-form">
+      <form
+        id="regis-form"
+        @submit.prevent="sendFile"
+        action=""
+        method="post"
+        enctype="multipar/form-data"
+      >
         <!-- <font-awesome-icon icon="angle-down"></font-awesome-icon> -->
 
         <input
@@ -40,7 +46,11 @@
         </div>
 
         <div class="row1">
-          <select class=" smallIn d-inline" id="faculty" v-model.trim="user.faculty">
+          <select
+            class=" smallIn d-inline"
+            id="faculty"
+            v-model.trim="user.faculty"
+          >
             <option disabled selected class="faculty-disble" value="0"
               >| Faculty
             </option>
@@ -104,7 +114,8 @@
             class="smallIn"
             type="tel"
             name="tel"
-            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            required
             v-model.trim="tel"
             placeholder="| Phone NUmber"
           />
@@ -144,10 +155,13 @@
         <!-- End of input -->
 
         <div class="mb-5 mb-xl-auto">
-          <button class="login-btn " @click="doSomething(), $router.push('/homepage')" id="login-btn">
-              Register
-            </button>
-          
+          <button
+            class="login-btn "
+            @click="doSomething(), $router.push('/homepage')"
+            id="login-btn"
+          >
+            Register
+          </button>
         </div>
       </form>
     </div>
@@ -168,8 +182,8 @@ export default {
         faculty: "0",
         mojors: "",
         email: "",
-        tel:"",
-        id:"",
+        tel: "",
+        id: "",
         type: "student",
       },
 
@@ -184,11 +198,7 @@ export default {
   margin-bottom: 5px;
 }
 
-
-
 @media only screen and (max-width: 575.98px) {
-  
-
   .option .hr-main {
     width: 135px;
     height: 3px;
