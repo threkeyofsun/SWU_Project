@@ -24,8 +24,11 @@
     <hr />
   </div>
 
+
+  
   <HPfooter />
 </template>
+
 
 <script>
 import HomepageHeader from "../components/HomepageHeader";
@@ -33,7 +36,11 @@ import HPfooter from "../components/homepageFooter";
 
 export default {
   setup() {
-    return { HomepageHeader, HPfooter };
+    return { 
+      HomepageHeader, 
+      HPfooter, 
+      
+    };
   },
 };
 </script>

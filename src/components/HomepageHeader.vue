@@ -7,7 +7,6 @@
       /></a>
     </transition>
   </div>
-
   <transition name="slide-fade">
     <div class="container-fluid responNav" v-if="!isHidden">
       <div class="language-respon d-block">
@@ -53,14 +52,21 @@
           </p>
         </div>
       </div>
-      <hr class="hr-head" />
+      <hr class="hr-headLeft" />
       <router-link to="/user/en60109010501"
         ><p class="profilepage profile-menu text-dark ">
           My Profile
         </p></router-link
       >
       <router-link to="/history"><p class="historypage profile-menu text-dark">History</p></router-link> 
-      <p class="upcomingpage profile-menu text-dark">Upcoming</p>
+      <router-link to="/upcoming"><p class="upcomingpage profile-menu text-dark">Upcoming</p></router-link>
+      <router-link to="/Create_News"><p class="recruite profile-menu text-dark">Activity Recruit</p></router-link>
+      
+      <router-link to="/createnews"><p class="createnews profile-menu text-dark">Create News</p></router-link>
+      <hr class="hr-right">
+      <div class=" profile-menu float-end fw-bold text-danger">
+        <p>Logout</p>
+      </div>
     </div>
   </transition>
   <!-- End of hamburger -->
@@ -168,6 +174,7 @@ hr.hr-header {
   margin-top: -119px;
 }
 
+
 .eng {
   color: #a53b3b;
 }
@@ -232,49 +239,64 @@ img.swu-inside {
 }
 
 .router-link-active.router-link-exact-active.homepage {
-  padding: 0px 97px 0px 56px;
-  margin: -65px;
+  padding: 0% 22% 1% 11%;
+    margin: 0% 0% 0% -9%;
   background-color: #769e94;
   border-radius: 0px 36px 36px 0px;
   color: white !important;
 }
 
 .router-link-active.router-link-exact-active.event {
-  padding: 0px 125px 0px 64px;
-  margin: -65px;
+  padding: 0% 33% 1% 9%;
+    margin: 0% 0% 0% -9%;
   background-color: #769e94;
   border-radius: 0px 36px 36px 0px;
   color: white;
 }
 
 .router-link-active.router-link-exact-active.contact {
-  padding: 0px 97px 0px 56px;
-  margin: -65px;
+  padding: 0% 33% 1% 9%;
+    margin: 0% 0% 0% -9%;
   background-color: #769e94;
   border-radius: 0px 36px 36px 0px;
   color: white !important;
 }
 
 .router-link-active.router-link-exact-active .profilepage {
-  margin: auto 175px 0px 62px;
-  border-radius: 0px 36px 36px 0px;
-  background-color: #b37d83;
-  color: rgb(255, 255, 255) !important;
-  padding: 0px 14px 0px 60px;
+  padding: 0% 9% 0% 13%;
+    margin: 2% 36% 0% 12%;
+    border-radius: 0px 36px 36px 0px;
+    background-color: #b37d83;
+    color: rgb(255, 255, 255) !important;
+  
 }
 .router-link-active.router-link-exact-active .historypage {
-  margin: auto 175px 0px 62px;
-  border-radius: 0px 36px 36px 0px;
-  background-color: #b37d83;
-  color: rgb(255, 255, 255) !important;
-  padding: 0px 14px 0px 60px;
+  padding: 0% 9% 0% 13%;
+    margin: -3% 36% 0% 12%;
+    border-radius: 0px 36px 36px 0px;
+    background-color: #b37d83;
+    color: rgb(255, 255, 255) !important;
 }
 .router-link-active.router-link-exact-active .upcomingpage {
-  margin: auto 175px 0px 62px;
-  border-radius: 0px 36px 36px 0px;
-  background-color: #b37d83;
-  color: rgb(255, 255, 255) !important;
-  padding: 0px 14px 0px 60px;
+  padding: 0% 9% 0% 13%;
+    margin: -3% 36% 0% 12%;
+    border-radius: 0px 36px 36px 0px;
+    background-color: #b37d83;
+    color: rgb(255, 255, 255) !important;
+}
+.router-link-active.router-link-exact-active .recruite {
+  padding: 0% 9% 0% 13%;
+    margin: -3% 36% 0% 12%;
+    border-radius: 0px 36px 36px 0px;
+    background-color: #b37d83;
+    color: rgb(255, 255, 255) !important;
+}
+.router-link-active.router-link-exact-active .createnews {
+  padding: 0% 9% 0% 13%;
+  margin: -3% 36% 5% 12%;
+    border-radius: 0px 36px 36px 0px;
+    background-color: #b37d83;
+    color: rgb(255, 255, 255) !important;
 }
 
 /* Profile */
@@ -341,11 +363,26 @@ img.ham2 {
 
 .hr-head {
   margin: auto auto 10px auto;
-  width: 75%;
+  width: 63%;
   height: 2px;
   background-color: #b0d4cb;
   opacity: 1;
 }
+.hr-headLeft{
+  margin: auto 46px;
+    width: 65%;
+    height: 3px;
+    background-color: #b0d4cb;
+    opacity: 1;
+}
+.hr-right{
+  margin: -4px 0px 0px 31%;
+    width: 63%;
+    height: 3px;
+    background-color: #b0d4cb;
+    opacity: 1;
+}
+
 .respon-menu {
   margin-left: 25%;
   font-size: 4vw;

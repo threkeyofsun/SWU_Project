@@ -1,7 +1,7 @@
 <template>
   <HomepageHeader />
 
-  <div class="row ">
+  <div class="row topspace">
     <Sidebar />
     <!--End of  Sidebar -->
 
@@ -92,12 +92,16 @@ export default {
 </script>
 
 <style scoped>
+  
 /* Upload profile image */
 input.file-input {
   display: none;
 }
 /*  */
 
+.topspace {
+    margin-top: -6%;
+}
 .detail {
   font-family: "THSaraban";
 }
