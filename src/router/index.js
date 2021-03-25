@@ -9,18 +9,57 @@ import event from "../views/Event.vue";
 import AnnoucePage from "../views/Annouce-Post.vue";
 import NewsPage from "../views/News-Post.vue";
 import ActPost from "../views/Activities-Post.vue";
-import Act from "../components/Activity.vue";
-import news from "../components/News.vue";
 import Profile_test from "../views/profile.vue";
 import NewsForm from "../views/NewsForm-dbTest.vue";
 import imageupload from "../views/image-upload.vue";
 import history from "../views/history.vue";
 import upcoming from "../views/upcoming.vue";
 import createnews from "../views/createnews.vue";
+import adminpage from "../views/admin_homepage.vue";
+import createAn from "../views/admin_anounceCreate.vue";
 
+
+// imaport components
+import Act from "../components/Activity.vue";
+import news from "../components/News.vue";
+import participate from "../components/participate.vue";
+
+// import middleware(?)
 import 'bootstrap/dist/css/bootstrap.css';
+// import { Router } from "express";
 
-const routes = [
+
+
+
+ const routes = [
+  // components
+  {
+    path: "/createAn",
+    name: "createAn",
+    component: createAn
+  },
+  {
+    path: "/adminpage",
+    name: "adminpage",
+    component: adminpage
+  },
+  {
+    path: "/News",
+    name: "news",
+    component: news
+  },
+  {
+    path: "/Activity",
+    name: "Act",
+    component: Act
+  },
+  {
+    path: "/participate",
+    name: "participate",
+    component: participate
+  },
+
+  // view page
   {
     path: "/createnews",
     name: "createnews",
@@ -51,16 +90,7 @@ const routes = [
     name: "profile",
     component: Profile_test
   },
-  {
-    path: "/News",
-    name: "news",
-    component: news
-  },
-  {
-    path: "/Activity",
-    name: "Act",
-    component: Act
-  },
+
   {
     path: "/Contact",
     name: "Contact",
@@ -111,14 +141,26 @@ const routes = [
   component: ActPost
 },
 
-
-
-
 ];
+
+// const isLoggedIn = false;
+
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes: routes,
+  linkActiveClass: 'active',
 });
+
+// router.beforeEach((to, from, next) => {
+//   const isLoggedIn = false;
+//   if (isLoggedIn){
+//     next();
+//   }else{
+//     next('/login');
+//   }
+// });
+
+
 
 export default router;

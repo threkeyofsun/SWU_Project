@@ -37,7 +37,7 @@
                     <div v-else>
                       <img
                         class=" profile-img mb-3 "
-                        src="/img/Mask-Group-25.png"
+                        :src="user.profile_img"
                         alt="profile.img"
                       />
                     </div>
@@ -60,18 +60,18 @@
 
         <div class="detail my-4 ml-md-5">
           <h5>
-            Name: &nbsp;&nbsp;&nbsp; {{ user.first_name }}&nbsp; &nbsp;
-            {{ user.last_name }}
+            Name: &nbsp;&nbsp;&nbsp; {{ user.firstname }}&nbsp; &nbsp;
+            {{ user.lastname }}
           </h5>
           <h5 class="d-sm-inline">
             Faculty:&nbsp;&nbsp;&nbsp; {{ user.faculty }}
           </h5>
           <span class="d-sm-inline d-none mx-4"></span>
           <h5 class="d-sm-inline">
-            Major:&nbsp;&nbsp;&nbsp; {{ user.majors }}
+            Major:&nbsp;&nbsp;&nbsp; {{ user.department }}
           </h5>
           <h5>Email: &nbsp;&nbsp;&nbsp; {{ user.email }}</h5>
-          <h5>Phone-Number:&nbsp;&nbsp;&nbsp;{{ user.phone_number }}</h5>
+          <h5>Phone-Number:&nbsp;&nbsp;&nbsp;{{ user.tel_no }}</h5>
           <h5>Status:&nbsp;&nbsp;&nbsp;{{ user.s_type }}</h5>
           <h5>{{ user.s_type }}-Id: {{ user.s_id }}</h5>
         </div>
@@ -133,14 +133,12 @@
               value="submit"
               @click="onUpload"
             >
-              Upload
+              Subscribe
             </button>
           </form>
 
 <p>
 
-
-   {{dipimg.originalName}}
 
 </p>
 
@@ -183,10 +181,10 @@ export default {
       obj:{
        'text-success':true,
       }
-    };
+    };//localhost:4000/users/api/user/en60109010501
   },
   async created() {
-    const result = await axios.get(`/api/user/${this.$route.params.s_id}`);
+    const result = await axios.get(`/users/api/user/${this.$route.params.s_id}`);
     this.user = result.data;
     const result2 = await axios.get('/api/posts/files/Hi1615445287026.png');
     this.dipimg = result2;

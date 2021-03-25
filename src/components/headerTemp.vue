@@ -44,8 +44,8 @@
     <nav class="navbar-area d-none d-md-block">
       <div class="main-menu">
         <ul class="nav-area ">
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/Contact">Contact Us</router-link></li>
+          <li class="mx-4 mx-lg-5"><router-link to="/">Home</router-link></li>
+          <li class="mx-lg-3"><router-link to="/Contact">Contact Us</router-link></li>
         </ul>
       </div>
     </nav>

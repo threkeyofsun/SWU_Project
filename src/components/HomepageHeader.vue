@@ -3,7 +3,7 @@
   <div class="ham d-md-none">
     <transition name="slide">
       <a @click="isHidden = !isHidden" v-if="isHidden"
-        ><img class="ham " src="../image/ham-white.png"
+        ><img class="ham" src="../image/ham-white.png"
       /></a>
     </transition>
   </div>
@@ -20,23 +20,17 @@
         /></a>
       </div>
       <!-- profile -->
-      <div class="badge user-badge fw-light ">
-        <img
-          class=" profile-img  mx-1"
-          v-bind:src="profile.img"
-          alt="profile.img"
-        />
+      <div class="badge user-badge fw-light">
+        <img class="profile-img mx-1" v-bind:src="profile.img" alt="profile.img" />
         <p class="firstname d-inline px-1 align-bottom">Firstname</p>
-        <p class="lastname  d-inline px-1 align-bottom">L.</p>
+        <p class="lastname d-inline px-1 align-bottom">L.</p>
       </div>
 
       <hr class="hr-head" />
-      <div class="align-self-center ">
+      <div class="align-self-center">
         <div>
           <p class="respon-menu mt-2">
-            <router-link class="homepage" to="/Homepage">
-              Homepage
-            </router-link>
+            <router-link class="homepage" to="/Homepage"> Homepage </router-link>
           </p>
         </div>
         <div>
@@ -46,26 +40,30 @@
         </div>
         <div>
           <p class="respon-menu mt-2">
-            <router-link class="contact" to="/ContactInside"
-              >Contact Us</router-link
-            >
+            <router-link class="contact" to="/ContactInside">Contact Us</router-link>
           </p>
         </div>
       </div>
       <hr class="hr-headLeft" />
       <router-link to="/user/en60109010501"
-        ><p class="profilepage profile-menu text-dark ">
-          My Profile
-        </p></router-link
+        ><p class="profilepage profile-menu text-dark">My Profile</p></router-link
       >
-      <router-link to="/history"><p class="historypage profile-menu text-dark">History</p></router-link> 
-      <router-link to="/upcoming"><p class="upcomingpage profile-menu text-dark">Upcoming</p></router-link>
-      <router-link to="/Create_News"><p class="recruite profile-menu text-dark">Activity Recruit</p></router-link>
-      
-      <router-link to="/createnews"><p class="createnews profile-menu text-dark">Create News</p></router-link>
-      <hr class="hr-right">
-      <div class=" profile-menu float-end fw-bold text-danger">
-        <p>Logout</p>
+      <router-link to="/history"
+        ><p class="historypage profile-menu text-dark">History</p></router-link
+      >
+      <router-link to="/upcoming"
+        ><p class="upcomingpage profile-menu text-dark">Upcoming</p></router-link
+      >
+      <router-link to="/Create_News"
+        ><p class="recruite profile-menu text-dark">Activity Recruit</p></router-link
+      >
+
+      <router-link to="/createnews"
+        ><p class="createnews profile-menu text-dark">Create News</p></router-link
+      >
+      <hr class="hr-right" />
+      <div class="profile-menu float-end fw-bold ">
+        <router-link to="/"><p class="text-danger">Logout</p></router-link>
       </div>
     </div>
   </transition>
@@ -75,12 +73,16 @@
     <div class="container-fluid mx-0">
       <div class="row headerrow">
         <div class="col-5">
-          <nav class="navigation ">
+          <nav class="navigation">
             <div class="menu">
-              <ul class="nav-area mt-lg-5">
-                <li><router-link to="/homepage">Homepage</router-link></li>
-                <li><router-link to="/event">Event</router-link></li>
-                <li><router-link to="/ContactInside">Contact</router-link></li>
+              <ul class="nav-area mt-md-5">
+                <li class="px-lg-3 px-0">
+                  <router-link to="/homepage">Homepage</router-link>
+                </li>
+                <li class=""><router-link to="/event">Event</router-link></li>
+                <li class="px-lg-3 px-0">
+                  <router-link to="/ContactInside">Contact</router-link>
+                </li>
               </ul>
             </div>
           </nav>
@@ -91,18 +93,18 @@
             <img class="swu-inside" src="../image/logo-inside.png" />
           </div>
         </div>
-        <div class="col-3">
-          <div class="profile d-flex flex-wrap justify-content-end ">
+        <div class="col-4 col-lg-4 profile">
+          <div class="profile-1 d-flex flex-wrap justify-content-center">
             <img
-              class="img-fluid profile-img  "
+              class="img-fluid profile-img"
               v-bind:src="profile.img"
               alt="profile.img"
             />
-            <div class="username px-3 mt-3">
-              <p class="firstname d-inline ">Firstname</p>
-              <p class="lastname  d-inline px-3">L.</p>
+            <div class="username px-3 ">
+              <p class="firstname d-inline">Firstname</p>
+              <p class="lastname d-inline px-3">L.</p>
               <i
-                class="arrow-down dropdown-toggle "
+                class="arrow-down dropdown-toggle"
                 role="button"
                 data-bs-toggle="dropdown"
               ></i>
@@ -121,7 +123,7 @@
             </div>
           </div>
         </div>
-        <div class="col-2">
+        <div class="col-1 col-lg-1">
           <div class="language-menu mt-lg-5 text-center">
             <ul class="lan-area">
               <router-link to="/Home"><li>TH</li></router-link>
@@ -152,8 +154,7 @@ export default {
       },
 
       profile: {
-        img:
-          "https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg",
+        img: "https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg",
       },
     };
   },
@@ -174,7 +175,6 @@ hr.hr-header {
   margin-top: -119px;
 }
 
-
 .eng {
   color: #a53b3b;
 }
@@ -182,7 +182,8 @@ hr.hr-header {
 .navbar-area,
 .language-menu {
   font-family: "Srinakharin";
-  margin-top: 0px;
+  margin-top: 15%;
+  font-size: 1vw;
 }
 
 .nav-area li a {
@@ -199,19 +200,18 @@ img.swu-inside {
 }
 
 /* profile --------------------------------------------------------*/
-.profile {
-  margin-top: 34px;
+.profile{
+  margin-top: 3%
 }
-
 .profile-img {
   border-radius: 50%;
-  width: 70px;
-  height: 70px;
+  width: 6vh;
+  height: 6vh;
 }
 .username {
-  align-self: center;
-  font-family: THSaraban;
-  font-size: 22px;
+    font-family: THSaraban;
+    font-size: x-large;
+    align-self: center;
 }
 .arrow {
   border: solid black;
@@ -240,7 +240,7 @@ img.swu-inside {
 
 .router-link-active.router-link-exact-active.homepage {
   padding: 0% 22% 1% 11%;
-    margin: 0% 0% 0% -9%;
+  margin: 0% 0% 0% -9%;
   background-color: #769e94;
   border-radius: 0px 36px 36px 0px;
   color: white !important;
@@ -248,7 +248,7 @@ img.swu-inside {
 
 .router-link-active.router-link-exact-active.event {
   padding: 0% 33% 1% 9%;
-    margin: 0% 0% 0% -9%;
+  margin: 0% 0% 0% -9%;
   background-color: #769e94;
   border-radius: 0px 36px 36px 0px;
   color: white;
@@ -256,7 +256,7 @@ img.swu-inside {
 
 .router-link-active.router-link-exact-active.contact {
   padding: 0% 33% 1% 9%;
-    margin: 0% 0% 0% -9%;
+  margin: 0% 0% 0% -9%;
   background-color: #769e94;
   border-radius: 0px 36px 36px 0px;
   color: white !important;
@@ -264,39 +264,38 @@ img.swu-inside {
 
 .router-link-active.router-link-exact-active .profilepage {
   padding: 0% 9% 0% 13%;
-    margin: 2% 36% 0% 12%;
-    border-radius: 0px 36px 36px 0px;
-    background-color: #b37d83;
-    color: rgb(255, 255, 255) !important;
-  
+  margin: 2% 36% 0% 12%;
+  border-radius: 0px 36px 36px 0px;
+  background-color: #b37d83;
+  color: rgb(255, 255, 255) !important;
 }
 .router-link-active.router-link-exact-active .historypage {
   padding: 0% 9% 0% 13%;
-    margin: -3% 36% 0% 12%;
-    border-radius: 0px 36px 36px 0px;
-    background-color: #b37d83;
-    color: rgb(255, 255, 255) !important;
+  margin: -3% 36% 0% 12%;
+  border-radius: 0px 36px 36px 0px;
+  background-color: #b37d83;
+  color: rgb(255, 255, 255) !important;
 }
 .router-link-active.router-link-exact-active .upcomingpage {
   padding: 0% 9% 0% 13%;
-    margin: -3% 36% 0% 12%;
-    border-radius: 0px 36px 36px 0px;
-    background-color: #b37d83;
-    color: rgb(255, 255, 255) !important;
+  margin: -3% 36% 0% 12%;
+  border-radius: 0px 36px 36px 0px;
+  background-color: #b37d83;
+  color: rgb(255, 255, 255) !important;
 }
 .router-link-active.router-link-exact-active .recruite {
   padding: 0% 9% 0% 13%;
-    margin: -3% 36% 0% 12%;
-    border-radius: 0px 36px 36px 0px;
-    background-color: #b37d83;
-    color: rgb(255, 255, 255) !important;
+  margin: -3% 36% 0% 12%;
+  border-radius: 0px 36px 36px 0px;
+  background-color: #b37d83;
+  color: rgb(255, 255, 255) !important;
 }
 .router-link-active.router-link-exact-active .createnews {
   padding: 0% 9% 0% 13%;
   margin: -3% 36% 5% 12%;
-    border-radius: 0px 36px 36px 0px;
-    background-color: #b37d83;
-    color: rgb(255, 255, 255) !important;
+  border-radius: 0px 36px 36px 0px;
+  background-color: #b37d83;
+  color: rgb(255, 255, 255) !important;
 }
 
 /* Profile */
@@ -340,12 +339,12 @@ img.swu-inside {
   background-size: 462px 574px;
   color: #636468;
   z-index: 9999;
-  max-height: 690px;
+  max-height: 100%;
 }
 
 .language-respon {
   font-family: "Srinakharinwirot";
-  padding-top: 39px;
+  padding-top: 4%;
   font-size: 3vw;
 }
 
@@ -368,19 +367,19 @@ img.ham2 {
   background-color: #b0d4cb;
   opacity: 1;
 }
-.hr-headLeft{
+.hr-headLeft {
   margin: auto 46px;
-    width: 65%;
-    height: 3px;
-    background-color: #b0d4cb;
-    opacity: 1;
+  width: 65%;
+  height: 3px;
+  background-color: #b0d4cb;
+  opacity: 1;
 }
-.hr-right{
+.hr-right {
   margin: -4px 0px 0px 31%;
-    width: 63%;
-    height: 3px;
-    background-color: #b0d4cb;
-    opacity: 1;
+  width: 63%;
+  height: 3px;
+  background-color: #b0d4cb;
+  opacity: 1;
 }
 
 .respon-menu {
@@ -388,7 +387,7 @@ img.ham2 {
   font-size: 4vw;
   font-family: "Srinakharinwirot";
 }
- a {
+a {
   text-decoration: none;
 }
 
@@ -400,8 +399,14 @@ img.ham2 {
   margin-top: 3%;
 }
 
+@media only screen and (max-width: 1400px) and (min-width: 766px) {
+  .username {
+    font-size: medium;
+  }
+}
+
 /* End Responsive Nav */
-@media (max-width: 767px) {
+@media only screen and (max-width: 767px) and (min-width: 320px) {
   img.cover {
     margin-top: -31px;
   }

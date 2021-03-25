@@ -3,7 +3,7 @@
 
   <div class="about-content container-fluid">
     <div class="row">
-      <div class="col d-none d-md-block ">
+      <div class="col d-none d-xl-block ">
         <div class="left-content">
           <img
             src="../image/activity-image.png"
@@ -46,7 +46,9 @@ export default {
     reg,
   },
   data() {
-    return {};
+    return {
+     
+    };
   },
 };
 </script>

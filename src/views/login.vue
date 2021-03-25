@@ -3,7 +3,7 @@
 
   <div class="about-content container-fluid">
     <div class="row">
-      <div class="col d-none d-md-block ">
+      <div class="col d-none d-xl-block">
         <div class="left-content">
           <img
             src="../image/activity-image.png"
@@ -20,13 +20,12 @@
             <h2><router-link to="/">Login</router-link></h2>
             <hr class="hr-main" />
           </div>
-          <div class="tap-register ">
+          <div class="tap-register">
             <h2><router-link to="/register">Register</router-link></h2>
             <hr class="hr-main1" />
           </div>
         </div>
 
-    
         <log />
       </div>
     </div>
@@ -58,6 +57,7 @@ export default {
 <style scoped>
 .tap-register h2 a {
   color: #6364686e;
+ 
 }
 .option .hr-main1 {
   background-color: #79b6a78a;
@@ -84,6 +84,7 @@ hr.hr-main {
     background-color: #79b6a78a;
   }
 }
+
 </style>
 
 <style>

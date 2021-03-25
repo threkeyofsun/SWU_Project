@@ -1,29 +1,33 @@
 <template>
-  <div class="col-3 d-none d-md-block ">
+  <div class="col-3 d-none d-md-block">
     <section class="sidebar ml-5">
       <router-link class="menuItem-active-link" to="/user/en60109010501"
-        ><p class="mb-0">
-          Profile
-        </p></router-link
+        ><p class="mb-0">Profile</p></router-link
       >
 
       <hr />
       <p>My Activities</p>
       <hr />
       <div class="MAlink">
-        <p><router-link to="/history" class="menuItem-active-link1"> History</router-link></p>
+        <p>
+          <router-link to="/history" class="menuItem-active-link1"> History</router-link>
+        </p>
         <p><router-link to="/upcoming" class="upcoming"> Upcoming</router-link></p>
       </div>
       <hr />
       <p>Create Your Event</p>
       <hr />
-      <div class="MAlink">
-        <p><router-link to="/Create_News" class="upcoming"> Activity Recruit</router-link></p>
-        <p><router-link to="/createnews" class="createnews"> Create News post</router-link></p>
+      <div class="MAlink mx-0 ms-0 ms-xl-5">
+        <p>
+          <router-link to="/Create_News" class="upcoming"> Activity Recruit</router-link>
+        </p>
+        <p>
+          <router-link to="/createnews" class="createnews"> Create News post</router-link>
+        </p>
       </div>
       <hr />
       <div class="float-end fw-bold text-danger">
-        <p>Logout</p>
+        <router-link to="/"><p>Logout</p></router-link>
       </div>
     </section>
     <span class="d-inline"></span>
@@ -32,17 +36,10 @@
 
 <script>
 export default {
-  props: ["text"],
   data() {
-    return {
-      color: "red",
-      clickedColor: "",
-      alteredState: false,
-    };
+    return {};
   },
-  methods: {
-  
-  },
+  methods: {},
 };
 </script>
 
@@ -63,7 +60,10 @@ input.file-input {
   border-bottom: 3px solid #f1bbbb;
   color: #ff9f48;
 }
-.menuItem-active-link, .menuItem-active-link1, .upcoming, .createnews{
+.menuItem-active-link,
+.menuItem-active-link1,
+.upcoming,
+.createnews {
   display: -webkit-box;
   border-bottom: 3px solid #ffffff;
 }
@@ -83,7 +83,7 @@ input.file-input {
 .sidebar {
   font-family: "THSaraban";
   margin: 35% 0% 0% 30%;
-  font-size: 3vh;
+  font-size: large;
 }
 .MAlink {
   margin-left: 25%;

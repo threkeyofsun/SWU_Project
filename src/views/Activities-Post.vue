@@ -2,29 +2,70 @@
   <HomepageHeader />
 
   <div class="container">
-    <p class="mt-5 mb-4 anounce-title">Activity Title</p>
+    <p class="mt-3 mb-4 anounce-title text-center text-md-start">Activity Title</p>
     <div class="posting">
       <div class="badge user-badge">
-        <img
-          class=" profile-img  "
-          src="/img/Mask-Group-25.png"
-          alt="profile.img"
-        />
-        <p class="firstname d-inline px-2 ">Firstname</p>
-        <p class="lastname  d-inline px-1">L.</p>
-        <p class="time-badge">Jan 7, 2021</p>
+        <img class="profile-img" src="/img/Mask-Group-25.png" alt="profile.img" />
+        <p class="firstname d-inline px-2">Firstname</p>
+        <p class="lastname d-inline px-1">L.</p>
+        <p class="time-badge">Jan 7, 2020</p>
       </div>
     </div>
     <hr />
     <!-- Detail -->
-    <div class="detail my-4">
-        <h3 class="start-date text-danger">Start Date: <span class="text-dark">May 12, 2021</span> </h3>
-        <h3 class="start-date text-danger">At Place: <span class="text-dark">Ongkharak Campus, Faculty of Engineering, 601 H-Building </span> </h3>
-      <p>Activity Details</p>
 
-      <button type="button" class="apply-btn">APPLY</button>
+    <p>Applicant Qualification</p>
+    <div class="detail my-2">
+      <div class="qualification">
+        <div class="d-sm-inline">
+          <p class="qa d-inline">Applicant Number :</p>
+          <p class="mx-3 d-inline">20</p>
+        </div>
+        <div class="d-sm-inline">
+          <p class="qa d-inline">Student Year :</p>
+          <p class="mx-3 d-inline">1 - 4</p>
+        </div>
+        <div class="">
+          <p class="qa d-inline">At Place :</p>
+          <p class="mx-3 d-inline">
+            Building G, Srinakharinwirot University Ongkharak Campus
+          </p>
+        </div>
+        <div class="d-inline">
+          <p class="qa d-inline">Start Date :</p>
+          <p class="mx-3 d-inline">
+            May 12, 2021 <span class="fw-bolder mx-1">At</span> 07.30
+          </p>
+        </div>
+        <div class="d-inline">
+          <p class="qa d-inline">End Date :</p>
+          <p class="mx-3 d-inline">
+            May 12, 2021 <span class="fw-bolder mx-1">At</span> 19.30
+          </p>
+        </div>
+      </div>
     </div>
     <hr />
+    <p class="py-0 my-0">Attivity Description</p>
+    <p class="lorem">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lorem Ipsum is simply dummy text of
+      the printing and typesetting industry. Lorem Ipsum has been the industry's standard
+      dummy text ever since the 1500s, when an unknown printer took a galley of type and
+      scrambled it to make a type specimen book. It has survived not only five centuries,
+      but also the leap into electronic typesetting, remaining essentially unchanged. It
+      was popularised in the 1960s with the release of Letraset sheets containing Lorem
+      Ipsum passages, and more recently with desktop publishing software like Aldus
+      PageMaker including versions of Lorem Ipsum
+    </p>
+    <button type="" class="cust-btn">
+      <div class="btn draw-border">Apply HERE</div>
+    </button>
+    <hr />
+
+    <div class="mb-5">
+      <img class="img-act" src="/img/whale.jpg" alt="..." />
+      <img class="img-act" src="/img/3505624.png" />
+    </div>
   </div>
 
   <HPfooter />
@@ -36,12 +77,44 @@ import HPfooter from "../components/homepageFooter";
 
 export default {
   setup() {
-    return { HomepageHeader, HPfooter };
+    return {
+      HomepageHeader,
+      HPfooter,
+    };
   },
 };
 </script>
 
 <style scoped>
+/* Start QA */
+.cust-btn {
+  box-shadow: none;
+    border: none;
+    padding: 6px 12px;
+    display: block;
+    background: white;
+    width: 100%;
+}
+button:focus {
+  outline: 0;
+}
+.detail {
+  font-family: "THSaraban";
+}
+.qualification .qa {
+  font-family: "THSaraban";
+  font-size: large;
+}
+
+/* End of QA */
+.img-act {
+  width: 100%;
+  object-fit: cover;
+  padding: 2% 0%;
+}
+.lorem {
+  font-family: "THSaraban";
+}
 .container {
   max-width: 680px;
   width: 100%;
@@ -72,25 +145,6 @@ export default {
 .anounce-title {
   font-size: 26px;
 }
-.detail{
-    font-family: "THSaraban";
-    font-size: 24px;
-}
-
-
-.apply-btn{
-        border: 0px;
-    
-background-color: #118ab2;
-    background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%);
-    color: white;
-    font-size: 28px;
-    border-radius: 18px;
-    padding: 4px 8px 0px 16px;
-    font-weight: 700;
-    text-align: center;
-    letter-spacing: 16px;
-}
 
 @media screen and (max-width: 551.98) {
   container {
@@ -114,5 +168,100 @@ background-color: #118ab2;
   container {
     margin: 0 64px;
   }
+}
+</style>
+
+<style lang="scss" scoped>
+//=== Drawing effect
+
+@mixin btn-border-drawing(
+  $color: #ccc,
+  $hover: black,
+  $width: 2px,
+  $vertical: top,
+  $horizontal: left,
+  $duration: 0.25s
+) {
+  box-shadow: inset 0 0 0 $width $color;
+  color: $color;
+  transition: color $duration $duration/3;
+  position: relative;
+
+  &::before,
+  &::after {
+    border: 0 solid transparent;
+    box-sizing: border-box;
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+
+    #{$vertical}: 0;
+    #{$horizontal}: 0;
+  }
+
+  &::before {
+    $h-side: if($horizontal == "left", "right", "left");
+
+    border-#{$vertical}-width: $width;
+    border-#{$h-side}-width: $width;
+  }
+
+  &::after {
+    $v-side: if($vertical == "top", "bottom", "top");
+
+    border-#{$v-side}-width: $width;
+    border-#{$horizontal}-width: $width;
+  }
+
+  &:hover {
+    color: $hover;
+
+    &::before,
+    &::after {
+      border-color: $hover;
+      transition: border-color 0s, width $duration, height $duration;
+      width: 100%;
+      height: 100%;
+    }
+
+    &::before {
+      transition-delay: 0s, 0s, $duration;
+    }
+
+    &::after {
+      transition-delay: 0s, $duration, 0s;
+    }
+  }
+}
+.draw-border {
+  @include btn-border-drawing(#58afd1, #ffe593, 4px, bottom, right);
+}
+.draw-border {
+  width: 100%;
+}
+
+//=== Button styling, semi-ignore
+.btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1.5;
+  font: 700 1.3rem "THSaraban";
+  padding: 0.3em 3%;
+  letter-spacing: 0.05rem;
+
+  &:focus {
+  }
+}
+
+//=== Pen styling, ignore
+body {
+  background: #1f1a25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 </style>

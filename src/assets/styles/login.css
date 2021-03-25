@@ -6,9 +6,11 @@ body {
   padding: 0;
   overflow-x: hidden;
 }
+
 a:nth-child(1) {
   color: #636468;
   text-decoration: none;
+
 }
 a:nth-child(1):hover {
   text-decoration: none;
@@ -33,13 +35,19 @@ a:nth-child(1):hover {
 /* Have to make it responsive! */
 .nav-area li {
   display: inline-block;
-  padding: 0px 50px;
+  
 }
 .lan-area * {
   display: inline-block;
   padding: 0px 2px;
 }
-
+.nav-area.mt-md-5 li {
+display: inline-block;
+padding: 0px 7%;
+}
+ul.nav-area.mt-md-5 {
+text-align-last: center;
+}
 .swu-logo {
   width: 300px;
   height: 100px;
@@ -62,7 +70,7 @@ a:nth-child(1):hover {
   color: #636468;
 }
 .option div {
-  margin: 12px 58px 20px 66px;
+  margin: 12px 47px 20px 66px;
   display: inline-block;
 }
 .option hr {
@@ -193,65 +201,29 @@ select {
   margin-top: 40px;
 }
 
-/* 
-@media (min-width: 878px) and (max-width: 1100px) {
-  .right-content h2 {
-    font-size: 40px;
-    margin: 0px 53px 0px 54px;
-  }
-  button#login-btn {
-    margin-right: 0%;
-    float: none;
-  }
-  .option {
-    margin-bottom: 35px;
-  }
-  #login-form input {
-    width: 384px;
-    height: 44px;
-    margin-bottom: 36px;
-  }
-  .option hr {
-    width: 100px;
-  }
-}
-
-@media (min-width: 767.97px) and (max-width: 877px) {
-
-  .option {
-    margin-bottom: 35px;
-  }
-  #login-form input {
-    margin-bottom: 18px;
-  }
-
-  @media (min-width: 576px) and (max-width: 767.98px) {
-    .footer {
-      padding: 200px 0px;
-      margin-top: -92px;
-      background-image: linear-gradient(#abb1bd, #cfcfcf);
-    }
-    #login-form input {
-      margin: 37px 0px 19px 0px;
-    }
-    .option {
-      margin: 85px 0px 12px 0px;
-    }
-    button#login-btn {
-      margin-top: 40px;
-    }
-    .swu-logo {
-      margin-top: 80px;
-    }
-
-  } */
-
-/* Register Left image */
 @media only screen and (max-width: 1600px) and (min-width: 1200px) {
   img.img-fluid.leftimage {
     height: 600px;
   }
 }
+@media only screen and (max-width: 1400px) and (min-width: 766px) {
+  .col-4.col-lg-4.profile {
+    
+    padding: 0
+}
+.profile-1 {
+  margin-left: 37%;
+} 
+ ul.lan-area {
+    padding: 0;
+    margin-left: -31%;
+}
+
+
+}
+
+
+
 
 /* XS for Mobile */
 @media only screen and (max-width: 575.98px) {
@@ -263,8 +235,8 @@ select {
     margin-top: -2px;
   }
   .right-content {
-    margin-top: 85px;
-  }
+    margin-top: 30px;
+}
   .option h2 {
     font-family: "THSaraban";
     font-size: 40px;
@@ -293,23 +265,44 @@ select {
     display: block;
     
   }
-  .smallIn,
-  select,
-  .largeIn {
-    width: 327px;
-    margin: 23px 0px;
-  }
+ 
   select#faculty {
     margin: 0px;
   }
   .checkB {
     margin: auto;
   }
+  
 }
 
-@media only screen and (max-width: 422px) {
+@media only screen and (max-width: 422px) and (min-width: 320px) {
   #login-form input {
     width: 300px;
     height: 45px;
   }
 }
+/*  .smallIn,
+  select,
+  .largeIn {
+    width: 327px;
+    margin: 23px 0px;
+  } */
+  @media only screen and (max-width: 575.98px) and (min-width: 400px) {
+  .smallIn,
+  select,
+  .largeIn {
+    width: 327px;
+    margin: 23px 0px;
+  }
+  .right-content{
+    margin-top: 0px;
+  }
+  }
+  @media only screen and (max-width: 401px) {
+    .smallIn,
+    select,
+    .largeIn {
+      width: 100%;
+      margin: 23px 0px;
+    }
+  }

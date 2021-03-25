@@ -35,7 +35,7 @@
           <router-link :to="'/homepage/annoucement/' + announcement.id[idx]">
             <img :src="'/img/' + banner + '.jpeg'" alt="" class="img-fluid" />
           </router-link>
-          <div class="carousel-caption d-none d-md-block">
+          <div class="carousel-caption">
             <p class="anTitle">{{ announcement.announce[idx] }}</p>
           </div>
         </div>
@@ -117,7 +117,6 @@ export default {
   width: 100%;
   right: 0%;
   left: 0%;
-  
 }
 img.cover {
   width: 100%;
@@ -136,11 +135,23 @@ img.cover {
 }
 .carousel-indicators li{
   height: 10px;
+  border-bottom: 0;
 }
-
+@media (max-width: 1200px) {
+  .carousel-caption {
+  font-size: x-large;
+}
+}
 @media (max-width: 767px) {
   img.cover {
     margin-top: -31px;
   }
+  .carousel-caption {
+  font-size: unset;
+  padding: 3%;
+}
+p.anTitle {
+    margin: 0;
+}
 }
 </style>

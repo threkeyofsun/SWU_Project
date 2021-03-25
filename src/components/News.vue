@@ -3,9 +3,9 @@
 
   <section class="event-content">
     <div class="container">
-      <div class="header-text mt-5 mb-sm-5 px-sm-4 text-center text-lg-start">
-        <router-link to="/event"><p class="fs-3 d-inline mx-4" >Activity</p></router-link>
-        <p class="fs-3 d-inline mx-4 text-decoration-none text-danger" @click="$router.push('/news')">News</p>
+      <div class="header-text  mt-5 mt-md-0 mb-4 mb-sm-3 ps-1 ps-lg-3 px-xl-0 px-xxl-4 text-center text-lg-start">
+        <router-link to="/event"><p class="fs-3 d-inline  mx-4 mx-xl-0  " >Activity</p></router-link>
+        <p class="fs-3 d-inline mx-4 ps-1 text-decoration-none textheader" @click="$router.push('/news')">News</p>
       </div>
 
   <div class="postloop ">
@@ -119,6 +119,9 @@ export default {
 </script>
 
 <style scoped>
+   .textheader{
+    color: #e9a1a1;
+  }
 .header-text {
   font-family: "Srinakharinwirot";
 }
