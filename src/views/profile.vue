@@ -181,13 +181,11 @@ export default {
       obj:{
        'text-success':true,
       }
-    };//localhost:4000/users/api/user/en60109010501
+    };
   },
   async created() {
     const result = await axios.get(`/users/api/user/${this.$route.params.s_id}`);
     this.user = result.data;
-    const result2 = await axios.get('/api/posts/files/Hi1615445287026.png');
-    this.dipimg = result2;
   },
   methods: {},
   computed: {

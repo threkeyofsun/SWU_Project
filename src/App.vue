@@ -3,6 +3,12 @@
     
 </template>
 
+<script>
+export default {
+
+}
+</script>
+
 <style scoped>
 /* Style is starting here --------------------> */
 @import url("https://fonts.googleapis.com/css2?family=Merienda&display=swap");

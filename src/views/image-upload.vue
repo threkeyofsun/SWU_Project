@@ -76,7 +76,7 @@
 
   <!-- Multiple Upload ---------------------------------------------------------->
   <form
-    @submit.prevent="sendFiles"
+    v-on:submit.prevent="submitForm"
     action=""
     method="post"
     enctype="multipar/form-data"
@@ -136,7 +136,7 @@
       class="btn btn-info mx-5 my-5"
       type="submit"
       value="submit"
-      @click="onUpload"
+     
     >
       Send
     </button>
@@ -201,7 +201,7 @@ export default {
   },
   methods: {
     // Dropzone
-    async senddropzoneFiles() {
+    async submitForm() {
       const dropzonefile = this.$refs.drop.files[0];
       const fdt = new FormData();
 

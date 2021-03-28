@@ -4,8 +4,8 @@
     <div class="regis-part">
       <form
         id="regis-form"
-        @submit.prevent="sendFile"
         action=""
+        @submit.prevent="sendFile"
         method="post"
         enctype="multipar/form-data"
       >
@@ -24,7 +24,6 @@
           name="password"
           v-model.trim="user.password"
           required
-          
           placeholder="| Password"
         />
         <div class="text-danger" v-if="user.passwordError">{{ user.passwordError }}</div>
@@ -34,10 +33,10 @@
           <input
             class="smallIn"
             type="text"
-            name="Firt-Name"
+            name="First-Name"
             v-model.trim="user.firstname"
             required
-            placeholder="| Firt-Name"
+            placeholder="| First-Name"
           />
 
           <input
@@ -51,7 +50,12 @@
         </div>
 
         <div class="row1">
-          <select class="smallIn d-inline" id="faculty" v-model.trim="user.faculty" required>
+          <select
+            class="smallIn d-inline"
+            id="faculty"
+            v-model.trim="user.faculty"
+            required
+          >
             <option disabled selected class="faculty-disble" value="0">| Faculty</option>
 
             <option value="CCI">College of Creative Industry</option>
@@ -86,7 +90,7 @@
             class="smallIn"
             type="text"
             name="Majors"
-            v-model.trim="user.majors"
+            v-model.trim="user.department"
             required
             placeholder="| Majors"
           />
@@ -106,7 +110,7 @@
             type="text"
             name="tel"
             required
-            v-model="user.tel"  
+            v-model="user.tel_no"
             @input="acceptNumber"
             placeholder="| Phone NUmber"
           />
@@ -150,13 +154,7 @@
 
         <div class="mb-5 mb-xl-auto">
           <!-- @click="doSomething(), $router.push('/homepage')" -->
-          <button
-            class="login-btn"
-           
-            id="login-btn"
-          >
-            Register
-          </button>
+          <button class="login-btn"  id="login-btn">Register</button>
         </div>
       </form>
     </div>
@@ -164,15 +162,16 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "reg",
   components: {},
   data() {
     return {
+      uploadInfo: [],
       user: {
         username: "",
         password: "",
-        
         firstname: "",
         lastname: "",
         faculty: "0",
@@ -180,37 +179,86 @@ export default {
         email: "",
         tel_no: "",
         id: "",
-        type: "student",
-        passwordError: ""
-      },
-
+        type: "",
+        passwordError: "",
+      },  
+      message:'',
+      showSuccessMessage: false,
+      error: false,
       typeOfTask: null, // 1 = recurring, 2 = scheduled
     };
   },
   methods: {
+    doSomething() {
+      alert("Registeration successfully");
+    },
     acceptNumber() {
-      var x = this.user.tel.replace(/\D/g, "").match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-      this.user.tel = !x[2] ? x[1] : "(" + x[1] + ") " + x[2] + (x[3] ? "-" + x[3] : "");
+      var x = this.user.tel_no.replace(/\D/g, "").match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+      this.user.tel_no = !x[2]
+        ? x[1]
+        : "(" + x[1] + ") " + x[2] + (x[3] ? "-" + x[3] : "");
     },
-    sendFile() {
-      this.user.passwordError = this.user.password.length > 7 ? 
-        '' : 'Password must be at least 8 chars long'    
+    password() {
+      this.user.passwordError =
+        this.user.password.length > 7 ? "" : "Password must be at least 8 chars long";
     },
-    addToAPI(){
-      let newUser = {
-        username: this.username,
-        password: this.password,
-        firstname: this.firstname,
-        lastname: this.lastname,
-        faculty: this.faculty,
-        department: this.department,
-        tel_no: this.tel_no,
-        s_id: this.id,
-        
-
+    // async addToCart() {
+    //     const res = await axios.post('/users/api/user', {
+    //       username: this.user.username,
+    //       password: this.user.password,
+    //       firstname_en: this.user.firstname,
+    //       lastname_en: this.user.lastname,
+    //       faculty: this.user.faculty,
+    //       department: this.user.department,
+    //       tel_no: this.user.tel_no,
+    //       s_id: this.user.id,
+    //       s_type: this.user.type,
+    //       email: this.user.email,
+    //     });
+    //     console.log(res);
+    //     this.showSuccessMessage = true;
+    //     setTimeout(() => {
+    //       this.$router.push('/');
+    //     }, 1500);
+    //   },
+    async sendFile() {
+      try {
+        const response = await axios.post("/users/api/register", {
+          username: this.user.username,
+          password: this.user.password,
+          firstname: this.user.firstname,
+          lastname: this.user.lastname,
+          faculty: this.user.faculty,
+          department: this.user.department,
+          tel_no: this.user.tel_no,
+          s_id: this.user.id,
+          s_type: this.user.type,
+          email: this.user.email,
+        });
+       
+        console.log(response);
+        this.showSuccessMessage = true;
+        alert(response.data);
+        this.user.username = '',
+        this.user.password = '',
+        this.user.firstname = '',
+        this.user.lastname = '',
+        this.user.faculty = '0',
+        this.user.department = '',
+        this.user.tel_no = '',
+        this.user.id = '',
+        this.user.type = '',
+        this.user.email = ''
+        // this.$router.push({name:'login'})
+  
+      } catch (err) {
+        this.error = true;
+        alert(err.response.data.error_message);
+        console.log(err.response.data.error_message)
       }
-      console.log(newUser);
-    }
+      
+    },
+
   },
 };
 </script>
