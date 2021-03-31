@@ -8,9 +8,7 @@
           >
         </li>
         <span class="co-12 mt-3 mt-lg-0 col-lg-6 text-end-lg butn">
-          <button type="" class="btn btn-info text-white mx-1 mb-3">Approve</button>
-          <button type="" class="btn btn-danger mx-1 mb-3">Delete</button>
-          <button type="" class="btn btn-secondary mx-1 mb-3">Not Approve</button>
+          <button type="" class="btn btn-secondary mx-1 mb-3" style="width: 40%;">Edit</button>
         </span>
       </div>
       <hr />
@@ -27,17 +25,16 @@
           >
         </li>
         <span class="co-12 mt-3 mt-lg-0 col-lg-6 text-end-lg butn">
-          <button type="" class="btn btn-info text-white mx-1 mb-3">Approve</button>
-          <button type="" class="btn btn-danger mx-1 mb-3">Delete</button>
-          <button type="" class="btn btn-secondary mx-1 mb-3">Not Approve</button>
+          <button type="" class="btn btn-secondary mx-1 mb-3">Edit</button>
         </span>
       </div>
       <hr />
     </div>
     <!--  -->
     <div>
-      <button class="btn draw-border mt-3 mb-3 align-center">Add Announcement</button>
+      <router-link to="/createAn"><button class="btn draw-border mt-3 mb-3 align-center">Add Announcement</button></router-link>
     </div>
+    
   </div>
 </template>
 

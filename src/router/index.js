@@ -17,6 +17,8 @@ import upcoming from "../views/upcoming.vue";
 import createnews from "../views/createnews.vue";
 import adminpage from "../views/admin_homepage.vue";
 import createAn from "../views/admin_anounceCreate.vue";
+import NotFound from "../views/NotFound.vue";
+
 
 
 // imaport components
@@ -86,7 +88,7 @@ import 'bootstrap/dist/css/bootstrap.css';
     component: NewsForm
   },
   {
-    path: "/user/:s_id",
+    path: "/user/myProfile",
     name: "profile",
     component: Profile_test
   },
@@ -107,7 +109,7 @@ import 'bootstrap/dist/css/bootstrap.css';
     component: event
   },
   {
-    path: "/",
+    path: "/login",
     name: "login",
     component: login
   },
@@ -140,7 +142,12 @@ import 'bootstrap/dist/css/bootstrap.css';
   name: "ActDetailPage",
   component: ActPost
 },
-
+// Catch All 404
+{
+  path: '/:catchAll(.*)',
+  name: 'NotFound',
+  component:NotFound
+},
 ];
 
 // const isLoggedIn = false;
@@ -152,14 +159,13 @@ const router = createRouter({
   linkActiveClass: 'active',
 });
 
-// router.beforeEach((to, from, next) => {
-//   const isLoggedIn = false;
-//   if (isLoggedIn){
-//     next();
-//   }else{
-//     next('/login');
-//   }
-// });
+router.beforeEach((to, from) => {
+  console.log(to);
+  console.log(from);
+  if(to.push === '/Contact') {
+    router.push('/asdsds');
+  }
+});
 
 
 

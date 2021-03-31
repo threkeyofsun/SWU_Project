@@ -1,37 +1,55 @@
 <template>
-  <div class="parti mt-2 mt-md-4">
+  <div class="parti mt-2 mt-md-4" v-for="(number, index) in loop" :key="(number,index)">
     <div>
-      <div class="mx-xxl-5 mt-5 row">
+      <!-- Activity  Do v-for loop-->
+      <div class="mx-xxl-5 mt-3 mt-md-5 row">
         <li class="col-12 col-lg-6 align-self-start mt-2">
           <router-link to="/event/activities/:id">
             <span> Activity I Lorem Ipsum is simply dummy text... </span></router-link
           >
         </li>
         <span class="co-12 mt-3 mt-lg-0 col-lg-6 text-end-lg butn">
-          <button type="" class="btn btn-info text-white mx-1 mb-3">Approve</button>
-          <button type="" class="btn btn-danger mx-1 mb-3">Delete</button>
-          <button type="" class="btn btn-secondary mx-1 mb-3">Not Approve</button>
+          <button
+            type=""
+            class="btn btn-info text-white mx-1 mb-3"
+            :class="[number.event ? activeClass : 'disabled']"
+          >
+            Approve
+          </button>
+          <button
+            type=""
+            class="btn btn-danger mx-1 mb-3"
+            :class="[number.event ? activeClass : 'disabled']"
+          >
+            Delete
+          </button>
+          <button
+            type=""
+            class="btn btn-secondary mx-1 mb-3 comment"
+            @click="number.event = !number.event"
+          >
+            Not Approve
+          </button>
+
         </span>
+        <form   action="" @submit.prevent="sendFile" method="post" enctype="multipar/form-data">
+        <div class="form-floating" v-if="!number.event">
+          <textarea
+            class="form-control"
+            placeholder="Leave a comment here"
+            id="floatingTextarea2"
+            style="height: 100px"
+          ></textarea>
+          <label for="floatingTextarea2">Comments</label>
+          <button type="button" class="btn btn-outline-warning mb-3">Send</button>
+        </div>
+        </form>
       </div>
       <hr />
     </div>
 
     <!-- Must loop and detrive data from database  -->
-    <div>
-      <div class="mx-xxl-5 mt-3 row">
-        <li class="col-12 col-lg-6 align-self-start mt-2">
-          <router-link to="/event/activities/:id">
-            <span> Activity II Lorem Ipsum is simply dummy text... </span></router-link
-          >
-        </li>
-        <span class="co-12 mt-3 mt-lg-0 col-lg-6 text-end-lg butn">
-          <button type="" class="btn btn-info text-white mx-1 mb-3">Approve</button>
-          <button type="" class="btn btn-danger mx-1 mb-3">Delete</button>
-          <button type="" class="btn btn-secondary mx-1 mb-3">Not Approve</button>
-        </span>
-      </div>
-      <hr />
-    </div>
+    
     <!--  -->
   </div>
 </template>
@@ -39,12 +57,29 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      textbox: true,
+      loop:[
+        {event:true},
+        {event:true}
+      ],
+
+    };
   },
 };
 </script>
 
 <style lang="css" scoped>
+textarea#floatingTextarea2 {
+  width: 79%;
+  margin-left: 10.5%;
+  margin-bottom: 2%;
+}
+
+.form-floating > label {
+  padding: 1rem 1.75rem;
+  margin-left: 10.5%;
+}
 .text-start {
   text-align: left;
 }

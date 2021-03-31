@@ -175,6 +175,10 @@
         </li>
       </ul>
     </div>
+
+
+    <!-- image -->
+ 
   </form>
 </template>
 
@@ -327,6 +331,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+
+
 .text-white {
   background-color: #009dff;
 }

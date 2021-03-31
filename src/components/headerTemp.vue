@@ -15,7 +15,7 @@
         <ul class="lan-area d-inline">
           <li>Thai</li>
           <p>|</p>
-          <li><router-link to="/">English</router-link></li>
+          <li><router-link to="/login">English</router-link></li>
         </ul>
         <a @click="isHidden = !isHidden"
           ><img class="ham2 d-inline" src="../image/ham-right.png"
@@ -25,12 +25,12 @@
       <div class="align-self-center mt-5 pt-5 text-center">
         <div>
           <p class="respon-menu ">
-            <router-link to="/">Homepage </router-link>
+            <router-link to="/login">Homepage </router-link>
           </p>
         </div>
         <div>
           <p class="respon-menu mt-4">
-            <router-link to="Home">Contact Us</router-link>
+            <router-link to="/Contact">Contact Us</router-link>
           </p>
         </div>
       </div>
@@ -41,19 +41,19 @@
     <div class="logo mx-auto mx-md-0">
       <img class="swu-logo" src="../assets/swulogo.png" />
     </div>
-    <nav class="navbar-area d-none d-md-block">
+    <nav class="navbar-area d-none d-md-block mt-4">
       <div class="main-menu">
         <ul class="nav-area ">
-          <li class="mx-4 mx-lg-5"><router-link to="/">Home</router-link></li>
+          <li class="mx-4 mx-lg-5"><router-link to="/login">Home</router-link></li>
           <li class="mx-lg-3"><router-link to="/Contact">Contact Us</router-link></li>
         </ul>
       </div>
     </nav>
-    <div class="language-menu d-none d-md-block">
+    <div class="language-menu d-none d-md-block mt-4">
       <ul class="lan-area">
-        <router-link to="/Home"><li>TH</li></router-link>
+        <router-link to="/Contact"><li>TH</li></router-link>
         <p>|</p>
-        <li><router-link to="/">EN</router-link></li>
+        <li><router-link to="/login">EN</router-link></li>
       </ul>
     </div>
   </header>
@@ -103,7 +103,6 @@ export default {
 
 .responNav {
   position: fixed;
-
   margin: -31px 0px;
   background-image: url("~@/image/mb-bg.png");
   background-position: center;

@@ -13,7 +13,7 @@
         <ul class="lan-area d-inline">
           <li>Thai</li>
           <p>|</p>
-          <li><router-link class="text-danger" to="/">English</router-link></li>
+          <li><router-link class="text-danger" to="/login">English</router-link></li>
         </ul>
         <a @click="isHidden = !isHidden"
           ><img class="ham2 d-inline" src="../image/ham-left.png"
@@ -63,7 +63,7 @@
       >
       <hr class="hr-right" />
       <div class="profile-menu float-end fw-bold">
-        <router-link to="/"><p class="text-danger">Logout</p></router-link>
+        <router-link to="/login"><p class="text-danger">Logout</p></router-link>
       </div>
     </div>
   </transition>

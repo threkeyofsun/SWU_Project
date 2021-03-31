@@ -1,5 +1,7 @@
 <template>
   <div class="row activity-card">
+
+
     <div class="col mt-5">
       <div class="card">
         <span class="badge time-badge ">Time</span>

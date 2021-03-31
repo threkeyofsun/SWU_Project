@@ -1,5 +1,5 @@
 <template>
-      <AdminHeader />
+  <AdminHeader />
   <div class="row topspace">
     <div class="container">
       <div class="headline mt-3 mt-md-none">
@@ -11,39 +11,39 @@
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <!-- radio image -->
-                <input type="radio" name="test" value="0" checked />
-                <img class="radioim" :src="'/img/' + coverimg" />
+                <input type="radio" name="test" value="0" v-model="picked" checked />
+                <img class="radioim" :src="'/img/' + user.coverimg[0]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="1" />
-                <img class="radioim" src="/img/Group-61443.png" />
+                <input type="radio" name="test" value="1" v-model="picked" />
+                <img class="radioim" :src="'/img/' + user.coverimg[1]" />
               </label>
             </div>
 
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="2" />
-                <img class="radioim" src="/img/Mask-Group-28.png" />
+                <input type="radio" name="test" value="2" v-model="picked" />
+                <img class="radioim" :src="'/img/' + user.coverimg[2]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="3" />
-                <img class="radioim" src="/img/Mask-Group-25.png" />
+                <input type="radio" name="test" value="3" v-model="picked" />
+                <img class="radioim" :src="'/img/' + user.coverimg[3]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="4" />
-                <img class="radioim" src="/img/Group-61443.png" />
+                <input type="radio" name="test" value="4" v-model="picked" />
+                <img class="radioim" :src="'/img/' + user.coverimg[4]"  />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="5" />
-                <img class="radioim" src="/img/Mask-Group-28.png" />
+                <input type="radio" name="test" value="5" v-model="picked" />
+                <img class="radioim" :src="'/img/' + user.coverimg[5]"  />
               </label>
             </div>
           </div>
@@ -62,14 +62,30 @@
             id="exampleFormControlFile1"
           />
 
-          <div class="user-badge">
+          <span class="file-cta">
+            <span class="file-label">
+              <div v-if="preview">
+                <img :src="preview" class="profile-img mt-5 my-4" />
+              </div>
+
+              <div v-else>
+                <img
+                  class="profile-img mt-5 my-4"
+                  :src="'/img/' + user.coverimg[picked]"
+                  alt="coverimg"
+                />
+              </div>
+            </span>
+          </span>
+
+          <!-- <div class="user-badge">
             <img
               class="profile-img mt-5 my-4"
               src="/img/Mask-Group-28.png"
               alt="profile.
               img"
             />
-          </div>
+          </div> -->
         </div>
 
         <div class="headline mt-3">
@@ -176,8 +192,17 @@ export default {
       quantity: 10,
       mquantity: 50,
       value: 1,
+      picked: "0",
       user: {
-        coverimg: ["photo-989-full","photo-1032-large"],
+        coverimg: [
+          "photo-989-full.jpeg",
+          "photo-1032-large.jpeg",
+          "photo-985-full.jpeg",
+          "photo-11471-full.jpeg",
+          "swu3.jpg",
+          "swu4.jpg",
+          "swu2.jpg",
+        ],
       },
     };
   },
@@ -190,7 +215,7 @@ export default {
 }
 img.profile-img {
   width: 85%;
-  height: 160px;
+  /* height: 160px; */
   object-fit: cover;
 }
 

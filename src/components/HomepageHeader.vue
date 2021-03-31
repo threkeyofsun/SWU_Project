@@ -13,7 +13,7 @@
         <ul class="lan-area d-inline">
           <li>Thai</li>
           <p>|</p>
-          <li><router-link class="text-danger" to="/">English</router-link></li>
+          <li><router-link class="text-danger" to="/login">English</router-link></li>
         </ul>
         <a @click="isHidden = !isHidden"
           ><img class="ham2 d-inline" src="../image/ham-left.png"
@@ -22,7 +22,7 @@
       <!-- profile -->
       <div class="badge user-badge fw-light">
         <img class="profile-img mx-1" v-bind:src="profile.img" alt="profile.img" />
-        <p class="firstname d-inline px-1 align-bottom">Firstname</p>
+        <p class="firstname d-inline px-1 align-bottom">{{ user.firstname }}</p>
         <p class="lastname d-inline px-1 align-bottom">L.</p>
       </div>
 
@@ -45,7 +45,7 @@
         </div>
       </div>
       <hr class="hr-headLeft" />
-      <router-link to="/user/en60109010501"
+      <router-link to="/user/myProfile"
         ><p class="profilepage profile-menu text-dark">My Profile</p></router-link
       >
       <router-link to="/history"
@@ -62,8 +62,8 @@
         ><p class="createnews profile-menu text-dark">Create News</p></router-link
       >
       <hr class="hr-right" />
-      <div class="profile-menu float-end fw-bold ">
-        <router-link to="/"><p class="text-danger">Logout</p></router-link>
+      <div class="profile-menu float-end fw-bold">
+        <router-link to="/login"><p class="text-danger">Logout</p></router-link>
       </div>
     </div>
   </transition>
@@ -93,25 +93,24 @@
             <img class="swu-inside" src="../image/logo-inside.png" />
           </div>
         </div>
-        <div class="col-4 col-lg-4 profile">
+        <div class="col-5 col-lg-5 profile">
           <div class="profile-1 d-flex flex-wrap justify-content-center">
             <img
               class="img-fluid profile-img"
               v-bind:src="profile.img"
               alt="profile.img"
             />
-            <div class="username px-3 ">
-              <p class="firstname d-inline">Firstname</p>
-              <p class="lastname d-inline px-3">L.</p>
+            <div class="username px-3">
+              <p class="firstname d-inline me-2" v-if="user={}">Firstname </p>
+              <p class="firstname d-inline">{{ user.firstname }}</p>
               <i
-                class="arrow-down dropdown-toggle"
+                class="arrow-down dropdown-toggle "
                 role="button"
                 data-bs-toggle="dropdown"
               ></i>
-
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li>
-                  <router-link class="dropdown-item" to="/user/en60109010501"
+                  <router-link class="dropdown-item" to="/user/myProfile"
                     >My Profile</router-link
                   >
                 </li>
@@ -119,19 +118,18 @@
                 <li>
                   <a class="dropdown-item" href="#">Create a New Event </a>
                 </li>
+
+                <div class="language-menu text-center">
+                  <p class="mb-0">
+                    <router-link to="/contact">TH</router-link> |
+                    <router-link to="/login" class="eng">EN</router-link>
+                  </p>
+                </div>
               </ul>
             </div>
           </div>
         </div>
-        <div class="col-1 col-lg-1">
-          <div class="language-menu mt-lg-5 text-center">
-            <ul class="lan-area">
-              <router-link to="/Home"><li>TH</li></router-link>
-              <p>|</p>
-              <li><router-link to="/" class="eng">EN</router-link></li>
-            </ul>
-          </div>
-        </div>
+
         <hr class="hr-header" />
       </div>
     </div>
@@ -143,6 +141,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   components: {},
   data() {
@@ -156,8 +156,15 @@ export default {
       profile: {
         img: "https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg",
       },
+
+      user: {},
     };
   },
+  async created() {
+    const result = await axios.get("/users/profile");
+    this.user = result.data;
+  },
+  methods: {},
 };
 </script>
 
@@ -182,7 +189,6 @@ hr.hr-header {
 .navbar-area,
 .language-menu {
   font-family: "Srinakharin";
-  margin-top: 15%;
   font-size: 1vw;
 }
 
@@ -200,8 +206,11 @@ img.swu-inside {
 }
 
 /* profile --------------------------------------------------------*/
-.profile{
-  margin-top: 3%
+.dropdown-toggle::after {
+    vertical-align: 0.05em;
+}
+.profile {
+  margin-top: 3%;
 }
 .profile-img {
   border-radius: 50%;
@@ -209,9 +218,9 @@ img.swu-inside {
   height: 6vh;
 }
 .username {
-    font-family: THSaraban;
-    font-size: x-large;
-    align-self: center;
+  font-family: THSaraban;
+  font-size: x-large;
+  align-self: center;
 }
 .arrow {
   border: solid black;
@@ -238,7 +247,7 @@ img.swu-inside {
   color: #636468;
 }
 
-.router-link-active.router-link-exact-active.homepage {
+a.active .homepage {
   padding: 0% 22% 1% 11%;
   margin: 0% 0% 0% -9%;
   background-color: #769e94;
@@ -246,7 +255,7 @@ img.swu-inside {
   color: white !important;
 }
 
-.router-link-active.router-link-exact-active.event {
+a.active .event {
   padding: 0% 33% 1% 9%;
   margin: 0% 0% 0% -9%;
   background-color: #769e94;
@@ -254,7 +263,7 @@ img.swu-inside {
   color: white;
 }
 
-.router-link-active.router-link-exact-active.contact {
+a.active .contact {
   padding: 0% 33% 1% 9%;
   margin: 0% 0% 0% -9%;
   background-color: #769e94;
@@ -397,6 +406,11 @@ a {
   font-size: 5vw;
   margin-left: 25%;
   margin-top: 3%;
+}
+@media only screen and (min-width: 1401px) {
+  .profile {
+    margin-top: 2.8rem;
+  }
 }
 
 @media only screen and (max-width: 1400px) and (min-width: 766px) {

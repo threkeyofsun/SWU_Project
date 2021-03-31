@@ -236,7 +236,7 @@ export default {
           email: this.user.email,
         });
        
-        console.log(response);
+        console.log('Your registration has been successful');
         this.showSuccessMessage = true;
         alert(response.data);
         this.user.username = '',
@@ -249,7 +249,7 @@ export default {
         this.user.id = '',
         this.user.type = '',
         this.user.email = ''
-        // this.$router.push({name:'login'})
+        this.$router.push({name:'login'})
   
       } catch (err) {
         this.error = true;
@@ -282,7 +282,7 @@ export default {
     margin: 0px;
   }
 }
-@media only-screen and (max-width: 1565px) {
+@media only screen and (max-width: 1565px) {
   .option h2 {
     font-family: "Srinakharin";
     margin: 0px 0px 0px 0px;

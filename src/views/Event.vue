@@ -3,13 +3,25 @@
 
   <section class="event-content">
     <div class="container">
-      <div class="header-text mt-5 mt-md-0 mb-4 mb-sm-3 ps-1 ps-lg-3 px-xl-0 px-xxl-4 text-center text-lg-start">
+      <div
+        class="header-text mt-5 mt-md-0 mb-4 mb-sm-3 ps-1 ps-lg-3 px-xl-0 px-xxl-4 text-center text-lg-start"
+      >
         <router-link to="/event"
-          ><p class="fs-3 d-inline mx-4 mx-xl-0  textheader">Activity</p></router-link
+          ><p class="fs-3 d-inline mx-4 mx-xl-0 textheader">Activity</p></router-link
         >
         <p class="fs-3 d-inline mx-4 text-decoration-none" @click="$router.push('/news')">
           News
         </p>
+        <!-- Filter -->
+        <input
+          type="text"
+          class="d-inline float-md-end mt-4 mt-md-0 float-none"
+          id="myInput"
+          onkeyup="myFunction()"
+          placeholder="Search for an Activity names.."
+          title="Type in a name"
+        />
+        <!-- Filter -->
       </div>
 
       <div class="row activity-card">
@@ -48,7 +60,7 @@
           </div>
         </div>
 
-        <div class="col col-xl-4 col-md-6 my-4 ">
+        <div class="col col-xl-4 col-md-6 my-4">
           <div class="card">
             <router-link to="/event/activities/:id">
               <span class="badge time-badge">Time</span>
@@ -147,7 +159,7 @@
           </div>
         </div>
 
-         <div class="col col-xl-4 col-md-6 my-4">
+        <div class="col col-xl-4 col-md-6 my-4">
           <div class="card">
             <router-link to="/event/activities/:id">
               <span class="badge time-badge">Time</span>
@@ -180,7 +192,7 @@
           </div>
         </div>
 
-         <div class="col col-xl-4 col-md-6 my-4">
+        <div class="col col-xl-4 col-md-6 my-4">
           <div class="card">
             <router-link to="/event/activities/:id">
               <span class="badge time-badge">Time</span>
@@ -238,9 +250,22 @@ export default {
 </script>
 
 <style scoped>
-  .header-text .fs-3 {
-    cursor: pointer;
-  }
+#myInput {
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/0/0b/Search_Icon.svg);
+    background-position: 2px -2px;
+    background-repeat: no-repeat;
+    font-size: 16px;
+    padding: 12px 48px 12px 58px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+    background-size: 17%;
+    width: 16rem;
+}
+
+/* End of filter */
+.header-text .fs-3 {
+  cursor: pointer;
+}
 .textheader {
   color: #e9a1a1;
 }

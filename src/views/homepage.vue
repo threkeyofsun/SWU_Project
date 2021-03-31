@@ -5,17 +5,13 @@
     <div class="cover-img d-none d-md-block">
       <img class="cover" src="/img/MaskGroup132x.png" alt="Responsive image" />
     </div>
-    <p class="text-center wellcome-text  my-3">Announcement</p>
+    <p class="text-center wellcome-text my-3">Announcement</p>
     <hr class="hr-main" />
   </section>
 
   <!-- Slider Section -->
   <section class="slider-part">
-    <div
-      id="carouselExampleCaptions"
-      class="carousel slide"
-      data-bs-ride="carousel"
-    >
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
       <ol class="carousel-indicators">
         <li
           data-bs-target="#carouselExampleCaptions"
@@ -32,9 +28,11 @@
           :class="{ active: idx == 0 }"
           :key="banner"
         >
-          <router-link :to="'/homepage/annoucement/' + announcement.id[idx]">
-            <img :src="'/img/' + banner + '.jpeg'" alt="" class="img-fluid" />
-          </router-link>
+          <div class="row">
+            <router-link :to="'/homepage/annoucement/' + announcement.id[idx]">
+              <img :src="'/img/' + banner" alt="" class="img-fluid col-12" />
+            </router-link>
+          </div>
           <div class="carousel-caption">
             <p class="anTitle">{{ announcement.announce[idx] }}</p>
           </div>
@@ -60,7 +58,7 @@
       </a>
     </div>
   </section>
-  <hr class="hr-main my-4 " />
+  <hr class="hr-main my-4" />
 
   <HPfooter />
 </template>
@@ -77,10 +75,27 @@ export default {
 
   data() {
     return {
-       existentialQuestion: 'Am I truly an alligator?',
+      existentialQuestion: "Am I truly an alligator?",
       announcement: {
-        banners: ["photo-989-full", "photo-1032-large", "photo-985-full"],
-        announce: ["Announcement form Admin I ", "Announcement form Admin II", "Announcement form Admin III "],
+        banners: [
+          "photo-989-full.jpeg",
+          "photo-1032-large.jpeg",
+          "photo-985-full.jpeg",
+          "photo-1003-full.jpeg",
+          "swu3.jpg",
+          "swu4.jpg",
+          "swu2.jpg",
+        ],
+        announce: [
+          "Announcement form Admin I ",
+          "Announcement form Admin II",
+          "Announcement form Admin III ",
+          "Announcement form Admin IV ",
+          "Announcement form Admin II",
+          "Announcement form Admin III ",
+          "Announcement form Admin IV ",
+
+        ],
         id: ["Uniform-Term", "Covid-19-situation", "5875sdwe"],
       },
       cover: {
@@ -104,7 +119,6 @@ export default {
   border: 0px;
   opacity: 0.75;
   color: #a53b3b;
-  
 }
 .hp-underline {
   border-bottom: solid 2px cornflowerblue;
@@ -133,25 +147,40 @@ img.cover {
 .fixed-height {
   max-height: 800px;
 }
-.carousel-indicators li{
+.carousel-indicators li {
   height: 10px;
   border-bottom: 0;
 }
 @media (max-width: 1200px) {
   .carousel-caption {
-  font-size: x-large;
+    font-size: x-large;
+  }
+  .fixed-height {
+    max-height: 500px;
+  }
 }
-}
+
 @media (max-width: 767px) {
   img.cover {
     margin-top: -31px;
   }
   .carousel-caption {
-  font-size: unset;
-  padding: 3%;
-}
-p.anTitle {
+    font-size: unset;
+    padding: 3%;
+  }
+  p.anTitle {
     margin: 0;
+  }
+  .fixed-height {
+    max-height: 370px;
+  }
 }
+@media (max-width: 560px) {
+  .fixed-height {
+    max-height: 220px;
+  }
 }
+
+
+
 </style>

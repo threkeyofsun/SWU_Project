@@ -20,7 +20,7 @@
               notdisplay = true;
             "
           >
-            <p class="mb-0">Participated</p>
+            <p class="mb-0">Participated & Recruited</p>
           </div>
           <div
             class="component mt-2 mx-2 mx-sm-4 mx-md-4 mx-lg-5"
@@ -31,7 +31,7 @@
               notdisplay = true;
             "
           >
-            <p class="mb-0">Recruited</p>
+            <p class="mb-0">Recruitment</p>
           </div>
           <div
             class="component mt-2 mx-2 mx-sm-4 mx-md-4 mx-lg-5"

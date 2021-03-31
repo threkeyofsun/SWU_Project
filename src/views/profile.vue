@@ -8,9 +8,11 @@
     <div class="col-md-9 col-12">
       <div class="container">
         <p class="mt-5 mb-4 anounce-title">User Detail</p>
+        <!-- <h1>{{ user.lastname.slice(0, 1).toUpperCase()}}.</h1> -->
+
         <div class="posting">
           <div class="badge user-badge">
-            <p class="firstname pt-4 ">
+            <p class="firstname pt-4">
               <b>Upload Your Profile Picture Below</b>
             </p>
 
@@ -20,15 +22,10 @@
               method="post"
               enctype="multipar/form-data"
             >
-              <label class="file-label profile-badge ">
-                <input
-                  type="file"
-                  ref="file"
-                  @change="profileImage"
-                  class="file-input"
-                />
+              <label class="file-label profile-badge">
+                <input type="file" ref="file" @change="profileImage" class="file-input" />
 
-                <span class="file-cta ">
+                <span class="file-cta">
                   <span class="file-label">
                     <div v-if="preview">
                       <img :src="preview" class="profile-img mb-3" />
@@ -36,7 +33,7 @@
 
                     <div v-else>
                       <img
-                        class=" profile-img mb-3 "
+                        class="profile-img mb-3"
                         :src="user.profile_img"
                         alt="profile.img"
                       />
@@ -45,11 +42,7 @@
                 </span>
               </label>
               <div>
-                <button
-                  type="button"
-                  class=" my-4 btn btn-light"
-                  @click="onUpload"
-                >
+                <button type="button" class="my-4 btn btn-light" @click="onUpload">
                   Confirm
                 </button>
               </div>
@@ -63,13 +56,9 @@
             Name: &nbsp;&nbsp;&nbsp; {{ user.firstname }}&nbsp; &nbsp;
             {{ user.lastname }}
           </h5>
-          <h5 class="d-sm-inline">
-            Faculty:&nbsp;&nbsp;&nbsp; {{ user.faculty }}
-          </h5>
+          <h5 class="d-sm-inline">Faculty:&nbsp;&nbsp;&nbsp; {{ user.faculty }}</h5>
           <span class="d-sm-inline d-none mx-4"></span>
-          <h5 class="d-sm-inline">
-            Major:&nbsp;&nbsp;&nbsp; {{ user.department }}
-          </h5>
+          <h5 class="d-sm-inline">Major:&nbsp;&nbsp;&nbsp; {{ user.department }}</h5>
           <h5>Email: &nbsp;&nbsp;&nbsp; {{ user.email }}</h5>
           <h5>Phone-Number:&nbsp;&nbsp;&nbsp;{{ user.tel_no }}</h5>
           <h5>Status:&nbsp;&nbsp;&nbsp;{{ user.s_type }}</h5>
@@ -137,16 +126,6 @@
             </button>
           </form>
 
-<p>
-
-
-</p>
-
-
-
-         
-          
-          
         </div>
       </div>
     </div>
@@ -162,7 +141,6 @@ import HPfooter from "../components/homepageFooter";
 import Sidebar from "../components/sliderbar";
 
 export default {
-
   components: {
     HomepageHeader,
     HPfooter,
@@ -178,13 +156,13 @@ export default {
       alertMessage: "",
       selectedFile: "",
       dipimg: {},
-      obj:{
-       'text-success':true,
-      }
+      obj: {
+        "text-success": true,
+      },
     };
   },
   async created() {
-    const result = await axios.get(`/users/api/user/${this.$route.params.s_id}`);
+    const result = await axios.get("/users/profile");
     this.user = result.data;
   },
   methods: {},
@@ -201,14 +179,14 @@ input.file-input {
 }
 /*  */
 .topspace {
-    margin-top: -6%;
+  margin-top: -6%;
 }
 .detail {
   font-family: "THSaraban";
 }
 .container {
   max-width: 1028px;
-    width: 100%;
+  width: 100%;
 }
 .posting {
   text-align-last: center;

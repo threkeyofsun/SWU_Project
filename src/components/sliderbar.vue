@@ -1,7 +1,7 @@
 <template>
   <div class="col-3 d-none d-md-block">
     <section class="sidebar ml-5">
-      <router-link class="menuItem-active-link" to="/user/en60109010501"
+      <router-link class="menuItem-active-link" to="/user/myProfile"
         ><p class="mb-0">Profile</p></router-link
       >
 
@@ -27,7 +27,7 @@
       </div>
       <hr />
       <div class="float-end fw-bold text-danger">
-        <router-link to="/"><p>Logout</p></router-link>
+        <p @click="logout">Logout</p>
       </div>
     </section>
     <span class="d-inline"></span>
@@ -35,11 +35,21 @@
 </template>
 
 <script>
+  import axios from "axios";
+
 export default {
   data() {
-    return {};
+    return {
+      user: {}
+    };
   },
-  methods: {},
+  methods: {
+    async logout() {
+        const result = await axios.delete('/users/logout');
+        this.user = result.data;
+        this.$router.push({name:'login'})
+      }
+  },
 };
 </script>
 
@@ -49,14 +59,12 @@ input.file-input {
 }
 
 /* Underline decorate */
-.router-link-active.router-link-exact-active.menuItem-active-link {
-  display: -webkit-box;
+a.active.router-link-exact-active.menuItem-active-link{
   border-bottom: 3px solid #f1bbbb;
   color: #ff9f48;
   margin-right: 50%;
 }
-.router-link-active.router-link-exact-active.menuItem-active-link1 {
-  display: -webkit-box;
+a.active.router-link-exact-active.menuItem-active-link1 {
   border-bottom: 3px solid #f1bbbb;
   color: #ff9f48;
 }
@@ -67,13 +75,11 @@ input.file-input {
   display: -webkit-box;
   border-bottom: 3px solid #ffffff;
 }
-.router-link-active.router-link-exact-active.upcoming {
-  display: -webkit-box;
+a.active.router-link-exact-active.upcoming {
   border-bottom: 3px solid #f1bbbb;
   color: #ff9f48;
 }
-.router-link-active.router-link-exact-active.createnews {
-  display: -webkit-box;
+a.active.router-link-exact-active.createnews {
   border-bottom: 3px solid #f1bbbb;
   color: #ff9f48;
 }

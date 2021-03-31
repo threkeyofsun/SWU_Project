@@ -17,7 +17,7 @@
       <div class="col align-self-center text-center mb-5">
         <div class="option">
           <div class="tap-login">
-            <h2><router-link to="/">Login</router-link></h2>
+            <h2><router-link to="/login">Login</router-link></h2>
             <hr class="hr-main" />
           </div>
           <div class="tap-register">
@@ -88,12 +88,13 @@ hr.hr-main {
 </style>
 
 <style>
-.hr-head + .align-self-center div:first-of-type {
+.hr-head + .align-self-center .active {
   border-left: solid 7px #d26760;
   border-right: solid 7px #d26760;
   background-color: #a5a5a563;
+  padding: 0 28%;
 }
-.hr-head + .align-self-center div:first-of-type a {
+.hr-head + .align-self-center .active  {
   color: white;
 }
 </style>

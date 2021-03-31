@@ -17,7 +17,7 @@
       <div class="col align-self-center text-center ">
         <h3 class="success">
           Your registration has been successful! <br />Click
-          <router-link to="/"><span class="underline"> HERE</span></router-link>
+          <router-link to="/login"><span class="underline"> HERE</span></router-link>
           to Sign-in
         </h3>
       </div>

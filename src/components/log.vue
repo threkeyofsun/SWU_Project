@@ -2,7 +2,7 @@
   <!-- Login------------------------------------------------- -->
 
   <div class="right-content">
-    <p>{{ $store.state.username ? $store.state.username : "Not Login yet" }}</p>
+    <!-- <p>{{ $store.state.username ? $store.state.username : "Not Login yet" }}</p> -->
 
     <div class="login-part">
       <form id="login-form" @submit.prevent="addToAPI">
@@ -57,7 +57,8 @@ export default {
           username: this.user.username,
           password: this.user.password,
         });
-        console.log(response);
+        console.log(response.data.username);
+        alert(response.data.firstname);
         this.$router.push({ name: 'homepage' })
 
       } catch (err) {

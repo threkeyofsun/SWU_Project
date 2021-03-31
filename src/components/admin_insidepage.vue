@@ -5,7 +5,7 @@
 
   <div class="col-12">
     <div class="linkhead">
-      <div class="text-center">
+      <div class="text-center mt-3 mb-0">
         <div
           class="component mx-2 mx-sm-4 mx-md-4 mx-lg-5"
           :class="[isHidden ? activeClass : 'hightling']"

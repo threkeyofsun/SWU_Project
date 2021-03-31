@@ -150,7 +150,7 @@ export default {
 .btn {
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: default;
   line-height: 1.5;
   font: 700 1.3rem "THSaraban";
   padding: 0.3em 3%;

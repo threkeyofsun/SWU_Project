@@ -17,7 +17,7 @@
       <div class="rightR col align-self-center text-center ">
         <div class="option">
           <div class="tap-login">
-            <h2><router-link to="/">Login</router-link></h2>
+            <h2><router-link to="/login">Login</router-link></h2>
             <hr class="hr-main" />
           </div>
           <div class="tap-register">

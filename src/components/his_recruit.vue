@@ -1,7 +1,7 @@
 <template>
   <div class="parti mt-2 mt-md-4">
     <div>
-      <p class="btn draw-border">Volunteer Activities</p>
+      <p class="btn draw-border">In Process</p>
       <div class="mx-xxl-5">
         <li> <router-link to="/event/activities/:id"> <span> Acttivity I Lorem Ipsum is simply dummy text... </span></router-link></li>
         <hr />
@@ -9,7 +9,7 @@
     </div>
 
     <div>
-      <p class="btn draw-border draw-border1">Regular Activities Activities</p>
+      <p class="btn draw-border draw-border1">On Going</p>
       <div class="mx-xxl-5">
         <p class="text-center"> </p>
         <hr />
@@ -17,7 +17,7 @@
     </div>
 
     <div>
-      <p class="btn draw-border draw-border2">Force Activities</p>
+      <p class="btn draw-border draw-border2">Past Activity</p>
       <div class="mx-xxl-5">
         <p class="text-center"> </p>
         <hr />
@@ -138,7 +138,7 @@ export default {
 .btn {
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: default;
   line-height: 1.5;
   font: 700 1.3rem "THSaraban";
   padding: 0.3em 3%;
