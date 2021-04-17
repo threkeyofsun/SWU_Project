@@ -12,7 +12,7 @@
         <p>
           <router-link to="/history" class="menuItem-active-link1"> History</router-link>
         </p>
-        <p><router-link to="/upcoming" class="upcoming"> Upcoming</router-link></p>
+        <p><router-link to="/newsHistory" class="upcoming"> News</router-link></p>
       </div>
       <hr />
       <p>Create Your Event</p>

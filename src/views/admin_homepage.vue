@@ -17,8 +17,11 @@
 import AdminHeader from "../components/admin_header";
 import HPfooter from "../components/homepageFooter";
 import Insidepage from "../components/admin_insidepage";
+import axios from "axios";
+
 
 export default {
+  
   components: {
     AdminHeader,
     HPfooter,
@@ -27,6 +30,15 @@ export default {
   data() {
     return {};
   },
+  async created() {
+    const result = await axios.get("/users/profile");
+    this.user = result.data;
+    this.firstname = 'Admin';
+    this.$store.commit("setAuthenticationAdmin", true);
+    const res = await axios.get("/users/profile");
+    this.$store.state.info = res.data;
+    this.$store.commit("setAuthentication", true);
+  },  
 };
 </script>
 

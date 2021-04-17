@@ -6,7 +6,7 @@
     <!--End of  Sidebar -->
 
     <div class="col-md-9 col-12">
-      <div class="container ">
+      <div class="container">
         <p class="mt-5 mb-4 anounce-title">My Activities > History</p>
       </div>
       <div class="linkhead myt-4">
@@ -20,7 +20,7 @@
               notdisplay = true;
             "
           >
-            <p class="mb-0">Participated & Recruited</p>
+            <p class="mb-0">Participated</p>
           </div>
           <div
             class="component mt-2 mx-2 mx-sm-4 mx-md-4 mx-lg-5"
@@ -42,7 +42,7 @@
               notdisplay = false;
             "
           >
-            <p class="mb-0">News</p>
+            <p class="mb-0">Upcoming</p>
           </div>
         </div>
 
@@ -54,7 +54,7 @@
             <Recruit />
           </div>
           <div :class="hidden1">
-            <News />
+            <Upcoming />
           </div>
         </div>
       </div>
@@ -71,7 +71,7 @@ import HPfooter from "../components/homepageFooter";
 import Sidebar from "../components/sliderbar";
 import Participate from "../components/participate";
 import Recruit from "../components/his_recruit";
-import News from "../components/his_news";
+import Upcoming from "../components/upcoming";
 
 export default {
   components: {
@@ -80,7 +80,7 @@ export default {
     Sidebar,
     Participate,
     Recruit,
-    News,
+    Upcoming,
   },
 
   data() {

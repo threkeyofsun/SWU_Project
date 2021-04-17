@@ -30,6 +30,7 @@
     "sweetalert2": "^10.12.7",
     "vue": "^3.0.0-beta.1",
     "vue-axios": "^3.2.2",
+    "vue-cookie-next": "^1.0.3",
     "vue-page-transition": "^0.2.2",
     "vue-router": "^4.0.2",
     "vue-sliding-pagination": "^1.1.2",

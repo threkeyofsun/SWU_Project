@@ -16,7 +16,7 @@
         </div>
         <div class="col-md-4 col-xs-12 order-3 order-md-2">
           <div class="coppyright">
-            <h6 id="c">Copyright © 2020 Faculty of Computer Engineering</h6>
+            <h6 id="c">Copyright © {{new Date().getFullYear()}} Faculty of Computer Engineering</h6>
           </div>
         </div>
         <div class="col-md-4 col-xs-12 order-2 order-md-2">

@@ -63,7 +63,7 @@
       >
       <hr class="hr-right" />
       <div class="profile-menu float-end fw-bold">
-        <router-link to="/login"><p class="text-danger">Logout</p></router-link>
+        <p class="text-danger" @click="logout">Logout</p>
       </div>
     </div>
   </transition>
@@ -101,8 +101,8 @@
               alt="profile.img"
             />
             <div class="username px-3">
-              <p class="firstname d-inline">Firstname</p>
-              <p class="lastname d-inline px-3">L.</p>
+              <p class="firstname d-inline">{{ firstname }}</p>
+              <!-- <p class="lastname d-inline px-3">L.</p> -->
               <!-- <i
                 class="arrow-down dropdown-toggle"
                 role="button"
@@ -122,6 +122,7 @@
               </ul>
             </div>
           </div>
+          <p class="float-end" @click="logout">Log out</p>
         </div>
 
         <hr class="hr-header" />
@@ -135,11 +136,15 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   components: {},
   data() {
     return {
+      firstname: "",
       isHidden: true,
+      user: {},
       cover: {
         img:
           "https://gswuacth-my.sharepoint.com/personal/nattawade_inala_g_swu_ac_th/Documents/Adobe%20XD%20Design%20I/Object%20Ver.I/Mask%20Group%2013@2x.png",
@@ -150,12 +155,25 @@ export default {
       },
     };
   },
+  async created() {
+    const result = await axios.get("/users/profile");
+    this.user = result.data;
+    this.firstname = "Admin";
+    this.$store.commit("setAuthenticationAdmin", true);
+  },
+  methods: {
+    async logout() {
+      const result = await axios.delete("/users/logout");
+      this.user = result.data;
+      this.$router.push({ name: "login" });
+    },
+  },
 };
 </script>
 
 <style scoped>
-.logo{
-    text-align-last: center;
+.logo {
+  text-align-last: center;
 }
 img.cover {
   width: 100%;
@@ -188,20 +206,20 @@ ul.lan-area {
   padding: 0px;
 }
 img.swu-inside {
-    z-index: 999;
-    position: relative;
-    padding-left: 0px;
-    margin: -75px 0px 0px -100px;
+  z-index: 999;
+  position: relative;
+  padding-left: 0px;
+  margin: -75px 0px 0px -100px;
 }
 
 /* profile --------------------------------------------------------*/
-.profile{
-    position: relative;
-    right: 1%;
-    margin-bottom: 0px;
-    padding: 0px;
-    height: 8em;
-    place-self: center;
+.profile {
+  position: relative;
+  right: 1%;
+  margin-bottom: 0px;
+  padding: 0px;
+  height: 8em;
+  place-self: center;
 }
 .profile-img {
   border-radius: 50%;
@@ -419,9 +437,8 @@ a {
 
 /* only profile img */
 @media only screen and (max-width: 1139px) and (min-width: 766px) {
-    .profile[data-v-20249f0d] {
+  .profile[data-v-20249f0d] {
     top: -20px;
+  }
 }
-}
-
 </style>

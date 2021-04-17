@@ -13,11 +13,20 @@ import Profile_test from "../views/profile.vue";
 import NewsForm from "../views/NewsForm-dbTest.vue";
 import imageupload from "../views/image-upload.vue";
 import history from "../views/history.vue";
-import upcoming from "../views/upcoming.vue";
+import newsHistory from "../views/newsHistory.vue";
 import createnews from "../views/createnews.vue";
 import adminpage from "../views/admin_homepage.vue";
 import createAn from "../views/admin_anounceCreate.vue";
 import NotFound from "../views/NotFound.vue";
+
+// Edit
+import editProfile from "../views/Edit/editProfile.vue";
+import editAnnounce from "../views/Edit/editAnnounce.vue";
+
+// Admin
+import adminonly from "../views/admin/adminonly.vue";
+import adminonlyAnnounce from "../views/admin/adminonlyAnnounce.vue";
+
 
 
 
@@ -26,24 +35,56 @@ import Act from "../components/Activity.vue";
 import news from "../components/News.vue";
 import participate from "../components/participate.vue";
 
-// import middleware(?)
+// import (?)
+
 import 'bootstrap/dist/css/bootstrap.css';
+import store from '@/store';
 // import { Router } from "express";
 
 
 
 
  const routes = [
+// Admin
+{
+  path: "/admin/activity/:id",
+  name: "adminonly",
+  component: adminonly,
+},
+{
+  path: "/admin/announce/:id",
+  name: "adminonlyAnnounce",
+  component: adminonlyAnnounce,
+},
+  // Edit
+  {
+    path: "/profile/edit/:id",
+    name: "editProfile",
+    component: editProfile,
+  },
+  {
+    path: "/Announcement/edit/:id",
+    name: "editAnnounce",
+    component: editAnnounce,
+  },
   // components
   {
     path: "/createAn",
     name: "createAn",
-    component: createAn
+    component: createAn,
+    beforeEnter: (to,from,next) => {
+      if(to.name !== 'login' && !store.state.authenticatedAdmin) next('/')
+      else next()
+    }
   },
   {
     path: "/adminpage",
     name: "adminpage",
-    component: adminpage
+    component: adminpage,
+    // beforeEnter: (to,from,next) => {
+    //   if(to.name !== 'login' && !store.state.authenticatedAdmin) next('/')
+    //   else next()
+    // }
   },
   {
     path: "/News",
@@ -68,9 +109,9 @@ import 'bootstrap/dist/css/bootstrap.css';
     component: createnews
   },
   {
-    path: "/upcoming",
-    name: "upcoming",
-    component: upcoming
+    path: "/newsHistory",
+    name: "newsHistory",
+    component: newsHistory
   },
   {
     path: "/history",
@@ -90,7 +131,8 @@ import 'bootstrap/dist/css/bootstrap.css';
   {
     path: "/user/myProfile",
     name: "profile",
-    component: Profile_test
+    component: Profile_test,
+
   },
 
   {
@@ -111,8 +153,10 @@ import 'bootstrap/dist/css/bootstrap.css';
   {
     path: "/login",
     name: "login",
-    component: login
+    component: login,
+  
   },
+  
   {
     path: "/register",
     name: "register",
@@ -126,7 +170,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 {
   path: "/Homepage",
   name: "homepage",
-  component: homepage
+  component: homepage,
+  // beforeEnter: (to,from,next) => {
+  //   if(to.name !== 'login' && !store.state.authenticatedAdmin) next('/')
+  //   else next()
+  // }
 },
 {
   path: "/homepage/annoucement/:id",
@@ -147,7 +195,12 @@ import 'bootstrap/dist/css/bootstrap.css';
   path: '/:catchAll(.*)',
   name: 'NotFound',
   component:NotFound
-},
+},{
+  path: '/',
+  redirect:{
+    name: "login"
+  }
+}
 ];
 
 // const isLoggedIn = false;
@@ -159,14 +212,17 @@ const router = createRouter({
   linkActiveClass: 'active',
 });
 
-router.beforeEach((to, from) => {
-  console.log(to);
-  console.log(from);
-  if(to.push === '/Contact') {
-    router.push('/asdsds');
-  }
-});
+// router.beforeEach((to, _1, next) => {
+//   console.log('Global before each');
+//   if(to.path === '/Contact') {
+//     next();
+//   } else {
+//     next();
+//   }
+// });
 
-
+// router.afterEach(( ) => {
+//   console.log('Router after each');
+// });
 
 export default router;

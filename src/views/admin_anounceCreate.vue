@@ -5,7 +5,12 @@
       <div class="headline mt-3 mt-md-none">
         <p>&nbsp; &nbsp;&nbsp; Select your cover image</p>
       </div>
-      <form class="ac-req-form">
+      <form id="submitAnnounce"
+        action=""
+        @submit.prevent="submitAnnounce"
+        method="post"
+        enctype="multipar/form-data"
+        class="ac-req-form">
         <div class="coverpost">
           <div class="row radiocollection">
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
@@ -37,35 +42,29 @@
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" value="4" v-model="picked" />
-                <img class="radioim" :src="'/img/' + user.coverimg[4]"  />
+                <img class="radioim" :src="'/img/' + user.coverimg[4]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" value="5" v-model="picked" />
-                <img class="radioim" :src="'/img/' + user.coverimg[5]"  />
+                <img class="radioim" :src="'/img/' + user.coverimg[5]" />
               </label>
             </div>
           </div>
         </div>
 
-        <div class="headline mt-3">
+        <div class="headline mt-4">
           <p class="firstname border-bottom-0">
-            &nbsp; &nbsp;&nbsp; **Or upload your cover image here**
+            &nbsp; &nbsp;&nbsp;Select your Cover Image
           </p>
         </div>
 
         <div class="posting">
-          <input
-            type="file"
-            class="form-control-file btn btn-light mt-2"
-            id="exampleFormControlFile1"
-          />
-
           <span class="file-cta">
             <span class="file-label">
               <div v-if="preview">
-                <img :src="preview" class="profile-img mt-5 my-4" />
+                <img :src="preview" class="profile-img mt-3 my-4" />
               </div>
 
               <div v-else>
@@ -104,22 +103,9 @@
                 class="form-control form-control-sm"
                 id="title"
                 placeholder=""
+                v-model="title"
+                required
               />
-            </div>
-          </div>
-
-          <div class="row my-4">
-            <div class="col-sm-3">
-              <span class="text-danger">*</span
-              ><label for="title" class="form-label">Short Description</label>
-            </div>
-            <div class="col-sm-9">
-              <textarea
-                class="form-control"
-                placeholder="Leave a short description here"
-                id="floatingTextarea2"
-                style="height: 100px"
-              ></textarea>
             </div>
           </div>
 
@@ -134,40 +120,29 @@
                 placeholder="Leave a short description here"
                 id="floatingTextarea2"
                 style="height: 300px"
+                v-model="description"
+                required
               ></textarea>
             </div>
           </div>
         </div>
 
-        <div class="mb-3">
+        <!-- <div class="mb-3">
           <label for="formFileSm" class="form-label">Insert Image</label>
-          <input class="form-control form-control-sm" id="formFileSm" type="file" />
+          <input class="form-control form-control-sm" id="formFileSm" type="file" /></div> 
+-->
           <button
-            :disabled="isEmpty"
             class="btn btn btn-secondary mb-2 mt-4"
             type="submit"
             value="submit"
-            @click="onUpload"
           >
             Create
           </button>
-        </div>
+        
         <div class="row">
-          <div class="image-preview col-6">
-            <!-- <img class="cover row" src="/img/whale.jpg" />
-            <img class="cover row" src="/img/3505624.png" />
+          <div class="image-preview col-6"></div>
 
-            <img class="cover row" src="/img/whale.jpg" /> -->
-          </div>
-
-          <div class="image-preview col-6">
-            <!-- <img class="cover row" src="/img/3505624.png" />
-            <img class="cover row" src="/img/whale.jpg" />
-            <img
-              class="cover row"
-              src="https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/83672173_2601817849931005_1524955282638110720_o.jpg?_nc_cat=107&ccb=1-3&_nc_sid=730e14&_nc_eui2=AeEQEU-pgFqkDyFuDgAilBPxpQWyrrPbf_mlBbKus9t_-ZcAxlvVWMZGBYnvh2WO9-_aa36uu_IyAu7iI6nam4kY&_nc_ohc=h9EagkiFNEUAX_51sfe&_nc_ht=scontent.fbkk10-1.fna&oh=bdd9d0df9ea3586d2ed7ee3dc846093d&oe=60750AD2"
-            /> -->
-          </div>
+          <div class="image-preview col-6"></div>
         </div>
       </form>
       <hr />
@@ -181,6 +156,8 @@
 <script>
 import AdminHeader from "../components/admin_header";
 import HPfooter from "../components/homepageFooter";
+import axios from "axios";
+
 export default {
   name: "ProductDetailPage",
   components: {
@@ -205,6 +182,23 @@ export default {
         ],
       },
     };
+  },
+  methods: {
+    async submitAnnounce() {
+      try {
+        const response = await axios.post("/admin/announcements", {
+          cover_img: this.user.coverimg[this.picked],
+          name: this.title,
+          description: this.description,
+        });
+        console.log(response.config);
+        alert("Activity has been created!");
+          this.$router.push({ name: "adminpage" });
+      } catch (err) {
+        alert(err);
+        // console.log(err.response.data.error_message);
+      }
+    },
   },
 };
 </script>

@@ -68,7 +68,7 @@
               class="profile-img cover-img mt-5 my-4 card-img"
               :src="'/img/' + coverimg[picked]"
               alt="profile.
-            img"
+              img"
             />
           </div>
         </div>
@@ -158,11 +158,9 @@
 </template>
 
 <script>
-import Sidebar from "../components/sliderbar";
-import HomepageHeader from "../components/HomepageHeader";
-import HPfooter from "../components/homepageFooter";
-import axios from "axios";
-
+import Sidebar from "@/components/sliderbar";
+import HomepageHeader from "@/components/HomepageHeader";
+import HPfooter from "@/components/homepageFooter";
 export default {
   name: "ProductDetailPage",
   components: {
@@ -189,19 +187,6 @@ export default {
       ],
     };
   },
-  async submitAct() {
-      try {
-        const response = await axios.post("/activities/", {
-          
-        });
-        console.log(response.config);
-        alert("Activity has been created!");
-        // this.$router.push({ name: "history" });
-      } catch (err) {
-        alert(err.response.data.error_message);
-        console.log(err.response.data.error_message);
-      }
-    },
 };
 </script>
 

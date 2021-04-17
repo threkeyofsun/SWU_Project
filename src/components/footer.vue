@@ -6,7 +6,7 @@
           <hr class="hr-foot" />
           <div class="ongkharak">
             <h6>Srinakharinwirot University Ongkharak Campus</h6>
-                      <hr class="hr-foot d-md-none" />
+            <hr class="hr-foot d-md-none" />
 
             <p>
               7 63 Rangsit - Nakhon Nayok Rd, Ongkharak district,<br />
@@ -16,20 +16,19 @@
         </div>
         <div class="col-md-4 col-xs-12 order-3 order-md-2">
           <div class="coppyright">
-            <h6 id="c">Copyright © 2020 Faculty of Computer Engineering</h6>
+            <h6 id="c">Copyright © {{new Date().getFullYear()}} Faculty of Computer Engineering</h6>
           </div>
         </div>
         <div class="col-md-4 col-xs-12 order-2 order-md-2">
           <hr class="hr-foot" />
           <div class="prasanmit">
             <h6>Srinakharinwirot University Prasarnmit Campus</h6>
-              <hr class="hr-foot" />
+            <hr class="hr-foot" />
             <p>
               174 Soi Sukhumvit 23, Khlong Toei Nuea, Wattana,<br />
               Bangkok, 10110
             </p>
           </div>
-        
         </div>
       </div>
     </div>
@@ -39,6 +38,12 @@
 <script>
 export default {
   name: "footer",
+  data() {
+    return {
+      year: "",
+    };
+  },
+  methods: {},
 };
 </script>
 

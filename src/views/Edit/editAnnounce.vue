@@ -1,7 +1,6 @@
 <template>
-  <HomepageHeader />
+  <AdminHeader />
   <div class="row topspace">
-    <Sidebar />
     <div class="container">
       <div class="headline mt-3 mt-md-none">
         <p>&nbsp; &nbsp;&nbsp; Select your cover image</p>
@@ -13,38 +12,38 @@
               <label>
                 <!-- radio image -->
                 <input type="radio" name="test" value="0" v-model="picked" checked />
-                <img class="radioim" :src="'/img/' + coverimg[0]" />
+                <img class="radioim" :src="'/img/' + user.coverimg[0]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" value="1" v-model="picked" />
-                <img class="radioim" :src="'/img/' + coverimg[1]" />
+                <img class="radioim" :src="'/img/' + user.coverimg[1]" />
               </label>
             </div>
 
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" value="2" v-model="picked" />
-                <img class="radioim" :src="'/img/' + coverimg[2]" />
+                <img class="radioim" :src="'/img/' + user.coverimg[2]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" value="3" v-model="picked" />
-                <img class="radioim" :src="'/img/' + coverimg[3]" />
+                <img class="radioim" :src="'/img/' + user.coverimg[3]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" value="4" v-model="picked" />
-                <img class="radioim" :src="'/img/' + coverimg[4]" />
+                <img class="radioim" :src="'/img/' + user.coverimg[4]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" value="5" v-model="picked" />
-                <img class="radioim" :src="'/img/' + coverimg[5]" />
+                <img class="radioim" :src="'/img/' + user.coverimg[5]" />
               </label>
             </div>
           </div>
@@ -63,14 +62,30 @@
             id="exampleFormControlFile1"
           />
 
-          <div class="user-badge">
-            <img
-              class="profile-img cover-img mt-5 my-4 card-img"
-              :src="'/img/' + coverimg[picked]"
-              alt="profile.
-            img"
-            />
-          </div>
+          <span class="file-cta">
+            <span class="file-label">
+              <div v-if="preview">
+                <img :src="preview" class="profile-img mt-5 my-4" />
+              </div>
+
+              <div v-else>
+                <img
+                  class="profile-img mt-5 my-4"
+                  :src="'/img/' + user.coverimg[picked]"
+                  alt="coverimg"
+                />
+              </div>
+            </span>
+          </span>
+
+          <!-- <div class="user-badge">
+              <img
+                class="profile-img mt-5 my-4"
+                src="/img/Mask-Group-28.png"
+                alt="profile.
+                img"
+              />
+            </div> -->
         </div>
 
         <div class="headline mt-3">
@@ -89,42 +104,21 @@
                 class="form-control form-control-sm"
                 id="title"
                 placeholder=""
-                required
-                v-model="title"
               />
             </div>
           </div>
 
           <div class="row my-4">
-            <div class="col-sm-3">
-              <span class="text-danger">*</span
-              ><label for="shDes" class="form-label">Short Description</label>
-            </div>
-            <div class="col-sm-9">
-              <textarea
-                class="form-control"
-                placeholder="Leave a short description here"
-                id="shDes"
-                style="height: 100px"
-                required
-                v-model="shDes"
-              ></textarea>
-            </div>
-          </div>
-
-          <div class="row my-4">
             <div class="col-12">
               <span class="text-danger">*</span
-              ><label for="detail" class="form-label">Detials</label>
+              ><label for="title" class="form-label">Detials</label>
             </div>
             <div class="col-12">
               <textarea
                 class="form-control"
                 placeholder="Leave a short description here"
-                id="detail"
+                id="floatingTextarea2"
                 style="height: 300px"
-                required
-                v-model="detail"
               ></textarea>
             </div>
           </div>
@@ -146,7 +140,14 @@
         <div class="row">
           <div class="image-preview col-6"></div>
 
-          <div class="image-preview col-6"></div>
+          <div class="image-preview col-6">
+            <!-- <img class="cover row" src="/img/3505624.png" />
+              <img class="cover row" src="/img/whale.jpg" />
+              <img
+                class="cover row"
+                src="https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/83672173_2601817849931005_1524955282638110720_o.jpg?_nc_cat=107&ccb=1-3&_nc_sid=730e14&_nc_eui2=AeEQEU-pgFqkDyFuDgAilBPxpQWyrrPbf_mlBbKus9t_-ZcAxlvVWMZGBYnvh2WO9-_aa36uu_IyAu7iI6nam4kY&_nc_ohc=h9EagkiFNEUAX_51sfe&_nc_ht=scontent.fbkk10-1.fna&oh=bdd9d0df9ea3586d2ed7ee3dc846093d&oe=60750AD2"
+              /> -->
+          </div>
         </div>
       </form>
       <hr />
@@ -158,66 +159,43 @@
 </template>
 
 <script>
-import Sidebar from "../components/sliderbar";
-import HomepageHeader from "../components/HomepageHeader";
-import HPfooter from "../components/homepageFooter";
-import axios from "axios";
-
+import AdminHeader from "@/components/admin_header";
+import HPfooter from "@/components/homepageFooter";
 export default {
   name: "ProductDetailPage",
   components: {
-    HomepageHeader,
+    AdminHeader,
     HPfooter,
-    Sidebar,
   },
   data() {
     return {
       quantity: 10,
       mquantity: 50,
       value: 1,
-      title: "",
-      shDes: "",
-      detail: "",
       picked: "0",
-      coverimg: [
-        "swu-water.jpg",
-        "IMG_20190126_114352_2.jpg",
-        "swu_lotus.jpg",
-        "00100dPORTRAIT_00100_BURST20190703172640303_COVER.jpg",
-        "IMG_20190629_173826.jpg",
-        "2019-08-08 15.27.48-1.jpg",
-      ],
+      user: {
+        coverimg: [
+          "photo-989-full.jpeg",
+          "photo-1032-large.jpeg",
+          "photo-985-full.jpeg",
+          "photo-11471-full.jpeg",
+          "swu3.jpg",
+          "swu4.jpg",
+          "swu2.jpg",
+        ],
+      },
     };
   },
-  async submitAct() {
-      try {
-        const response = await axios.post("/activities/", {
-          
-        });
-        console.log(response.config);
-        alert("Activity has been created!");
-        // this.$router.push({ name: "history" });
-      } catch (err) {
-        alert(err.response.data.error_message);
-        console.log(err.response.data.error_message);
-      }
-    },
 };
 </script>
 
 <style scoped>
-.card-img {
-  border-radius: 15px;
-  max-height: 414px;
-  object-position: center;
-  object-fit: cover;
-}
 .radiocollection {
   text-align-last: center;
 }
 img.profile-img {
   width: 85%;
-  height: 200px;
+  /* height: 160px; */
   object-fit: cover;
 }
 

@@ -1,7 +1,9 @@
 <template>
   <div class="row activity-card">
 
-
+<div v-if="act.status === 'Approve'">
+  {{act[0].name}}
+</div>
     <div class="col mt-5">
       <div class="card">
         <span class="badge time-badge ">Time</span>
@@ -149,35 +151,15 @@
         </div>
       </div>
     </div>
-    <div class="col mt-5">
-      <div class="card">
-        <span class="badge time-badge ">Time</span>
-        <span class="badge user-badge fw-light fs-6">
-          <p class="firstname d-inline ">Firstname</p>
-          <p class="lastname  d-inline px-2">L.</p>
-          <img
-            class=" profile-img  "
-            v-bind:src="profile.img"
-            alt="profile.img"
-          />
-        </span>
 
-        <img src="/img/photo-1003-full.jpeg" class="card-img-top" alt="..." />
-
-        <div class="card-body">
-          <p class="fs-6 fw-bold act-name">
-            Activity Name....
-          </p>
-          <br />
-          <p class="card-text float-start">Activity Description...…...</p>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
+  import axios from "axios";
+
 export default {
+  
   props: {},
   data() {
     return {
@@ -189,7 +171,17 @@ export default {
         img:
           "https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg",
       },
+      act:{},
     };
+  },
+  async created() {
+    try {
+      const result = await axios.get("/activities");
+      this.act = result.data;
+      console.log(this.act);
+    } catch (err) {
+      alert(err.result.data.error_message);
+    }
   },
 };
 </script>

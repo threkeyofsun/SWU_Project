@@ -21,16 +21,16 @@
       </div>
       <!-- profile -->
       <div class="badge user-badge fw-light">
-        <img class="profile-img mx-1" v-bind:src="profile.img" alt="profile.img" />
-        <p class="firstname d-inline px-1 align-bottom">{{ user.firstname }}</p>
-        <p class="lastname d-inline px-1 align-bottom">L.</p>
+        <img class="profile-img mx-1" :src="information.profile_img" alt="profile.img" />
+        <p class="firstname d-inline px-1 align-bottom">{{ information.firstname }}</p>
+        <p class="lastname d-inline px-1 align-bottom">{{ information.lastname }}</p>
       </div>
 
       <hr class="hr-head" />
       <div class="align-self-center">
         <div>
           <p class="respon-menu mt-2">
-            <router-link class="homepage" to="/Homepage"> Homepage </router-link>
+            <router-link class="homepage" to="/homepage"> Homepage </router-link>
           </p>
         </div>
         <div>
@@ -63,7 +63,7 @@
       >
       <hr class="hr-right" />
       <div class="profile-menu float-end fw-bold">
-        <router-link to="/login"><p class="text-danger">Logout</p></router-link>
+        <p class="text-danger" @click="logout">Logout</p>
       </div>
     </div>
   </transition>
@@ -97,14 +97,14 @@
           <div class="profile-1 d-flex flex-wrap justify-content-center">
             <img
               class="img-fluid profile-img"
-              v-bind:src="profile.img"
+              :src="$store.state.info.profile_img"
               alt="profile.img"
             />
             <div class="username px-3">
-              <p class="firstname d-inline me-2" v-if="user={}">Firstname </p>
-              <p class="firstname d-inline">{{ user.firstname }}</p>
+              <!-- <p class="firstname d-inline me-2" v-if="information={}">{{$store.state.info}}</p> -->
+              <p class="firstname d-inline me-2">{{ $store.state.info.firstname }}</p>
               <i
-                class="arrow-down dropdown-toggle "
+                class="arrow-down dropdown-toggle"
                 role="button"
                 data-bs-toggle="dropdown"
               ></i>
@@ -114,10 +114,16 @@
                     >My Profile</router-link
                   >
                 </li>
-                <li><a class="dropdown-item" href="#">Upcoming Activity</a></li>
-                <li>
-                  <a class="dropdown-item" href="#">Create a New Event </a>
-                </li>
+                <router-link to="/history">
+                  <li>
+                    <a class="dropdown-item" href="#">History</a>
+                  </li></router-link
+                >
+                <router-link to="/Create_News">
+                  <li>
+                    <a class="dropdown-item" href="#">Create a New Event </a>
+                  </li></router-link
+                >
 
                 <div class="language-menu text-center">
                   <p class="mb-0">
@@ -158,13 +164,21 @@ export default {
       },
 
       user: {},
+      information: {},
     };
   },
   async created() {
     const result = await axios.get("/users/profile");
-    this.user = result.data;
+    this.information = result.data;
   },
-  methods: {},
+
+  methods: {
+    async logout() {
+      const result = await axios.delete("/users/logout");
+      this.user = result.data;
+      this.$router.push({ name: "login" });
+    },
+  },
 };
 </script>
 
@@ -207,7 +221,7 @@ img.swu-inside {
 
 /* profile --------------------------------------------------------*/
 .dropdown-toggle::after {
-    vertical-align: 0.05em;
+  vertical-align: 0.05em;
 }
 .profile {
   margin-top: 3%;
@@ -247,59 +261,62 @@ img.swu-inside {
   color: #636468;
 }
 
-a.active .homepage {
+a.active.homepage {
   padding: 0% 22% 1% 11%;
   margin: 0% 0% 0% -9%;
   background-color: #769e94;
   border-radius: 0px 36px 36px 0px;
   color: white !important;
+  border: none;
 }
 
-a.active .event {
+a.active.event {
   padding: 0% 33% 1% 9%;
   margin: 0% 0% 0% -9%;
   background-color: #769e94;
   border-radius: 0px 36px 36px 0px;
   color: white;
+  border: none;
 }
 
-a.active .contact {
+a.active.router-link-exact-active.contact {
   padding: 0% 33% 1% 9%;
   margin: 0% 0% 0% -9%;
   background-color: #769e94;
   border-radius: 0px 36px 36px 0px;
   color: white !important;
+  border: none;
 }
 
-.router-link-active.router-link-exact-active .profilepage {
+a.active .profilepage {
   padding: 0% 9% 0% 13%;
   margin: 2% 36% 0% 12%;
   border-radius: 0px 36px 36px 0px;
   background-color: #b37d83;
   color: rgb(255, 255, 255) !important;
 }
-.router-link-active.router-link-exact-active .historypage {
+a.active .historypage {
   padding: 0% 9% 0% 13%;
   margin: -3% 36% 0% 12%;
   border-radius: 0px 36px 36px 0px;
   background-color: #b37d83;
   color: rgb(255, 255, 255) !important;
 }
-.router-link-active.router-link-exact-active .upcomingpage {
+a.active .upcomingpage {
   padding: 0% 9% 0% 13%;
   margin: -3% 36% 0% 12%;
   border-radius: 0px 36px 36px 0px;
   background-color: #b37d83;
   color: rgb(255, 255, 255) !important;
 }
-.router-link-active.router-link-exact-active .recruite {
+a.active .recruite {
   padding: 0% 9% 0% 13%;
   margin: -3% 36% 0% 12%;
   border-radius: 0px 36px 36px 0px;
   background-color: #b37d83;
   color: rgb(255, 255, 255) !important;
 }
-.router-link-active.router-link-exact-active .createnews {
+a.active .createnews {
   padding: 0% 9% 0% 13%;
   margin: -3% 36% 5% 12%;
   border-radius: 0px 36px 36px 0px;

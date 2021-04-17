@@ -37,6 +37,7 @@
 import headerTemp from "../components/headerTemp";
 import foot from "../components/footer";
 import reg from "../components/reg";
+import axios from "axios";
 
 export default {
   name: "About",
@@ -49,6 +50,11 @@ export default {
     return {
      
     };
+  },
+  async created() {
+    const result = await axios.get("/users/profile");
+    this.$store.state.info = result.data;
+    this.$store.commit("setAuthentication", true);
   },
 };
 </script>

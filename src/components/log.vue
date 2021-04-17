@@ -1,9 +1,7 @@
 <template>
   <!-- Login------------------------------------------------- -->
-
+  <!-- {{$store.state.authenticated}} -->
   <div class="right-content">
-    <!-- <p>{{ $store.state.username ? $store.state.username : "Not Login yet" }}</p> -->
-
     <div class="login-part">
       <form id="login-form" @submit.prevent="addToAPI">
         <input
@@ -12,13 +10,15 @@
           v-model.trim="user.username"
           placeholder="| Username"
         />
+        <!-- <p v-if="messageUser" class="Errmes text-danger">** {{ messageUser }} **</p> -->
+
         <input
           type="password"
           name="password"
           v-model="user.password"
           placeholder="| Password"
         />
-
+        <!-- <p v-if="messagePass" class="Errmes text-danger">** {{ messagePass }} **</p> -->
         <div class="btn-home">
           <button class="login-btn" id="login-btn">Login</button>
         </div>
@@ -29,7 +29,6 @@
 
 <script>
 import axios from "axios";
-// import * as auth from "../services/AuthService";
 
 export default {
   // beforeCreate: function(){
@@ -39,7 +38,8 @@ export default {
   components: {},
   data() {
     return {
-      message: "",
+      messageUser: "",
+      messagePass: "",
       user: {
         username: "",
         password: "",
@@ -57,13 +57,28 @@ export default {
           username: this.user.username,
           password: this.user.password,
         });
-        console.log(response.data.username);
-        alert(response.data.firstname);
-        this.$router.push({ name: 'homepage' })
-
+        if (
+          this.user.username == this.$store.state.admin &&
+          this.user.password == this.$store.state.adminpass
+        ) {
+          alert("Wellcome Admin!");
+          this.$router.push({ name: "adminpage" });
+          this.$store.commit("setAuthenticationAdmin", true);
+          this.$store.commit("setAuthentication", true);
+        } else {
+          this.$store.state.token = response.data;
+          console.log(this.$store.state.token);
+          alert("Wellcome User!");
+          this.$router.push({ name: "homepage" });
+        }
       } catch (err) {
-        alert(err.response.data.error_message);
         console.log(err.response.data.error_message);
+
+        (this.user.username = ""),
+          (this.user.password = ""),
+          alert(err.response.data.error_message);
+        this.messageUser = err.response.data.error_message[0];
+        this.messagePass = err.response.data.error_message[1];
       }
 
       // this.message = response.data.msg;
@@ -72,4 +87,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.Errmes {
+  margin-top: -11%;
+}
+</style>

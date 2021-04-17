@@ -6,45 +6,52 @@
       <div class="headline">
         <p>&nbsp; &nbsp;&nbsp; Select your cover image</p>
       </div>
-      <form class="ac-req-form">
+      <form
+        id="submitAct"
+        action=""
+        @submit.prevent="submitAct"
+        method="post"
+        enctype="multipar/form-data"
+        class="ac-req-form"
+      >
         <div class="coverpost">
           <div class="row radiocollection">
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <!-- radio image -->
-                <input type="radio" name="test" value="small" checked />
-                <img class="radioim" src="/img/Mask-Group-25.png" />
+                <input type="radio" name="test" :value="0" v-model="picked" checked />
+                <img class="radioim" :src="'/img/' + coverimg[0]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="big" />
-                <img class="radioim" src="/img/IMG_20190126_114352_2.jpg" />
+                <input type="radio" name="test" value="1" v-model="picked" />
+                <img class="radioim" :src="'/img/' + coverimg[1]" />
               </label>
             </div>
 
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="big" />
-                <img class="radioim" src="/img/Mask-Group-28.png" />
+                <input type="radio" name="test" value="2" v-model="picked" />
+                <img class="radioim" :src="'/img/' + coverimg[2]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="big" />
-                <img class="radioim" src="/img/00100dPORTRAIT_00100_BURST20190703172640303_COVER.jpg" />
+                <input type="radio" name="test" value="3" v-model="picked" />
+                <img class="radioim" :src="'/img/' + coverimg[3]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="big" />
-                <img class="radioim" src="/img/IMG_20190629_173826.jpg" />
+                <input type="radio" name="test" value="4" v-model="picked" />
+                <img class="radioim" :src="'/img/' + coverimg[4]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="big" />
-                <img class="radioim" src="/img/2019-08-08 15.27.48-1.jpg" />
+                <input type="radio" name="test" value="5" v-model="picked" />
+                <img class="radioim" :src="'/img/' + coverimg[5]" />
               </label>
             </div>
           </div>
@@ -65,8 +72,8 @@
 
           <div class="user-badge">
             <img
-              class="profile-img mt-5 my-4"
-              src="/img/Mask-Group-25.png"
+              class="profile-img cover-img mt-5 my-4"
+              :src="'/img/' + coverimg[picked]"
               alt="profile.
             img"
             />
@@ -88,7 +95,9 @@
                 type="input"
                 class="form-control form-control-sm"
                 id="title"
-                placeholder=""
+                placeholder="e.g. Orientation Day"
+                v-model="title"
+                required
               />
             </div>
           </div>
@@ -102,106 +111,123 @@
 
             <div class="col-sm-2 col-6 mx-2 mx-sm-none">
               <input
-                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                oninput="javascript: if (this.value.length > this.value) this.value = this.value.slice(0, this.maxLength);"
                 maxlength="3"
-                v-model="value"
+                v-model="member_amount"
                 :min="1"
-                :max="100"
+                :max="1000"
                 class="form-input"
                 type="number"
                 id="example-number-input"
+                required
               />
             </div>
           </div>
 
           <div class="row">
             <div class="col-12 col-sm-3">
-              <label for="st-year">Student Year</label>
+              <label for="st-year">Activity Type</label>
             </div>
-            
-            <div class="col-12 col-sm-8 mx-3 px-0">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault"
-                checked
-              />
-              <label class="form-check-label mx-2" for="flexCheckDefault"> 1 </label>
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault"
-                checked
-              />
-              <label class="form-check-label mx-2" for="flexCheckDefault"> 2 </label>
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault"
-                checked
-              />
-              <label class="form-check-label mx-2" for="flexCheckDefault"> 3 </label>
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault"
-                checked
-              />
-              <label class="form-check-label mx-2" for="flexCheckDefault"> 4 </label>
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault"
-                checked
-              />
-              <label class="form-check-label mx-2" for="flexCheckDefault">
-                <p>More Than 5</p>
-              </label>
+
+            <div class="col-12 col-sm-8 mx-3 px-0 ms-5 ms-md-4">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault1"
+                  value="Volunteer"
+                  v-model="type"
+                  checked
+                />
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Volunteer Activities
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault2"
+                  value="Regular"
+                  v-model="type"
+                />
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Regular Activities
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault3"
+                  value="Force"
+                  v-model="type"
+                />
+                <label class="form-check-label" for="flexRadioDefault3">
+                  Force Activities
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault4"
+                  value="Others"
+                  v-model="type"
+                />
+                <label class="form-check-label" for="flexRadioDefault4">
+                  Others Activities
+                </label>
+              </div>
             </div>
           </div>
           <div class="row my-4">
             <div class="col-3">
               <span class="text-danger">*</span
-              ><label for="title" class="form-label">At Place</label>
+              ><label for="place" class="form-label">At Place</label>
             </div>
             <div class="col-9">
               <input
                 type="input"
                 class="form-control form-control-sm"
-                id="title"
-                placeholder=""
+                id="place"
+                placeholder="e.g. Building G, Srinakharinwirot University Ongkharak Campus"
+                required
+                v-model="place"
               />
             </div>
           </div>
           <div class="row my-4">
-            <div class="col-sm-2 col-12 mx-2 mx-sm-0">
+            <div class="col-sm-2 col-12 mx-2 mx-sm-0 pe-0">
               <span class="text-danger">*</span
-              ><label for="st-date" class="form-label">Start Date</label>
+              ><label for="st-date" class="form-label">Start At</label>
             </div>
             <div class="col-sm-4 col-8 mx-2 mx-sm-0">
               <input
-                type="date"
+                type="datetime-local"
                 class="form-control form-control-sm"
                 id="st-date"
-                value=""
+                v-model="start_date"
+                required
               />
             </div>
 
             <div class="col-sm-2 col-12 mx-2 mt-2 mt-sm-0 mx-sm-0">
               <span class="text-danger">*</span
-              ><label for="st-time" class="form-label">At Time</label>
+              ><label for="st-time" class="form-label">End At</label>
             </div>
             <div class="col-sm-4 col-8 mx-2 mx-sm-0">
               <input
-                type="time"
+                type="datetime-local"
                 class="form-control form-control-sm"
                 id="st-time"
-                value=""
+                v-model="end_date"
+                required
               />
             </div>
           </div>
@@ -209,58 +235,48 @@
           <div class="row my-4">
             <div class="col-sm-2 col-12 mx-2 mx-sm-0">
               <span class="text-danger">*</span
-              ><label for="st-date" class="form-label">End Date</label>
+              ><label for="Faculty" class="form-label">Faculty</label>
             </div>
             <div class="col-sm-4 col-8 mx-2 mx-sm-0">
               <input
-                type="date"
+                type="input"
                 class="form-control form-control-sm"
-                id="st-date"
-                value=""
+                id="Faculty"
+                placeholder="e.g. Enginnering"
+                required
+                v-model="faculty"
               />
             </div>
-
-            <div class="col-sm-2 col-12 mx-2 mt-2 mt-sm-0 mx-sm-0">
+            <div class="col-sm-2 col-12 mx-2 mx-sm-0 mt-3 mt-sm-0 px-sm-0 px-md-2">
               <span class="text-danger">*</span
-              ><label for="st-time" class="form-label">End Time</label>
+              ><label for="department" class="form-label">Department</label>
             </div>
             <div class="col-sm-4 col-8 mx-2 mx-sm-0">
               <input
-                type="time"
+                type="input"
                 class="form-control form-control-sm"
-                id="st-time"
-                value=""
+                id="department"
+                placeholder="e.g. Computer Enginnering"
+                required
+                v-model="department"
               />
-            </div>
-          </div>
-
-          <div class="row my-4">
-            <div class="col-sm-3">
-              <span class="text-danger">*</span
-              ><label for="title" class="form-label">Short Description</label>
-            </div>
-            <div class="col-sm-9">
-              <textarea
-                class="form-control"
-                placeholder="Leave a short description here"
-                id="floatingTextarea2"
-                style="height: 100px"
-              ></textarea>
             </div>
           </div>
 
           <div class="row my-4">
             <div class="col-12">
               <span class="text-danger">*</span
-              ><label for="title" class="form-label">Detials</label>
+              ><label for="detail" class="form-label">Detials</label>
             </div>
             <!-- Submit btn -->
             <div class="col-12">
               <textarea
                 class="form-control"
                 placeholder="Leave a short description here"
-                id="floatingTextarea2"
+                id="detail"
                 style="height: 300px"
+                required
+                v-model="description"
               ></textarea>
             </div>
           </div>
@@ -274,7 +290,6 @@
             class="btn btn btn-secondary mb-2 mt-4"
             type="submit"
             value="submit"
-            @click="onUpload"
           >
             Create
           </button>
@@ -309,6 +324,10 @@
 import Sidebar from "../components/sliderbar";
 import HomepageHeader from "../components/HomepageHeader";
 import HPfooter from "../components/homepageFooter";
+import axios from "axios";
+import moment from "moment";
+
+
 export default {
   name: "ProductDetailPage",
   components: {
@@ -318,25 +337,77 @@ export default {
   },
   data() {
     return {
-      quantity: 10,
-      mquantity: 50,
       value: 1,
-      user: {
-        faculty: "0",
-      },
+      picked: "0",
+      coverimg: [
+        "swu-water.jpg",
+        "IMG_20190126_114352_2.jpg",
+        "swu_lotus.jpg",
+        "00100dPORTRAIT_00100_BURST20190703172640303_COVER.jpg",
+        "IMG_20190629_173826.jpg",
+        "2019-08-08 15.27.48-1.jpg",
+      ],
+      description: "",
+      department: "",
+      faculty: "",
+      end_date: "",
+      title: "",
+      member_amount: "",
+      start_date: "",
+      type: "",
+      place: "",
     };
+  },
+  methods: {
+    async submitAct() {
+      try {
+        const response = await axios.post("/activities/", {
+          cover_img: this.coverimg[this.picked],
+          name: this.title,
+          type: this.type,
+          faculty: this.faculty,
+          department: this.department,
+          start_date: moment(this.start_date).format("YYYY-MM-DD HH:mm:ss"),
+          end_date: moment(this.end_date).format("YYYY-MM-DD HH:mm:ss"),
+          member_amount: this.member_amount,
+          place: this.place,
+          description: this.description,
+        });
+        console.log(response.config);
+        alert("Activity has been created!");
+        this.$router.push({ name: "history" });
+      } catch (err) {
+        alert(err.response.data.error_message);
+        console.log(err.response.data.error_message);
+      }
+    },
+    createAt() {
+      const thisMoment = moment(this.start_date).format("YYYY-MM-DD");
+      return thisMoment;
+    },
   },
 };
 </script>
 
 <style scoped>
-    .radiocollection{
-    text-align-last: center;
-  }
-img.cover{  
+/* Cover Image */
+img.cover-img {
+  -o-object-position: unset;
+  object-position: top;
+  -o-object-fit: cover;
+  object-fit: cover;
+  height: 265px;
+  width: 360px;
+  border-radius: 23px 0px 23px 23px;
+}
+/*  */
+.radiocollection {
+  text-align-last: center;
+}
+img.cover {
   width: 100%;
-    margin-left: 0%;
-    padding: 2px;
+  margin-left: 0%;
+  padding: 2px;
 }
 
 .image-preview.col-6 {
@@ -408,15 +479,13 @@ img.cover{
 .radioim {
   opacity: 0.3;
   object-fit: cover;
-  height:150px;
+  height: 150px;
   width: 150px;
   border-radius: 0px;
 }
 
-
-
 /* HIDE RADIO */
-[type="radio"] {
+.radiocollection [type="radio"] {
   position: absolute;
   opacity: 0;
   width: 0;
@@ -424,12 +493,12 @@ img.cover{
 }
 
 /* IMAGE STYLES */
-[type="radio"] + img {
+.radiocollection [type="radio"] + img {
   cursor: pointer;
 }
 
 /* CHECKED STYLES */
-[type="radio"]:checked + img {
+.radiocollection [type="radio"]:checked + img {
   opacity: 1;
 }
 /* Radio */
@@ -474,7 +543,6 @@ img.cover{
 }
 
 @media screen and (max-width: 1320px) and (min-width: 768px) {
-  
   .container[data-v-e3c53f88] {
     max-width: 643px;
     width: 100%;
@@ -488,22 +556,24 @@ img.cover{
   }
 }
 @media only screen and (max-width: 766px) {
-  
-  
   .container {
     max-width: 92%;
   }
   .headline p[data-v-047933e9] {
     font-size: inherit;
   }
-  img.profile-img {
-    margin-left: -8px;
-  }
   .col-3 {
     flex: 0 0 auto;
     width: 25%;
     display: inherit;
   }
-  
+}
+/* Responsive Cover Image */
+@media only screen and (max-width: 380px) and (min-width: 280px) {
+  img.cover-img[data-v-e3c53f88] {
+    width: 13rem;
+    height: 9rem;
+    margin-left: -2%;
+  }
 }
 </style>

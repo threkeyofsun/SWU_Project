@@ -92,7 +92,7 @@
             name="Majors"
             v-model.trim="user.department"
             required
-            placeholder="| Majors"
+            placeholder="| Department"
           />
         </div>
 
@@ -143,18 +143,18 @@
               class="type d-inline"
               type="radio"
               name="type"
-              value="Stuff"
+              value="Staff"
               required
               v-model="user.type"
             />
-            <label for="Stuff">Stuff</label>
+            <label for="Stuff">Staff</label>
           </div>
         </div>
         <!-- End of input -->
 
         <div class="mb-5 mb-xl-auto">
           <!-- @click="doSomething(), $router.push('/homepage')" -->
-          <button class="login-btn"  id="login-btn">Register</button>
+          <button class="login-btn" id="login-btn">Register</button>
         </div>
       </form>
     </div>
@@ -181,8 +181,8 @@ export default {
         id: "",
         type: "",
         passwordError: "",
-      },  
-      message:'',
+      },
+      message: "",
       showSuccessMessage: false,
       error: false,
       typeOfTask: null, // 1 = recurring, 2 = scheduled
@@ -202,28 +202,10 @@ export default {
       this.user.passwordError =
         this.user.password.length > 7 ? "" : "Password must be at least 8 chars long";
     },
-    // async addToCart() {
-    //     const res = await axios.post('/users/api/user', {
-    //       username: this.user.username,
-    //       password: this.user.password,
-    //       firstname_en: this.user.firstname,
-    //       lastname_en: this.user.lastname,
-    //       faculty: this.user.faculty,
-    //       department: this.user.department,
-    //       tel_no: this.user.tel_no,
-    //       s_id: this.user.id,
-    //       s_type: this.user.type,
-    //       email: this.user.email,
-    //     });
-    //     console.log(res);
-    //     this.showSuccessMessage = true;
-    //     setTimeout(() => {
-    //       this.$router.push('/');
-    //     }, 1500);
-    //   },
+
     async sendFile() {
       try {
-        const response = await axios.post("/users/api/register", {
+        const response = await axios.post("/users/register", {
           username: this.user.username,
           password: this.user.password,
           firstname: this.user.firstname,
@@ -231,34 +213,31 @@ export default {
           faculty: this.user.faculty,
           department: this.user.department,
           tel_no: this.user.tel_no,
-          s_id: this.user.id,
-          s_type: this.user.type,
+          status_id: this.user.id,
+          status: this.user.type,
           email: this.user.email,
         });
-       
-        console.log('Your registration has been successful');
+
+        console.log(response.config);
         this.showSuccessMessage = true;
-        alert(response.data);
-        this.user.username = '',
-        this.user.password = '',
-        this.user.firstname = '',
-        this.user.lastname = '',
-        this.user.faculty = '0',
-        this.user.department = '',
-        this.user.tel_no = '',
-        this.user.id = '',
-        this.user.type = '',
-        this.user.email = ''
-        this.$router.push({name:'login'})
-  
+        alert("Your registration has been successful");
+        (this.user.username = ""),
+          (this.user.password = ""),
+          (this.user.firstname = ""),
+          (this.user.lastname = ""),
+          (this.user.faculty = "0"),
+          (this.user.department = ""),
+          (this.user.tel_no = ""),
+          (this.user.id = ""),
+          (this.user.type = ""),
+          (this.user.email = "");
+        this.$router.push({ name: "login" });
       } catch (err) {
         this.error = true;
         alert(err.response.data.error_message);
-        console.log(err.response.data.error_message)
+        console.log(err.response.data.error_message);
       }
-      
     },
-
   },
 };
 </script>

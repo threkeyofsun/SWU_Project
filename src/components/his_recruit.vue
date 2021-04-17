@@ -1,25 +1,91 @@
 <template>
   <div class="parti mt-2 mt-md-4">
     <div>
-      <p class="btn draw-border">In Process</p>
-      <div class="mx-xxl-5">
-        <li> <router-link to="/event/activities/:id"> <span> Acttivity I Lorem Ipsum is simply dummy text... </span></router-link></li>
-        <hr />
+      <p class="btn draw-border">In Progress</p>
+      <div class="status-color">
+        Status:
+        <p class="d-inline mx-2 sq-de"><span class="square sq-pending"></span>Pending</p>
+        <p class="d-inline mx-2 sq-reject"><span class="square"></span>Reject</p>
+        <p class="d-inline mx-2 sq-approve"><span class="square"></span>Approve</p>
+      </div>
+      <!--  -->
+      <div>
+        <div v-if="act">
+          <div
+            v-for="(activity, index) in act.history.activity.recruitment"
+            :key="(activity, index)"
+          >
+            <!--  -->
+            <div class="mx-xxl-5 my-3 row" v-if="act.history.activity.recruitment[index].status != 'Approve' ">
+              <div class="col col-sm-6 col-12 col-6 ms-0 me-0 align-self-center">
+                <router-link :to="{ path: '/event/activities/' + act.history.activity.recruitment[index]._id }" target="_blank">
+                  {{ act.history.activity.recruitment[index].name }}
+                </router-link>
+              </div>
+              <span class="col-sm-6 col-12 col mx-0 mt-3 mt-sm-0 align-self-center">
+                <button
+                  type=""
+                  class="mx-1 btn bg-white btn-outline-warning border border-warning text-warning"
+                  :class="`${comments ? 'd-none' : ''}`"
+                >
+                  Comment
+                </button>
+                <button
+                  type=""
+                  :class="`${approve ? 'd-none' : ''}`"
+                  class="btn mx-1 text-white bg-secondary"
+                >
+                  Cancel
+                </button>
+              </span>
+              <hr class="mt-3" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <div>
       <p class="btn draw-border draw-border1">On Going</p>
-      <div class="mx-xxl-5">
-        <p class="text-center"> </p>
-        <hr />
+      <div v-if="act">
+        <div v-for="(activity, index) in act.history.activity.recruitment"
+            :key="(activity, index)">
+          <div v-if="act.history.activity.recruitment[index].status === 'Approve' ">
+            {{ act.history.activity.recruitment[index].name }}
+          </div>
+        </div>
       </div>
+
+      <!-- <div class="mx-xxl-5 row">
+        <div class="col col-sm-6 col-12 col-6 ms-0 me-0 align-self-center">
+          <router-link to="/event/activities/:id">
+            <span class="square sq-approve"></span>
+            Orientation Day
+          </router-link>
+        </div>
+        <span class="col-sm-6 col-12 col mx-0 mt-3 mt-sm-0 align-self-center">
+          <button type="" class="btn mx-1 text-white bg-secondary fw-normal">Edit</button>
+          <button type="" class="btn mx-1 text-white bg-secondary fw-normal">
+            Cancel
+          </button>
+        </span>
+        <hr class="mt-3" />
+      </div> -->
     </div>
 
     <div>
-      <p class="btn draw-border draw-border2">Past Activity</p>
+      <p class="btn draw-border draw-border2">Completed Activity</p>
       <div class="mx-xxl-5">
-        <p class="text-center"> </p>
+        <p class="text-center"></p>
+        <div v-if="act">
+        <div v-for="(activity, index) in act.history.activity.recruitment"
+            :key="(activity, index)">
+          <div v-if="act.history.activity.recruitment[index].status === 'Completed' ">
+            {{ act.history.activity.recruitment[index].name }}
+          </div>
+        </div>
+      </div>
+
         <hr />
       </div>
     </div>
@@ -27,14 +93,54 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
-    return {};
+    return {
+      comments: "false",
+      act: null,
+      recruitment_act: null,
+    };
+  },
+  async mounted() {
+    try {
+      const { data } = await axios.get("/users/history/recruitment");
+      this.act = data;
+      this.recruitment_act = this.act.history.activity.recruitment;
+      console.log(this.recruitment_act);
+    } catch (err) {
+      alert(err);
+    }
   },
 };
 </script>
 
 <style lang="css" scoped>
+.status-color {
+  border-bottom: solid 3px;
+  padding-bottom: 3px;
+}
+.square {
+  width: 10px;
+  height: 10px;
+  display: inline-flex;
+  background: currentColor;
+  margin-right: 10px;
+}
+.sq-de {
+  color: #ffca59;
+}
+.sq-reject {
+  color: #f87070;
+}
+.sq-approve {
+  color: cadetblue;
+  margin: 0px;
+}
+span .btn {
+  background: cornflowerblue;
+}
 .parti {
   font-family: "THSaraban";
   font-size: larger;

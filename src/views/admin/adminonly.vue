@@ -1,14 +1,16 @@
 <template>
-  <HomepageHeader />
-
-  <div class="container">
-    <p class=" mb-4 anounce-title text-center text-md-start">{{actDetail.name}}</p>
+  <div class="container mt-5 pt-3">
+    <p class="mb-4 anounce-title text-center mt-5 text-md-start">{{ actDetail.name }}</p>
     <div class="posting">
       <div class="badge user-badge">
-        <img class="profile-img" :src="actDetail.createdBy.profile_img" alt="profile.img" />
-        <p class="firstname d-inline px-2 ps-4">{{actDetail.createdBy.firstname}}</p>
-        <p class="lastname d-inline px-1">{{actDetail.createdBy.lastname}}</p>
-        <p class="time-badge">{{createAt()}}</p>
+        <img
+          class="profile-img"
+          :src="actDetail.createdBy.profile_img"
+          alt="profile.img"
+        />
+        <p class="firstname d-inline px-2 ps-4">{{ actDetail.createdBy.firstname }}</p>
+        <p class="lastname d-inline px-1">{{ actDetail.createdBy.lastname }}</p>
+        <p class="time-badge">{{ createAt() }}</p>
       </div>
     </div>
     <hr />
@@ -19,60 +21,59 @@
       <div class="qualification">
         <div class="d-sm-inline">
           <p class="qa d-inline">Applicant Number :</p>
-          <p class="mx-3 d-inline">{{actDetail.member_amount}}</p>
+          <p class="mx-3 d-inline">{{ actDetail.member_amount }}</p>
         </div>
         <div class="d-sm-inline">
           <p class="qa d-inline">Activity Type :</p>
-          <p class="mx-3 d-inline">{{actDetail.type}}</p>
+          <p class="mx-3 d-inline">{{ actDetail.type }}</p>
         </div>
         <div class="">
           <p class="qa d-inline">At Place :</p>
           <p class="mx-3 d-inline">
-            {{actDetail.place}}
+            {{ actDetail.place }}
           </p>
         </div>
         <div class="d-inline">
           <p class="qa d-inline">Start Date :</p>
           <p class="mx-3 d-inline">
-            {{StartDate()}} <span class="fw-bolder mx-1">At</span> {{StartTime()}}
+            {{ StartDate() }} <span class="fw-bolder mx-1">At</span> {{ StartTime() }}
           </p>
         </div>
         <div class="d-sm-inline d-block">
-          <p class="qa d-inline ">End Date :</p>
+          <p class="qa d-inline">End Date :</p>
           <p class="mx-3 d-inline">
-            {{EndDate()}} <span class="fw-bolder mx-1">At</span> {{EndTime()}}
+            {{ EndDate() }} <span class="fw-bolder mx-1">At</span> {{ EndTime() }}
           </p>
         </div>
         <div>
-          
-        
-        <div class="d-sm-inline d-block">
-          <p class="qa d-inline ">Faculty :</p>
-          <p class="mx-3 d-inline">
-            {{actDetail.faculty}}
-          </p>
-        </div>
-        <div class="d-sm-inline d-block">
-          <p class="qa d-inline ">Department :</p>
-          <p class="mx-3 d-inline">
-            {{actDetail.department}}
-          </p>
-        </div>
+          <div class="d-sm-inline d-block">
+            <p class="qa d-inline">Faculty :</p>
+            <p class="mx-3 d-inline">
+              {{ actDetail.faculty }}
+            </p>
+          </div>
+          <div class="d-sm-inline d-block">
+            <p class="qa d-inline">Department :</p>
+            <p class="mx-3 d-inline">
+              {{ actDetail.department }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
     <hr />
     <p class="py-0 my-3">Attivity Description</p>
     <p class="lorem">
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{actDetail.description}}
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ actDetail.description }}
     </p>
-    <button type="" class="cust-btn " @click="toApply" >
-      <div class="btn draw-border ">Apply HERE</div>
+    <button type="" class="cust-btn">
+      <div class="btn draw-border">Apply HERE</div>
     </button>
     <hr />
 
     <div class="mb-5">
-     
+      <img class="img-act" src="/img/whale.jpg" alt="..." />
+      <img class="img-act" src="/img/3505624.png" />
     </div>
   </div>
 
@@ -80,26 +81,21 @@
 </template>
 
 <script>
-import HomepageHeader from "../components/HomepageHeader";
-import HPfooter from "../components/homepageFooter";
+import HPfooter from "@/components/homepageFooter";
 import axios from "axios";
 import moment from "moment";
 
 export default {
-  
   setup() {
     return {
-      HomepageHeader,
       HPfooter,
-      
     };
   },
-  data(){
-    return{
-      actDetail:{},
+  data() {
+    return {
+      actDetail: {},
       information: {},
-
-    }
+    };
   },
   // async created1() {
   //   const result = await axios.get("/users/profile");
@@ -107,7 +103,9 @@ export default {
   // },
   async created() {
     try {
-      const result = await axios.get(`/activities/${this.$route.params.id}`);
+      const result = await axios.get(
+        `/admin/activities/${this.$route.params.id}`
+      );
       this.actDetail = result.data;
       const res = await axios.get("/users/profile");
       this.$store.state.info = res.data;
@@ -126,7 +124,7 @@ export default {
       const thisMoment = moment(this.actDetail.start_date).format("LL");
       return thisMoment;
     },
-    StartTime(){
+    StartTime() {
       const thisMoment = moment(this.actDetail.start_date).format("LT");
       return thisMoment;
     },
@@ -138,11 +136,6 @@ export default {
       const thisMoment = moment(this.actDetail.end_date).format("LT");
       return thisMoment;
     },
-    async toApply(){
-      const result = await axios.post(`/activities/${this.$route.params.id}`);
-      console.log(result);
-      alert("You have successfully apply the activity!")
-    }
   },
 };
 </script>
@@ -151,11 +144,11 @@ export default {
 /* Start QA */
 .cust-btn {
   box-shadow: none;
-    border: none;
-    padding: 6px 12px;
-    display: block;
-    background: white;
-    width: 100%;
+  border: none;
+  padding: 6px 12px;
+  display: block;
+  background: white;
+  width: 100%;
 }
 button:focus {
   outline: 0;

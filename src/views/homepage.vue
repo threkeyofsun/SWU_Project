@@ -1,6 +1,5 @@
 <template>
   <HomepageHeader />
-
   <section class="content">
     <div class="cover-img d-none d-md-block">
       <img class="cover" src="/img/MaskGroup132x.png" alt="Responsive image" />
@@ -66,6 +65,7 @@
 <script>
 import HomepageHeader from "../components/HomepageHeader";
 import HPfooter from "../components/homepageFooter";
+import axios from "axios";
 
 export default {
   components: {
@@ -75,26 +75,12 @@ export default {
 
   data() {
     return {
-      existentialQuestion: "Am I truly an alligator?",
       announcement: {
-        banners: [
-          "photo-989-full.jpeg",
-          "photo-1032-large.jpeg",
-          "photo-985-full.jpeg",
-          "photo-1003-full.jpeg",
-          "swu3.jpg",
-          "swu4.jpg",
-          "swu2.jpg",
-        ],
+        banners: ["photo-989-full.jpeg", "photo-1032-large.jpeg", "photo-985-full.jpeg"],
         announce: [
           "Announcement form Admin I ",
           "Announcement form Admin II",
           "Announcement form Admin III ",
-          "Announcement form Admin IV ",
-          "Announcement form Admin II",
-          "Announcement form Admin III ",
-          "Announcement form Admin IV ",
-
         ],
         id: ["Uniform-Term", "Covid-19-situation", "5875sdwe"],
       },
@@ -102,7 +88,27 @@ export default {
         img:
           "https://gswuacth-my.sharepoint.com/personal/nattawade_inala_g_swu_ac_th/Documents/Adobe%20XD%20Design%20I/Object%20Ver.I/Mask%20Group%2013@2x.png",
       },
+      announce:'',
     };
+  },
+  async created() {
+    const result = await axios.get("/users/profile");
+    this.$store.state.info = result.data;
+    this.$store.commit("setAuthentication", true);
+  },
+  async created2() {
+    try {
+      const resulted = await axios.get("/announcements/");
+      this.announce = resulted.data;
+      // User
+      const result = await axios.get("/users/history/recruitment");
+      this.act = result.data;
+      this.$store.state.actvity = this.act;
+      console.log(result.data)
+   
+    } catch (err) {
+      alert(err);
+    }
   },
 };
 </script>
@@ -180,7 +186,4 @@ img.cover {
     max-height: 220px;
   }
 }
-
-
-
 </style>

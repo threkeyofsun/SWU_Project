@@ -40,6 +40,9 @@ import foot from "../components/footer";
 import log from "../components/log";
 
 export default {
+  beforeRouteEnter(){
+    console.log("component based before each");
+  },
   components: {
     headerTemp,
     foot,

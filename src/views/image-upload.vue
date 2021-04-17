@@ -1,14 +1,6 @@
 <template>
-  <form
-    @submit.prevent="sendFile"
-    action=""
-    method="post"
-    enctype="multipar/form-data"
-  >
-    <div
-      v-if="message"
-      :class="`message ${error ? 'bg-danger' : 'bg-success'} `"
-    >
+  <form @submit.prevent="sendFile" action="" method="post" enctype="multipar/form-data">
+    <div v-if="message" :class="`message ${error ? 'bg-danger' : 'bg-success'} `">
       <div class="message-body">{{ message }}</div>
     </div>
 
@@ -30,42 +22,37 @@
             <span class="file-icon">
               <i class="fas fa-upload"></i>
             </span>
-            <span class="file-label">
-              Choose a file...
-            </span>
+            <span class="file-label"> Choose a file... </span>
           </span>
           <span v-if="selectedFile" class="badge bg-secondary">
             {{ selectedFile.name }} &nbsp; &nbsp;
-            <a
-              @click.prevent="selectedFile = ''"
-              class="d-inline btn-close delete"
-            ></a>
+            <a @click.prevent="selectedFile = ''" class="d-inline btn-close delete"></a>
           </span>
         </label>
       </div>
     </div>
-    
+
+    <!-- Preview image -->
+
     <div class="previewImage">
       <div
         class="image-input"
         :style="{ 'background-image': `url(${imageData})` }"
         @click="selectedFile"
       >
-        <p
+        <div
           @input="onUpload"
           :class="selectedFile ? '' : 'd-none'"
           class="px-5 py-5"
-        ></p>
+        ></div>
       </div>
     </div>
 
+    <!-- End of preview image -->
+
     <button
-      :class="
-        `message ${
-          selectedFile ? '' : 'disabled bg-secondary border-secondary'
-        }`
-      "
-      class="btn btn-primary mx-5 my-5 "
+      :class="`message ${selectedFile ? '' : 'disabled bg-secondary border-secondary'}`"
+      class="btn btn-primary mx-5 my-5"
       type="submit"
       value="submit"
       @click="onUpload"
@@ -99,27 +86,23 @@
             <span class="file-icon">
               <i class="fas fa-upload"></i>
             </span>
-            <span class="file-label">
-              Choose a file...
-            </span>
+            <span class="file-label"> Choose a file... </span>
           </span>
         </label>
       </div>
     </div>
 
-    <div class="field  d-inline-block mx-5">
+    <div class="field d-inline-block mx-5">
       <div
         v-for="(file, index) in files"
         :key="index"
         class="my-2"
         :class="`level ${file.invalidMessage && 'text-danger'}`"
       >
-        <div class="level-left ">
-          <div class="level-item m-3 d-inline ">
+        <div class="level-left">
+          <div class="level-item m-3 d-inline">
             {{ file.name }}
-            <span v-if="file.invalidMessage">
-              &nbsp;- {{ file.invalidMessage }}</span
-            >
+            <span v-if="file.invalidMessage"> &nbsp;- {{ file.invalidMessage }}</span>
           </div>
           <a
             @click.prevent="
@@ -132,14 +115,7 @@
       </div>
     </div>
 
-    <button
-      class="btn btn-info mx-5 my-5"
-      type="submit"
-      value="submit"
-     
-    >
-      Send
-    </button>
+    <button class="btn btn-info mx-5 my-5" type="submit" value="submit">Send</button>
   </form>
 
   <!-- Start of Dropzone--------------- -->
@@ -150,16 +126,9 @@
     enctype="multipar/form-data"
   >
     <div class="dropzone">
-      <input
-        type="file"
-        ref="drop"
-        @change="senddropzoneFiles"
-        class="input-field"
-      />
+      <input type="file" ref="drop" @change="senddropzoneFiles" class="input-field" />
 
-      <p v-if="!uploaded" class="call-to-action">
-        Drag your files here
-      </p>
+      <p v-if="!uploaded" class="call-to-action">Drag your files here</p>
 
       <p v-if="uploading" class="progress-bar">
         <progress :value="progress" class="progress bg-primary" max="100">
@@ -176,9 +145,7 @@
       </ul>
     </div>
 
-
     <!-- image -->
- 
   </form>
 </template>
 
@@ -308,9 +275,6 @@ export default {
         this.$emit("input", files[0]);
       }
     },
-    chooseImage() {
-      this.$refs.file.click();
-    },
 
     async sendFile() {
       const formdata = new FormData();
@@ -331,9 +295,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-
-
-
 .text-white {
   background-color: #009dff;
 }

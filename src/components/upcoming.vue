@@ -1,80 +1,75 @@
 <template>
-  <div class="parti mt-2 mt-md-5">
-    <div v-for="(activity, index) in announce" :key="(activity, index)">
-      <div class="mx-xxl-5 row">
-        <li class="col-12 col-md-6 align-self-start mt-2">
-          <router-link
-            :to="{ path: '/admin/announce/' + announce[index]._id }"
-            target="_blank"
-            >" <span> {{ announce[index].name }} </span></router-link
+  <div class="parti mt-2 mt-md-4">
+    <div>
+      <p class="btn draw-border">Volunteer Activities</p>
+      <div class="mx-xxl-5">
+        <li>
+          <router-link to="/event/activities/:id">
+            <span> Acttivity I Lorem Ipsum is simply dummy text... </span></router-link
           >
         </li>
-        <span class="co-12 mt-3 mt-lg-0 col-md-6 text-end-lg butn">
-          <button type="" class="btn btn-outline-warning fw-bolder mx-1 mb-3">
-            Edit
-          </button>
-          <button
-            type=""
-            @click="delAnnounce(announce[index]._id)"
-            class="btn btn-outline-danger fw-bolder mx-1 mb-3"
-          >
-            Delete
-          </button>
-        </span>
+        <hr />
       </div>
-      <hr />
+      <div class="mx-xxl-5">
+        <li>
+          <router-link to="/event/activities/:id">
+            <span> Acttivity II Lorem Ipsum is simply dummy text... </span></router-link
+          >
+        </li>
+        <hr />
+      </div>
     </div>
 
-    <!--  -->
     <div>
-      <router-link to="/createAn"
-        ><button class="btn draw-border mt-3 mb-3 align-center">
-          Add Announcement
-        </button></router-link
-      >
+      <p class="btn draw-border draw-border1">Regular Activities Activities</p>
+      <div class="mx-xxl-5">
+        <li>
+          <router-link to="/event/activities/:id">
+            <span> Acttivity I Lorem Ipsum is simply dummy text... </span></router-link
+          >
+        </li>
+        <hr />
+      </div>
+      <div class="mx-xxl-5">
+        <li>
+          <router-link to="/event/activities/:id">
+            <span> Acttivity II Lorem Ipsum is simply dummy text... </span></router-link
+          >
+        </li>
+      </div>
+    </div>
+
+    <div>
+      <p class="btn draw-border draw-border2">Force Activities</p>
+      <div class="mx-xxl-5">
+        <li>
+          <router-link to="/event/activities/:id">
+            <span> Acttivity I Lorem Ipsum is simply dummy text... </span></router-link
+          >
+        </li>
+        <hr />
+      </div>
+      <div class="mx-xxl-5">
+        <li>
+          <router-link to="/event/activities/:id">
+            <span> Acttivity II Lorem Ipsum is simply dummy text... </span></router-link
+          >
+        </li>
+        <hr />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   data() {
-    return {
-      announce: [],
-      index: "0",
-    };
-  },
-  async created() {
-    try {
-      const result = await axios.get("/announcements/");
-      this.announce = result.data;
-      console.log(result);
-    } catch (err) {
-      alert("Something went wrong");
-    }
-  },
-  methods: {
-    async delAnnounce(announceId) {
-      try {
-        if (window.confirm("Do you want to delete this Announcement?")) {
-          const result = await axios.delete(`/admin/announcements/${announceId}`);
-          this.announce.splice(announceId, 1);
-          console.log(result);
-        }
-      } catch (err) {
-        alert("Something went wrong!");
-      }
-    },
+    return {};
   },
 };
 </script>
 
 <style lang="css" scoped>
-.text-start {
-  text-align: left;
-}
 .parti {
   font-family: "THSaraban";
   font-size: larger;
@@ -83,11 +78,8 @@ export default {
   max-width: 100%;
 }
 .parti hr {
-  margin-left: 11%;
   margin-right: 11%;
-  margin-top: 0;
 }
-
 @media (min-width: 576px) {
   .container-sm,
   .container {
@@ -170,7 +162,7 @@ export default {
 .draw-border {
   @include btn-border-drawing(#58afd1, #ffe593, 4px, bottom, right);
 }
-.draw-border[data-v-693b56fe] {
+.draw-border {
   box-shadow: inset 0 0 0 4px #7aa15596;
   color: #214c5eb4;
   transition: color 0.25s 0.0833333333s;
@@ -180,11 +172,14 @@ export default {
 
 //=== Button styling, semi-ignore
 .btn {
-  cursor: pointer;
+  background: none;
+  border: none;
+  cursor: default;
   line-height: 1.5;
-  padding: 0.5em 3%;
+  font: 700 1.3rem "THSaraban";
+  padding: 0.3em 3%;
   letter-spacing: 0.05rem;
-
+  width: 91%;
   &:focus {
     outline: 2px dotted #55d7dc;
   }
