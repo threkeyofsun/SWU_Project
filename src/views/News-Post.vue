@@ -2,34 +2,25 @@
   <HomepageHeader />
 
   <div class="container">
-    <p class="mt-3 mb-4 anounce-title text-center text-md-start">News Title</p>
+    <p class="mt-3 mb-4 anounce-title text-center text-md-start"> {{$store.state.newsData.title}} </p>
     <div class="posting">
       <div class="badge user-badge">
-        <img class="profile-img" src="/img/Mask-Group-25.png" alt="profile.img" />
-        <p class="firstname d-inline px-2">Firstname</p>
-        <p class="lastname d-inline px-1">L.</p>
-        <p class="time-badge">Jan 7, 2020</p>
+        <img class="profile-img" :src="creator.profile_img" alt="profile.img" />
+        <p class="firstname d-inline px-2"> {{creator.firstname}} </p>
+        <p class="lastname d-inline px-1">{{creator.lastname}}</p>
+        <p class="time-badge"> {{createAt()}} </p>
       </div>
     </div>
     <hr />
-    <!-- Detail -->
     <div class="detail my-4">
       <p>News Details</p>
     </div>
     <p class="lorem">
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lorem Ipsum is simply dummy text of
-      the printing and typesetting industry. Lorem Ipsum has been the industry's standard
-      dummy text ever since the 1500s, when an unknown printer took a galley of type and
-      scrambled it to make a type specimen book. It has survived not only five centuries,
-      but also the leap into electronic typesetting, remaining essentially unchanged. It
-      was popularised in the 1960s with the release of Letraset sheets containing Lorem
-      Ipsum passages, and more recently with desktop publishing software like Aldus
-      PageMaker including versions of Lorem Ipsum
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{$store.state.newsData.description}}
     </p>
     <hr />
     <div class="mb-5">
-      <img class="img-act" src="/img/whale.jpg" alt="..." />
-      <img class="img-act" src="/img/3505624.png" />
+      
     </div>
   </div>
 
@@ -39,13 +30,41 @@
 <script>
 import HomepageHeader from "../components/HomepageHeader";
 import HPfooter from "../components/homepageFooter";
+import axios from "axios";
+import moment from "moment";
 
 export default {
   setup() {
     return {
       HomepageHeader,
       HPfooter,
+      creator: {},
+      newsDetail:{},
+      test:"",
     };
+  },
+  async mounted()  {
+    const newsdata = await axios.get(`/news/${this.$route.params.id}`);
+    this.$store.state.newsData = newsdata.data;
+    this.creator = this.$store.state.newsData.createdBy;    
+    console.log(newsdata);
+    console.log(this.$store.state.newsData);
+    const res = await axios.get("/users/profile");
+      this.$store.state.info = res.data;
+  },
+  methods: {
+    createAt() {
+      const thisMoment = moment(this.$store.state.newsData.createdAt).format("LL");
+      return thisMoment;
+    },
+    async endActivity() {
+      const result = await axios.put(`/activity/announcements/${this.$route.params.id}`, this.anInfo);
+      this.anInfo = result.data;
+      alert("Updated");
+      this.$router.push({ name: "adminpage" });
+      console.log(this.anInfo);
+
+    },
   },
 };
 </script>

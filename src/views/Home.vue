@@ -9,13 +9,13 @@
           If you have any inconvenience from using the website please, feel free to contact us
         </h3>
       </div>
-      <div class="row mb-4 mt-5">
+      <div class="row mb-4 mt-5 text-center">
        
-        <div class="col-xl-4  ">
+        <!-- <div class="col-xl-4  ">
       <h3>Mr.Jittipat Thepta</h3>
           <h3>Developer</h3>
           <p>jittipat.thepta@g.swu.ac.th</p>
-        </div>
+        </div> -->
          <div class="col-xl-4">
           <h3>Mr.Wongsathorn Pornpirunroch</h3>
           <h3>Developer</h3>

@@ -32,7 +32,7 @@ export default {
   },
   async created() {
     const result = await axios.get("/users/profile");
-    this.user = result.data;
+    this.$store.state.adminInfo = result.data;
     this.firstname = 'Admin';
     this.$store.commit("setAuthenticationAdmin", true);
     const res = await axios.get("/users/profile");

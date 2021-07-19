@@ -1,50 +1,134 @@
 <template>
-  <div class="parti mt-2 mt-md-4">
-    <div>
-      <div class="mx-xxl-5 mt-5 row">
+  <div class="parti mt-2 mt-md-4 mt-md-5 mt-3">
+    <div v-for="(news, index) in $store.state.AdminNews" :key="(news, index)">
+      <!-- Activity  Do v-for loop-->
+      <div class="mx-xxl-5 row">
         <li class="col-12 col-lg-6 align-self-start mt-2">
-          <router-link to="/event/activities/:id">
-            <span> News I Lorem Ipsum is simply dummy text... </span></router-link
+          <router-link :to="{ path: '/admin/news/' + news._id }" target="_blank">
+            <span> {{ news.title }} </span></router-link
           >
         </li>
         <span class="co-12 mt-3 mt-lg-0 col-lg-6 text-end-lg butn">
-          <button type="" class="btn btn-info text-white mx-1 mb-3">Approve</button>
-          <button type="" class="btn btn-danger mx-1 mb-3">Delete</button>
-          <button type="" class="btn btn-secondary mx-1 mb-3">Not Approve</button>
-        </span>
-      </div>
-      <hr />
-    </div>
-
-    <!-- Must loop and detrive data from database  -->
-    <div>
-      <div class="mx-xxl-5 mt-3 row">
-        <li class="col-12 col-lg-6 align-self-start mt-2">
-          <router-link to="/event/activities/:id">
-            <span> News II Lorem Ipsum is simply dummy text... </span></router-link
+          <button
+            type=""
+            @click="Approve(news._id)"
+            class="btn btn-info text-white mx-1 mb-3"
           >
-        </li>
-        <span class="co-12 mt-3 mt-lg-0 col-lg-6 text-end-lg butn">
-          <button type="" class="btn btn-info text-white mx-1 mb-3">Approve</button>
-          <button type="" class="btn btn-danger mx-1 mb-3">Delete</button>
-          <button type="" class="btn btn-secondary mx-1 mb-3">Not Approve</button>
+            Approve
+          </button>
+         
+          <button
+            type=""
+            class="btn btn-secondary mx-1 mb-3 comment"
+            @click="news.comment = !news.comment"
+          >
+            Reject
+          </button>
         </span>
+        <form
+          action=""
+          @submit.prevent="sendToUser"
+          method="post"
+          enctype="multipar/form-data"
+          v-if="$store.state.AdminNews[index].comment"
+        >
+          <div class="form-floating">
+            <textarea
+              class="form-control"
+              placeholder="Leave a comment here"
+              id="floatingTextarea2"
+              style="height: 100px"
+              v-model="comment"
+            >
+            </textarea>
+            <label for="floatingTextarea2">Comments</label>
+            <button
+              type="button"
+              @click="Reject($store.state.AdminNews[index]._id)"
+              class="btn btn-outline-warning mb-3"
+            >
+              Send
+            </button>
+          </div>
+        </form>
       </div>
       <hr />
     </div>
-    <!--  -->
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
-    return {};
+    return {
+      news: {},
+      comment: "",
+      index: "0",
+      textbox: true,
+      act: {},
+      user: {},
+      newsI: {},
+    };
+  },
+  async mounted() {
+    try {
+      const result = await axios.get("/admin/news");
+      this.$store.state.AdminNews = result.data;
+      this.newsI = result.data;
+      console.log(result);
+    } catch (err) {
+      alert(err.result.data.error_message);
+    }
+  },
+  methods: {
+    async Approve(NewsId) {
+      try {
+        if (window.confirm("Do you want to Approve this Announcement?")) {
+          const result = await axios.post(`/admin/news/${NewsId}`, 
+          {comment: "Approved",
+           status: "Approved" });
+          console.log(result);
+          setTimeout(() => {
+            this.$router.go();
+          }, 1500);
+        }
+      } catch (err) {
+        alert("Something went wrong!");
+      }
+    },
+    async Reject(NewsId) {
+      try {
+        if (window.confirm("Do you want to Reject this Announcement?")) {
+          const result = await axios.post(`/admin/news/${NewsId}`, {
+            comment: this.comment,
+            status: "Rejected"
+          });
+          console.log(result);
+          setTimeout(() => {
+            this.$router.push("/homepage");
+          }, 1500);
+        }
+      } catch (err) {
+        alert(err);
+      }
+    },
   },
 };
 </script>
 
 <style lang="css" scoped>
+textarea#floatingTextarea2 {
+  width: 79%;
+  margin-left: 10.5%;
+  margin-bottom: 2%;
+}
+
+.form-floating > label {
+  padding: 1rem 1.75rem;
+  margin-left: 10.5%;
+}
 .text-start {
   text-align: left;
 }

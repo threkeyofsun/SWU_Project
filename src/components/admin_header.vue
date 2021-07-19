@@ -22,15 +22,19 @@
       <!-- profile -->
       <div class="badge user-badge fw-light">
         <img class="profile-img mx-1" v-bind:src="profile.img" alt="profile.img" />
-        <p class="firstname d-inline px-1 align-bottom">Firstname</p>
-        <p class="lastname d-inline px-1 align-bottom">L.</p>
+        <p class="firstname d-inline px-1 align-bottom">
+          {{ $store.state.info.firstname }}
+        </p>
+        <p class="lastname d-inline px-1 align-bottom">
+          {{ $store.state.info.lastname }}
+        </p>
       </div>
 
       <hr class="hr-head" />
       <div class="align-self-center">
         <div>
           <p class="respon-menu mt-2">
-            <router-link class="homepage" to="/Homepage"> Homepage </router-link>
+            <router-link class="homepage" to="/adminpage"> Admin Page </router-link>
           </p>
         </div>
         <div>
@@ -45,7 +49,7 @@
         </div>
       </div>
       <hr class="hr-headLeft" />
-      <router-link to="/user/en60109010501"
+      <router-link to="/user/myProfile"
         ><p class="profilepage profile-menu text-dark">My Profile</p></router-link
       >
       <router-link to="/history"
@@ -57,13 +61,12 @@
       <router-link to="/Create_News"
         ><p class="recruite profile-menu text-dark">Activity Recruit</p></router-link
       >
-
       <router-link to="/createnews"
         ><p class="createnews profile-menu text-dark">Create News</p></router-link
       >
       <hr class="hr-right" />
       <div class="profile-menu float-end fw-bold">
-        <p class="text-danger" @click="logout">Logout</p>
+        <p class="text-danger" @click="logout"><a>Logout</a></p>
       </div>
     </div>
   </transition>
@@ -77,7 +80,7 @@
             <div class="menu">
               <ul class="nav-area mt-md-5">
                 <li class="px-lg-3 px-0">
-                  <router-link to="/homepage">Homepage</router-link>
+                  <router-link to="/adminpage"> Admin Page</router-link>
                 </li>
                 <li class=""><router-link to="/event">Event</router-link></li>
                 <li class="px-lg-3 px-0">
@@ -88,6 +91,7 @@
           </nav>
         </div>
         <!-- ไม่ต้องยุ่งกับมัน This is LOGO, better don't mess with this one -->
+
         <div class="col-3 logo">
           <div>
             <img class="swu-inside" src="../image/logo-inside.png" />
@@ -97,32 +101,16 @@
           <div class="profile-1 d-flex flex-wrap justify-content-center">
             <img
               class="img-fluid profile-img"
-              v-bind:src="profile.img"
+              v-bind:src="$store.state.info.profile_img"
               alt="profile.img"
             />
             <div class="username px-3">
-              <p class="firstname d-inline">{{ firstname }}</p>
-              <!-- <p class="lastname d-inline px-3">L.</p> -->
-              <!-- <i
-                class="arrow-down dropdown-toggle"
-                role="button"
-                data-bs-toggle="dropdown"
-              ></i> -->
-
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <li>
-                  <router-link class="dropdown-item" to="/user/en60109010501"
-                    >My Profile</router-link
-                  >
-                </li>
-                <li><a class="dropdown-item" href="#">Upcoming Activity</a></li>
-                <li>
-                  <a class="dropdown-item" href="#">Create a New Event </a>
-                </li>
-              </ul>
+              <p class="firstname d-inline">{{ $store.state.info.firstname }}</p>
             </div>
+            <p class="fw-bolder text-danger username my-0 ms-5" @click="logout">
+              Log out
+            </p>
           </div>
-          <p class="float-end" @click="logout">Log out</p>
         </div>
 
         <hr class="hr-header" />
@@ -155,10 +143,10 @@ export default {
       },
     };
   },
-  async created() {
+  async mounted() {
     const result = await axios.get("/users/profile");
     this.user = result.data;
-    this.firstname = "Admin";
+    // this.firstname = "Admin";
     this.$store.commit("setAuthenticationAdmin", true);
   },
   methods: {

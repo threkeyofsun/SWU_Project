@@ -2,17 +2,17 @@
   <HomepageHeader />
 
   <div class="container">
-    <p class="mt-5 mb-4 anounce-title">Annoucement Title</p>
+    <p class="mt-5 mb-4 anounce-title">{{ann.title}}</p>
     <div class="posting">
       <div class="badge user-badge">
         <img
           class=" profile-img  "
-          src="/img/Mask-Group-25.png"
+          :src="creator.profile_img"
           alt="profile.img"
         />
-        <p class="firstname d-inline px-2 ">Firstname</p>
-        <p class="lastname  d-inline px-1">L.</p>
-        <p class="time-badge">Jan 7, 2020</p>
+        <p class="firstname d-inline px-2 ">{{ creator.firstname }}</p>
+        <p class="lastname  d-inline px-1">{{ creator.lastname }}</p>
+        <p class="time-badge ms-5 ps-3">{{ createAt() }}</p>
       </div>
     </div>
     <hr />
@@ -20,14 +20,7 @@
     <div class="detail my-4">
       <p>Announcement Details</p> 
       <p class="lorem">
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lorem Ipsum is simply dummy text of
-      the printing and typesetting industry. Lorem Ipsum has been the industry's standard
-      dummy text ever since the 1500s, when an unknown printer took a galley of type and
-      scrambled it to make a type specimen book. It has survived not only five centuries,
-      but also the leap into electronic typesetting, remaining essentially unchanged. It
-      was popularised in the 1960s with the release of Letraset sheets containing Lorem
-      Ipsum passages, and more recently with desktop publishing software like Aldus
-      PageMaker including versions of Lorem Ipsum
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ ann.description }}
     </p>
     </div>
     <hr />
@@ -39,10 +32,31 @@
 <script>
 import HomepageHeader from "../components/HomepageHeader";
 import HPfooter from "../components/homepageFooter";
+import axios from "axios";
+import moment from "moment";
+
 
 export default {
   setup() {
     return { HomepageHeader, HPfooter };
+  },
+  data() {
+    return {
+      creator: {},
+      ann:{},
+    };
+  },
+  async mounted()  {
+    const res = await axios.get(`/announcements/${this.$route.params.id}`);
+    this.ann = res.data;
+    this.creator = res.data.createdBy;    
+    console.log(this.creator);
+  },
+  methods: {
+    createAt() {
+      const thisMoment = moment(this.ann.createdAt).format("LL");
+      return thisMoment;
+    },
   },
 };
 </script>

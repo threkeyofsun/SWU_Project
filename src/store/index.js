@@ -13,7 +13,19 @@ export default Vuex.createStore({
     info:{},
     actvity:{},
     token:'',
-    posts:[]
+    posts:[],
+    anno:{},
+    newspost:{},
+    announceInfo:{},
+    adminInfo:{},
+    // Event
+    event:{},
+    news:{},
+    eventLoading:true,
+    // Admin
+    AdminNews:{},
+    newsData:{},
+    AnnounceLoading:true,
   },
   
   actions: {

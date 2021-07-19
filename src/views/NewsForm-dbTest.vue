@@ -19,38 +19,44 @@
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <!-- radio image -->
-                <input type="radio" name="test" :value="0" v-model="picked" checked />
+                <input
+                  type="radio"
+                  name="test"
+                  :value="coverimg[0]"
+                  v-model="value"
+                  checked
+                />
                 <img class="radioim" :src="'/img/' + coverimg[0]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="1" v-model="picked" />
+                <input type="radio" name="test" :value="coverimg[1]" v-model="value" />
                 <img class="radioim" :src="'/img/' + coverimg[1]" />
               </label>
             </div>
 
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="2" v-model="picked" />
+                <input type="radio" name="test" :value="coverimg[2]" v-model="value" />
                 <img class="radioim" :src="'/img/' + coverimg[2]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="3" v-model="picked" />
+                <input type="radio" name="test" :value="coverimg[3]" v-model="value" />
                 <img class="radioim" :src="'/img/' + coverimg[3]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="4" v-model="picked" />
+                <input type="radio" name="test" :value="coverimg[4]" v-model="value" />
                 <img class="radioim" :src="'/img/' + coverimg[4]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="5" v-model="picked" />
+                <input type="radio" name="test" :value="coverimg[5]" v-model="value" />
                 <img class="radioim" :src="'/img/' + coverimg[5]" />
               </label>
             </div>
@@ -64,22 +70,38 @@
         </div>
 
         <div class="posting">
-          <input
-            type="file"
-            class="form-control-file btn btn-light mt-2"
-            id="exampleFormControlFile1"
-          />
-
-          <div class="user-badge">
-            <img
-              class="profile-img cover-img mt-5 my-4"
-              :src="'/img/' + coverimg[picked]"
-              alt="profile.
-            img"
+          <label class="file-label profile-badge">
+            <input
+              name="file"
+              type="file"
+              ref="file"
+              @change="selectFile"
+              accept="image/*"
+              class="form-control-file btn btn-light mt-2 file-input"
+              id="file"
             />
-          </div>
+            <div v-if="preview" class="previewImage">
+              <div>
+                <img :src="preview" class="profile-img cover-img mt-5 my-4" />
+              </div>
+              <div class="text-danger firstname">
+                {{ message }}
+              </div>
+            </div>
+            <div v-else>
+              <div class="user-badge">
+                <img
+                  class="profile-img cover-img mt-5 my-4"
+                  :src="'/img/' + value"
+                  alt="profile.img"
+                />
+              </div>
+            </div>
+          </label>
         </div>
-
+        <div v-if="preview" class="cancelbtn mt-2">
+          <button class="btn btn-dark" @click="Empyty">Cancel</button>
+        </div>
         <div class="headline mt-3">
           <p class="firstname">&nbsp; &nbsp;&nbsp; Activity details</p>
         </div>
@@ -138,7 +160,6 @@
                   id="flexRadioDefault1"
                   value="Volunteer"
                   v-model="type"
-                  checked
                 />
                 <label class="form-check-label" for="flexRadioDefault1">
                   Volunteer Activities
@@ -212,8 +233,12 @@
                 type="datetime-local"
                 class="form-control form-control-sm"
                 id="st-date"
+                name="start_date"
+                :min="thisDay()"
+                max="2031-02-20T20:20"
                 v-model="start_date"
                 required
+                :disabledDates="disabledDates"
               />
             </div>
 
@@ -226,6 +251,8 @@
                 type="datetime-local"
                 class="form-control form-control-sm"
                 id="st-time"
+                name="end_date"
+                :min="endDate()"
                 v-model="end_date"
                 required
               />
@@ -283,37 +310,54 @@
         </div>
 
         <div class="mb-3">
+          <!--  -->
           <label for="formFileSm" class="form-label">Insert Image</label>
-          <input class="form-control form-control-sm" id="formFileSm" type="file" />
+          <form
+            @submit.prevent="sendFile"
+            action=""
+            method="post"
+            enctype="multipar/form-data"
+          >
+            <input
+              class="form-control form-control-sm"
+              name="imagefile"
+              id="imagefile"
+              type="file"
+              ref="imagefile"
+              @change="imagefile"
+              accept="image/*"
+            />
+
+            <div
+              v-if="message"
+              :class="`message mt-2 ${error ? 'text-danger' : 'bg-success'} `"
+            >
+              <div class="message-body text-danger">**{{ message }}**</div>
+            </div>
+          </form>
+          <!-- End of Insert Image -->
           <button
             :disabled="isEmpty"
             class="btn btn btn-secondary mb-2 mt-4"
             type="submit"
             value="submit"
+            :class="` ${
+              message ? 'disabled bg-secondary border-secondary text-white' : ''
+            }`"
+            
           >
             Create
           </button>
         </div>
-        <div class="row">
-          <div class="image-preview col-6">
-            <img class="cover row" src="/img/whale.jpg" />
-            <img class="cover row" src="/img/3505624.png" />
-
-            <img class="cover row" src="/img/whale.jpg" />
-          </div>
-
-          <div class="image-preview col-6">
-            <img class="cover row" src="/img/3505624.png" />
-            <img class="cover row" src="/img/whale.jpg" />
-            <img
-              class="cover row"
-              src="https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/83672173_2601817849931005_1524955282638110720_o.jpg?_nc_cat=107&ccb=1-3&_nc_sid=730e14&_nc_eui2=AeEQEU-pgFqkDyFuDgAilBPxpQWyrrPbf_mlBbKus9t_-ZcAxlvVWMZGBYnvh2WO9-_aa36uu_IyAu7iI6nam4kY&_nc_ohc=h9EagkiFNEUAX_51sfe&_nc_ht=scontent.fbkk10-1.fna&oh=bdd9d0df9ea3586d2ed7ee3dc846093d&oe=60750AD2"
-            />
-          </div>
-        </div>
       </form>
+
       <hr />
       <!-- Detail -->
+      <div class="row">
+        <div class="col">
+          <!-- <img :src="preview" class="profile-img" /> -->
+        </div>
+      </div>
     </div>
   </div>
 
@@ -327,7 +371,6 @@ import HPfooter from "../components/homepageFooter";
 import axios from "axios";
 import moment from "moment";
 
-
 export default {
   name: "ProductDetailPage",
   components: {
@@ -337,7 +380,7 @@ export default {
   },
   data() {
     return {
-      value: 1,
+      value: "swu-water.jpg",
       picked: "0",
       coverimg: [
         "swu-water.jpg",
@@ -356,40 +399,136 @@ export default {
       start_date: "",
       type: "",
       place: "",
+      appliedList: [],
+      today: "",
+      // Upload Image
+      uploadFiles: [],
+      files: [],
+      message: false,
+      error: false,
+      dropzonefile: "",
+      uploading: false,
+      preview: "",
+      coverPreview: "",
+      image: "",
+      alertMessage: "",
+      selectedFile: "",
+      dipimg: {},
+      Test1:{}
     };
   },
   methods: {
     async submitAct() {
       try {
         const response = await axios.post("/activities/", {
-          cover_img: this.coverimg[this.picked],
-          name: this.title,
+          cover_img: this.value,
+          title: this.title,
           type: this.type,
           faculty: this.faculty,
           department: this.department,
           start_date: moment(this.start_date).format("YYYY-MM-DD HH:mm:ss"),
           end_date: moment(this.end_date).format("YYYY-MM-DD HH:mm:ss"),
           member_amount: this.member_amount,
-          place: this.place,
+          location: this.place,
           description: this.description,
         });
-        console.log(response.config);
+        this.Test1 = response;
         alert("Activity has been created!");
-        this.$router.push({ name: "history" });
+        // this.$router.push({ name: "history" });
       } catch (err) {
         alert(err.response.data.error_message);
-        console.log(err.response.data.error_message);
+        // console.log(err.response.data.error_message);
       }
     },
     createAt() {
       const thisMoment = moment(this.start_date).format("YYYY-MM-DD");
       return thisMoment;
     },
+    thisDay() {
+      const thisMoment = moment().format("YYYY-MM-DDTHH:mm");
+      return thisMoment;
+    },
+    endDate() {
+      const thisMoment = moment(this.start_date).format("YYYY-MM-DDTHH:mm");
+      return thisMoment;
+    },
+    Empyty() {
+      this.preview = "";
+    },
+
+    // single file upload
+    selectFile() {
+      //ชื่อเหมือน iput@change
+      const selectFile = this.$refs.file.files[0];
+      this.selectedFile = selectFile;
+
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+      const MAX_SIZE = 200000;
+      const tooLarge = selectFile.size > MAX_SIZE;
+
+      if (allowedTypes.includes(selectFile.type) && !tooLarge) {
+        this.error = false;
+        this.message = "";
+      } else {
+        this.error = true;
+        this.message = tooLarge
+          ? `Too large. Max size is ${MAX_SIZE / 1000}Kb`
+          : "Only images are allowed";
+        this.selectedFile = "";
+      }
+
+      // Preview Image
+      const input = this.$refs.file;
+      const files = input.files;
+      if (files && files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.preview = e.target.result;
+        };
+        reader.readAsDataURL(files[0]);
+        this.$emit("input", files[0]);
+      }
+    },
+    // Upload file
+    async sendFile() {
+      const formdata = new FormData();
+      formdata.append("selectedFile", this.selectedFile);
+      formdata.append("cover_img",  this.value);
+      formdata.append("title",  this.title);
+      formdata.append("type",  this.type);
+      formdata.append("faculty",  this.faculty);
+      formdata.append("department",  this.department);
+      formdata.append("start_date",   moment(this.start_date).format("YYYY-MM-DD HH:mm:ss"));
+      formdata.append("end_date",   moment(this.end_date).format("YYYY-MM-DD HH:mm:ss"));
+      formdata.append("member_amount",  this.member_amount);
+      formdata.append("location",  this.place);
+      formdata.append("description",  this.description);
+      
+      try {
+        await axios.post("/activities/", formdata);
+        this.message = "File has been uploaded!";
+        this.selectedFile = "";
+        this.error = false;
+
+        for (var pair of formdata.entries()) {
+          console.log(pair[0] + " - " + pair[1]);
+        }
+        setTimeout(() => {
+          this.$router.push("homepage");
+        }, 1000);
+      } catch (err) {
+        this.message = err.response.data.error;
+        this.error = true;
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
+.cancelbtn {
+  text-align: -webkit-center;
+}
 /* Cover Image */
 img.cover-img {
   -o-object-position: unset;
@@ -518,7 +657,7 @@ img.cover {
 }
 .profile-img {
   margin-top: 1%;
-  -o-object-fit: cover;
+  width: inherit;
 }
 
 .user-badge {

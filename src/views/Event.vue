@@ -23,44 +23,63 @@
         />
         <!-- Filter -->
       </div>
-
-      <div class="row activity-card">
+      <div v-if="$store.state.eventLoading" class="text-center my-5">
+        <div class="loadingio-spinner-ellipsis-zn4fhzwgb">
+          <div class="loadingio-spinner-ellipsis-e2dlnyc4ytc">
+            <div class="ldio-8xpx2o6sd04">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row activity-card" v-else>
         <!-- one card -->
-            <div class="card col-xl-4 col-md-6 my-4 mx-4" v-for="(activity, index) in act" :key="(activity, index)">
-              <router-link :to="{ path: '/event/activities/' +  act[index]._id }" target="_blank">
-                <span class="badge time-badge">{{ createAt() }}</span>
-                <span class="badge user-badge fw-light fs-6">
-                  <p class="firstname d-inline">{{ act[index].createdBy.firstname }}</p>
-                  <p class="lastname d-inline px-2">{{ act[index].createdBy.lastname }}</p>
-                  <img class="profile-img" v-bind:src="act[index].createdBy.profile_img" alt="profile.img" />
-                </span>
+        <div
+          class="card col-xl-4 col-md-6 my-4 mx-4"
+          v-for="(activity, index) in $store.state.event"
+          :key="(activity, index)"
+        >
+          <router-link :to="{ path: '/event/activities/' + activity._id }">
+            <span class="badge time-badge">{{ createAt(activity.createdAt) }}</span>
+            <span class="badge user-badge fw-light fs-6">
+              <p class="firstname d-inline">{{ activity.createdBy.firstname }}</p>
+              <p class="lastname d-inline px-2">{{ activity.createdBy.lastname }}</p>
+              <img
+                class="profile-img"
+                v-bind:src="activity.createdBy.profile_img"
+                alt="profile.img"
+              />
+            </span>
 
-                <img :src="'/img/' + act[index].cover_img" class="card-img-top" alt="..." />
+            <img :src="'/img/' + activity.cover_img" class="card-img-top" alt="..." />
 
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-9">
-                      <p class="fs-6 fw-bold act-name">{{ act[index].name }}</p>
-                      <br />
-                      <p class="card-text float-start">Faculty: {{ act[index].faculty }}</p>
-                    </div>
-                    <!-- right -->
-                    <div class="col-3 float-end mt-2">
-                      <i class="fas fa-user-check"></i>
-                      <br />
-                      <div class="applicants">
-                        <span>{{ act[index].current_member}}</span><span>/</span><span>{{ act[index].member_amount}}</span>
-                      </div>
-                    </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-9">
+                  <p class="fs-6 fw-bold act-name">{{ activity.title }}</p>
+                  <br />
+                  <p class="card-text float-start">Faculty: {{ activity.faculty }}</p>
+                </div>
+                <!-- right -->
+                <div class="col-3 float-end mt-2">
+                  <i class="fas fa-user-check"></i>
+                  <br />
+                  <div class="applicants">
+                    <span>{{ activity.current_member }}</span
+                    ><span>/</span><span>{{ activity.member_amount }}</span>
                   </div>
                 </div>
-              </router-link>
+              </div>
             </div>
+          </router-link>
+        </div>
         <!--  -->
-
-        
-
       </div>
+      <h1>{{ appliedList }}</h1>
     </div>
   </section>
   <HPfooter />
@@ -71,7 +90,6 @@ import HomepageHeader from "../components/HomepageHeader";
 import HPfooter from "../components/homepageFooter";
 import axios from "axios";
 import moment from "moment";
-
 
 export default {
   components: {
@@ -84,29 +102,47 @@ export default {
         img: "https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg",
       },
       act: {},
+      re_act: null,
+      recruitment_act: null,
+      recruitList: [],
+      // recruited:[]
     };
+  },
+  computed: {
+    recruited() {
+      return this.recruitList.some((item) => item.id === this.product.id);
+    },
   },
 
   async mounted() {
-    try {
-      const result = await axios.get("/activities");
-      this.act = result.data;
-      console.log(result.data);
-      // User
-      const resulted = await axios.get("/users/profile");
-      this.$store.state.info = resulted.data;
-      this.$store.commit("setAuthentication", true);
-    } catch (err) {
-      alert(err.result.data.error_message);
-    }
+    // User's Event
+    // list
+    const { data } = await axios.get("/users/history/activities/recruited");
+    this.re_act = data;
+    this.recruitment_act = this.re_act.history.activity.recruited;
+    //
+    // const { data: {history: {activity: {recruitment:recruitment}}} } = await axios.get('users/history/recruitment');
+    // this.recruitList = recruitment;
+    // console.log(recruitment);
+    //
+
+    // get Event
+    const event = await axios.get("/activities/");
+    this.$store.state.event = event.data;
+    this.act = event.data;
+    // console.log(this.act);
+    this.$store.state.eventLoading = false;
+    // User
+    const resulted = await axios.get("/users/profile");
+    this.$store.state.info = resulted.data;
+    this.$store.commit("setAuthentication", true);
   },
   methods: {
-      createAt() {
-        const thisMoment = moment(this.act.createdAt).format("LL");
-        return thisMoment;
-      },
-    }
-
+    createAt(date) {
+      const thisMoment = moment(date).format("LL");
+      return thisMoment;
+    },
+  },
 };
 </script>
 
@@ -163,7 +199,7 @@ img.card-img-top {
   object-position: top;
   object-fit: cover;
   height: 265px;
-  width: 360px;
+  width: 18rem;
   border-radius: 23px 0px 23px 23px;
   margin-left: -15px;
 }

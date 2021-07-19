@@ -38,6 +38,7 @@ export default {
   components: {},
   data() {
     return {
+      userRokl: {},
       messageUser: "",
       messagePass: "",
       user: {
@@ -67,7 +68,7 @@ export default {
           this.$store.commit("setAuthentication", true);
         } else {
           this.$store.state.token = response.data;
-          console.log(this.$store.state.token);
+          console.log(response.config.role);
           alert("Wellcome User!");
           this.$router.push({ name: "homepage" });
         }
@@ -84,6 +85,7 @@ export default {
       // this.message = response.data.msg;
     },
   },
+
 };
 </script>
 

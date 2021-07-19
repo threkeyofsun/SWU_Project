@@ -51,13 +51,12 @@
       <router-link to="/history"
         ><p class="historypage profile-menu text-dark">History</p></router-link
       >
-      <router-link to="/upcoming"
-        ><p class="upcomingpage profile-menu text-dark">Upcoming</p></router-link
+      <router-link to="/newsHistory"
+        ><p class="upcomingpage profile-menu text-dark">News History</p></router-link
       >
       <router-link to="/Create_News"
         ><p class="recruite profile-menu text-dark">Activity Recruit</p></router-link
       >
-
       <router-link to="/createnews"
         ><p class="createnews profile-menu text-dark">Create News</p></router-link
       >

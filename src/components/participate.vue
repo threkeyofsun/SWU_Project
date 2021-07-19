@@ -1,13 +1,11 @@
 <template>
-  <div class="parti mt-2 mt-md-4">
+  <div class="parti mt-2 mt-md-4">      
+      <h3 class="commentbox mb-3" v-show="allAct"> You are not Participate in any Activity yet</h3>
+
     <div>
       <p class="btn draw-border">Volunteer Activities</p>
       <div class="mx-xxl-5">
-        <li> <router-link to="/event/activities/:id"> <span> Acttivity I Lorem Ipsum is simply dummy text... </span></router-link></li>
-        <hr />
-      </div>
-      <div class="mx-xxl-5">
-        <li> <router-link to="/event/activities/:id"> <span> Acttivity II Lorem Ipsum is simply dummy text... </span></router-link></li>
+        <!--  -->
         <hr />
       </div>
     </div>
@@ -15,22 +13,15 @@
     <div>
       <p class="btn draw-border draw-border1">Regular Activities Activities</p>
       <div class="mx-xxl-5">
-        <li> <router-link to="/event/activities/:id"> <span> Acttivity I Lorem Ipsum is simply dummy text... </span></router-link></li>
+<!--  -->
         <hr />
-      </div>
-      <div class="mx-xxl-5">
-        <li> <router-link to="/event/activities/:id"> <span> Acttivity II Lorem Ipsum is simply dummy text... </span></router-link></li>
       </div>
     </div>
 
     <div>
       <p class="btn draw-border draw-border2">Force Activities</p>
       <div class="mx-xxl-5">
-        <li> <router-link to="/event/activities/:id"> <span> Acttivity I Lorem Ipsum is simply dummy text... </span></router-link></li>
-        <hr />
-      </div>
-      <div class="mx-xxl-5">
-        <li> <router-link to="/event/activities/:id"> <span> Acttivity II Lorem Ipsum is simply dummy text... </span></router-link></li>
+<!--  -->
         <hr />
       </div>
     </div>
@@ -40,12 +31,24 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      allAct:true,
+    };
   },
 };
 </script>
 
 <style lang="css" scoped>
+  .commentbox {
+    border-left: 6px solid #ff8686;
+    border-right: 6px solid #b6b6b6;
+    background: linear-gradient( 
+90deg
+, rgb(255 241 241) 0%, rgba(241, 187, 187, 1) 22%, rgb(215 83 83 / 75%) 90%, rgba(176, 68, 68, 0.5525560566023284) 100% );
+  color: #ffffff;
+  font-family: "THSarabanBold";
+  margin-top: 15px;
+}
 .parti {
   font-family: "THSaraban";
   font-size: larger;

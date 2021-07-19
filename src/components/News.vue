@@ -8,82 +8,36 @@
         <p class="fs-3 d-inline mx-4 ps-1 text-decoration-none textheader" @click="$router.push('/news')">News</p>
       </div>
 
+<div v-for="(news, index) in $store.state.news" :key="(news, index)"> 
+  <p> {{news.status}} </p>
   <div class="postloop ">
-    <router-link to="/event/news/123">
+    <router-link :to="{ path: '/event/news/' + news._id }">
     <div class="card text-white  ">
       <span class="decorate-line"></span>
       <span class="decorate-line2"></span>
-      <span class="badge time-badge ">Time</span>
+      <span class="badge time-badge "> {{createAt()}} </span>
       <span class="badge user-badge fw-light ">
         <img
           class=" profile-img  "
-          v-bind:src="profile.img[0]"
+          v-bind:src="news.createdBy.profile_img"
           alt="profile.img"
         />
-        <p class="firstname d-inline mx-0 mx-md-2">Firstname</p>
-        <p class="lastname  d-inline ">L.</p>
+
+        <p class="firstname d-inline mx-0 ms-md-2">{{news.createdBy.firstname}}</p>
+        <!-- <p class="lastname  d-inline ">{{news.createdBy.lastname}}</p> -->
       </span>
-      <img src="/img/bg-12.png" class="card-img  " alt="..." />
+      <img :src="'/img/' + news.cover_img" class="card-img  " alt="..." />
       <div class="card-img-overlay mx-auto">
-        <h3 class="card-title">Card title</h3>
+        <h3 class="card-title">{{news.name}}</h3>
         <p class="card-text">
-          This is a wider card with supporting text below as a natural lead-in
-          to additional content. This content is a little bit longer.
+          {{news.short_description}}
         </p>
       </div>
     </div>
 </router-link>
   </div>
+</div>
 
-  <div class="postloop ">
-    <div class="card text-white my-5 ">
-      <span class="decorate-line"></span>
-      <span class="decorate-line2"></span>
-      <span class="badge time-badge ">Time</span>
-      <span class="badge user-badge fw-light ">
-        <img
-          class=" profile-img  "
-          v-bind:src="profile.img[1]"
-          alt="profile.img"
-        />
-        <p class="firstname d-inline mx-0 mx-md-2">Firstname</p>
-        <p class="lastname  d-inline ">L.</p>
-      </span>
-      <img src="/img/photo-1003-full.jpeg" class="card-img  " alt="..." />
-      <div class="card-img-overlay mx-auto">
-        <h3 class="card-title">Card title</h3>
-        <p class="card-text">
-          This is a wider card with supporting text below as a natural lead-in
-          to additional content. This content is a little bit longer.
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="postloop ">
-    <div class="card text-white my-5 ">
-      <span class="decorate-line"></span>
-      <span class="decorate-line2"></span>
-      <span class="badge time-badge ">Time</span>
-      <span class="badge user-badge fw-light ">
-        <img
-          class=" profile-img  "
-          v-bind:src="profile.img[2]"
-          alt="profile.img"
-        />
-        <p class="firstname d-inline mx-0 mx-md-2">Firstname</p>
-        <p class="lastname  d-inline ">L.</p>
-      </span>
-      <img src="/img/photo-11471-full.jpeg" class="card-img  " alt="..." />
-      <div class="card-img-overlay mx-auto">
-        <h3 class="card-title">Card title</h3>
-        <p class="card-text">
-          This is a wider card with supporting text below as a natural lead-in
-          to additional content. This content is a little bit longer.
-        </p>
-      </div>
-    </div>
-  </div>
     </div>
   </section>
   <HPfooter />
@@ -92,6 +46,9 @@
 <script>
 import HomepageHeader from "../components/HomepageHeader";
 import HPfooter from "../components/homepageFooter";
+import axios from "axios";
+import moment from "moment";
+
 
 export default {
  
@@ -113,7 +70,23 @@ export default {
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTj3K9YhP2F27Z6hMGZm6gKSuRNF-B07GQWg&usqp=CAU",
         ],
       },
+      allNews:{},
+      num : 0,
+      pendingEvent:[],
     };
+  },
+  async mounted()  {
+    const result = await axios.get(`/news/`);
+    console.log(result.data)
+    this.$store.state.news = result.data;
+    const res = await axios.get("/users/profile");
+      this.$store.state.info = res.data;
+  },
+  methods: {
+    createAt() {
+      const thisMoment = moment(this.$store.state.news.createdAt).format("LL");
+      return thisMoment;
+    },
   },
 };
 </script>
@@ -146,7 +119,7 @@ export default {
 }
 .card-img-overlay {
   z-index: 1;
-  top: auto;
+  top: 51%;
   right: auto;
   left: 15%;
   padding: 0 6rem 0 22px;
@@ -269,6 +242,7 @@ export default {
   .card-img-overlay h3 {
     font-size: 24px;
     margin-bottom: 4px;
+    margin-left: 15px
   }
   .card-img-overlay p {
     font-size: 16px;
@@ -305,7 +279,7 @@ export default {
 
 @media only screen and (max-width: 450px) {
   .card-img {
-    max-height: 96px;
+    max-height: 106px;
   }
   .card-img-overlay {
     bottom: 9%;
@@ -330,11 +304,13 @@ export default {
     font-size: 16px;
   }
   .card-img-overlay h3 {
-    font-size: 19px;
+    font-size: 16px;
+    margin-bottom: 0;
   }
   .card-img-overlay p {
     font-size: 12px;
     line-height: 0.9;
+    margin-left: 16px;
   }
 }
 </style>

@@ -1,50 +1,84 @@
 <template>
   <HomepageHeader />
   <div class="row topspace">
-    <Sidebar />
     <div class="container">
       <div class="headline mt-3 mt-md-none">
         <p>&nbsp; &nbsp;&nbsp; Select your cover image</p>
       </div>
-      <form class="ac-req-form">
+      <form id="submitAct"
+        action=""
+        @submit.prevent="submitAct"
+        method="post"
+        enctype="multipar/form-data"
+        class="ac-req-form">
         <div class="coverpost">
           <div class="row radiocollection">
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <!-- radio image -->
-                <input type="radio" name="test" value="0" v-model="picked" checked />
-                <img class="radioim" :src="'/img/' + coverimg[0]" />
+                <input
+                  type="radio"
+                  name="test"
+                  value="swu-water.jpg"
+                  v-model="anInfo.cover_img"
+                />
+                <img class="radioim" :src="'/img/' + 'swu-water.jpg'" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="1" v-model="picked" />
-                <img class="radioim" :src="'/img/' + coverimg[1]" />
+                <input
+                  type="radio"
+                  name="test"
+                  value="IMG_20190126_114352_2.jpg"
+                  v-model="anInfo.cover_img"
+                />
+                <img class="radioim" :src="'/img/' + user.coverimg[1]" />
               </label>
             </div>
 
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="2" v-model="picked" />
-                <img class="radioim" :src="'/img/' + coverimg[2]" />
+                <input
+                  type="radio"
+                  name="test"
+                  value="swu_lotus.jpg"
+                  v-model="anInfo.cover_img"
+                />
+                <img class="radioim" :src="'/img/' + user.coverimg[2]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="3" v-model="picked" />
-                <img class="radioim" :src="'/img/' + coverimg[3]" />
+                <input
+                  type="radio"
+                  name="test"
+                  value="00100dPORTRAIT_00100_BURST20190703172640303_COVER.jpg"
+                  v-model="anInfo.cover_img"
+                />
+                <img class="radioim" :src="'/img/' + user.coverimg[3]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="4" v-model="picked" />
-                <img class="radioim" :src="'/img/' + coverimg[4]" />
+                <input
+                  type="radio"
+                  name="test"
+                  value="IMG_20190629_173826.jpg"
+                  v-model="anInfo.cover_img"
+                />
+                <img class="radioim" :src="'/img/' + user.coverimg[4]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="5" v-model="picked" />
-                <img class="radioim" :src="'/img/' + coverimg[5]" />
+                <input
+                  type="radio"
+                  name="test"
+                  value="2019-08-08 15.27.48-1.jpg"
+                  v-model="anInfo.cover_img"
+                />
+                <img class="radioim" :src="'/img/' + user.coverimg[5]" />
               </label>
             </div>
           </div>
@@ -62,11 +96,14 @@
             class="form-control-file btn btn-light mt-2"
             id="exampleFormControlFile1"
           />
+          <div v-if="preview">
+            <img :src="preview" class="profile-img mt-5 my-4" />
+          </div>
 
           <div class="user-badge">
             <img
               class="profile-img cover-img mt-5 my-4 card-img"
-              :src="'/img/' + coverimg[picked]"
+              :src="'/img/' + anInfo.cover_img"
               alt="profile.
               img"
             />
@@ -90,7 +127,7 @@
                 id="title"
                 placeholder=""
                 required
-                v-model="title"
+                v-model="anInfo.title"
               />
             </div>
           </div>
@@ -107,7 +144,8 @@
                 id="shDes"
                 style="height: 100px"
                 required
-                v-model="shDes"
+                v-model="anInfo.short_description"
+                maxlength="121"
               ></textarea>
             </div>
           </div>
@@ -124,7 +162,7 @@
                 id="detail"
                 style="height: 300px"
                 required
-                v-model="detail"
+                v-model="anInfo.description"
               ></textarea>
             </div>
           </div>
@@ -138,15 +176,10 @@
             class="btn btn btn-secondary mb-2 mt-4"
             type="submit"
             value="submit"
-            @click="onUpload"
+            @click="editNews()"
           >
-            Create
+            Update
           </button>
-        </div>
-        <div class="row">
-          <div class="image-preview col-6"></div>
-
-          <div class="image-preview col-6"></div>
         </div>
       </form>
       <hr />
@@ -158,15 +191,15 @@
 </template>
 
 <script>
-import Sidebar from "@/components/sliderbar";
 import HomepageHeader from "@/components/HomepageHeader";
 import HPfooter from "@/components/homepageFooter";
+import axios from "axios";
+
 export default {
   name: "ProductDetailPage",
   components: {
     HomepageHeader,
     HPfooter,
-    Sidebar,
   },
   data() {
     return {
@@ -177,15 +210,39 @@ export default {
       shDes: "",
       detail: "",
       picked: "0",
-      coverimg: [
-        "swu-water.jpg",
-        "IMG_20190126_114352_2.jpg",
-        "swu_lotus.jpg",
-        "00100dPORTRAIT_00100_BURST20190703172640303_COVER.jpg",
-        "IMG_20190629_173826.jpg",
-        "2019-08-08 15.27.48-1.jpg",
-      ],
+      user: {
+        coverimg: [
+          "swu-water.jpg",
+          "IMG_20190126_114352_2.jpg",
+          "swu_lotus.jpg",
+          "00100dPORTRAIT_00100_BURST20190703172640303_COVER.jpg",
+          "IMG_20190629_173826.jpg",
+          "2019-08-08 15.27.48-1.jpg",
+        ],
+      },  
+      anInfo:{},
+      cover_img:"",
+       name:"",
+       description:"",
+       short_description:""
+
     };
+  },
+  async mounted() {
+    // Get News History
+    const res = await axios.get(`/news/${this.$route.params.id}`);
+    this.anInfo = res.data;
+    console.log(this.anInfo);
+
+  },
+  methods: {
+    async editNews() {
+      const result = await axios.put(`/news/${this.$route.params.id}`, this.anInfo);
+      this.anInfo = result.data;
+      alert("Updated");
+      this.$router.push({ name: "history" });
+      console.log( this.anInfo);
+    },
   },
 };
 </script>

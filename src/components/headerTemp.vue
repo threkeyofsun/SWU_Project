@@ -39,7 +39,7 @@
 
   <header class="header-area countainer-fluid mx-md-5">
     <div class="logo mx-auto mx-md-0">
-      <img class="swu-logo" src="../assets/swulogo.png" />
+      <router-link to="/login"><img class="swu-logo" src="../assets/swulogo.png" /></router-link>
     </div>
     <nav class="navbar-area d-none d-md-block mt-4">
       <div class="main-menu">

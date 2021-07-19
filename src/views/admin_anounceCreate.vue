@@ -88,14 +88,14 @@
         </div>
 
         <div class="headline mt-3">
-          <p class="firstname">&nbsp; &nbsp;&nbsp; News details</p>
+          <p class="firstname">&nbsp; &nbsp;&nbsp; Announcement details</p>
         </div>
 
         <div class="ATinput">
           <div class="row my-4">
             <div class="col-3">
               <span class="text-danger">*</span>
-              <label for="title" class="form-label"> News Title</label>
+              <label for="title" class="form-label"> Announcement Title</label>
             </div>
             <div class="col-9">
               <input

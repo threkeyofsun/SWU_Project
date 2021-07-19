@@ -5,44 +5,49 @@
       <div class="headline mt-3 mt-md-none">
         <p>&nbsp; &nbsp;&nbsp; Select your cover image</p>
       </div>
-      <form class="ac-req-form">
+      <form class="ac-req-form"
+        action=""
+        @submit.prevent=""
+        method="post"
+        enctype="multipar/form-data"
+        >
         <div class="coverpost">
           <div class="row radiocollection">
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <!-- radio image -->
-                <input type="radio" name="test" value="0" v-model="picked" checked />
-                <img class="radioim" :src="'/img/' + user.coverimg[0]" />
+                <input type="radio" name="test" value="photo-989-full.jpeg"  v-model="anInfo.cover_img" />
+                <img class="radioim" :src="'/img/' + 'photo-989-full.jpeg'" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="1" v-model="picked" />
+                <input type="radio" name="test" value="photo-1032-large.jpeg" v-model="anInfo.cover_img"  />
                 <img class="radioim" :src="'/img/' + user.coverimg[1]" />
               </label>
             </div>
 
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="2" v-model="picked" />
+                <input type="radio" name="test" value="photo-985-full.jpeg" v-model="anInfo.cover_img" />
                 <img class="radioim" :src="'/img/' + user.coverimg[2]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="3" v-model="picked" />
+                <input type="radio" name="test" value="photo-11471-full.jpeg" v-model="anInfo.cover_img" />
                 <img class="radioim" :src="'/img/' + user.coverimg[3]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="4" v-model="picked" />
+                <input type="radio" name="test" value="swu3.jpg" v-model="anInfo.cover_img" />
                 <img class="radioim" :src="'/img/' + user.coverimg[4]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="5" v-model="picked" />
+                <input type="radio" name="test" value="swu4.jpg" v-model="anInfo.cover_img" />
                 <img class="radioim" :src="'/img/' + user.coverimg[5]" />
               </label>
             </div>
@@ -64,6 +69,7 @@
 
           <span class="file-cta">
             <span class="file-label">
+
               <div v-if="preview">
                 <img :src="preview" class="profile-img mt-5 my-4" />
               </div>
@@ -71,7 +77,7 @@
               <div v-else>
                 <img
                   class="profile-img mt-5 my-4"
-                  :src="'/img/' + user.coverimg[picked]"
+                  :src="'/img/' + anInfo.cover_img"
                   alt="coverimg"
                 />
               </div>
@@ -89,21 +95,22 @@
         </div>
 
         <div class="headline mt-3">
-          <p class="firstname">&nbsp; &nbsp;&nbsp; News details</p>
+          <p class="firstname">&nbsp; &nbsp;&nbsp; Announcement details</p>
         </div>
 
         <div class="ATinput">
           <div class="row my-4">
             <div class="col-3">
               <span class="text-danger">*</span>
-              <label for="title" class="form-label"> News Title</label>
+              <label for="name" class="form-label"> Announcement Title</label>
             </div>
             <div class="col-9">
               <input
                 type="input"
                 class="form-control form-control-sm"
-                id="title"
+                id="name"
                 placeholder=""
+                v-model="anInfo.title"
               />
             </div>
           </div>
@@ -119,6 +126,7 @@
                 placeholder="Leave a short description here"
                 id="floatingTextarea2"
                 style="height: 300px"
+                v-model="anInfo.description"
               ></textarea>
             </div>
           </div>
@@ -132,9 +140,9 @@
             class="btn btn btn-secondary mb-2 mt-4"
             type="submit"
             value="submit"
-            @click="onUpload"
+            @click="editForm"
           >
-            Create
+            Update
           </button>
         </div>
         <div class="row">
@@ -159,6 +167,9 @@
 </template>
 
 <script>
+import axios from "axios";
+
+
 import AdminHeader from "@/components/admin_header";
 import HPfooter from "@/components/homepageFooter";
 export default {
@@ -172,7 +183,7 @@ export default {
       quantity: 10,
       mquantity: 50,
       value: 1,
-      picked: "0",
+      picked: '',
       user: {
         coverimg: [
           "photo-989-full.jpeg",
@@ -184,7 +195,23 @@ export default {
           "swu2.jpg",
         ],
       },
+      anInfo:{},
     };
+  },
+  async mounted() {
+    // Get News History
+    const res = await axios.get(`/announcements/${this.$route.params.id}`);
+    this.anInfo = res.data;
+  },
+  methods: {
+    async editForm() {
+      const result = await axios.put(`/admin/announcements/${this.$route.params.id}`, this.anInfo);
+      this.anInfo = result.data;
+      alert("Updated");
+      this.$router.push({ name: "adminpage" });
+      console.log(this.anInfo);
+
+    },
   },
 };
 </script>

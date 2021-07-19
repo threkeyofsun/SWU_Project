@@ -22,12 +22,15 @@ import NotFound from "../views/NotFound.vue";
 // Edit
 import editProfile from "../views/Edit/editProfile.vue";
 import editAnnounce from "../views/Edit/editAnnounce.vue";
+import editActivity from "../views/Edit/editActivity.vue";
+import editNews from "../views/Edit/editNews.vue";
+
+
 
 // Admin
 import adminonly from "../views/admin/adminonly.vue";
 import adminonlyAnnounce from "../views/admin/adminonlyAnnounce.vue";
-
-
+import adminonlyNews from "../views/admin/adminonlyNews.vue";
 
 
 // imaport components
@@ -42,8 +45,6 @@ import store from '@/store';
 // import { Router } from "express";
 
 
-
-
  const routes = [
 // Admin
 {
@@ -56,6 +57,11 @@ import store from '@/store';
   name: "adminonlyAnnounce",
   component: adminonlyAnnounce,
 },
+{
+  path: "/admin/news/:id",
+  name: "adminonlyNews",
+  component: adminonlyNews,
+},
   // Edit
   {
     path: "/profile/edit/:id",
@@ -66,6 +72,16 @@ import store from '@/store';
     path: "/Announcement/edit/:id",
     name: "editAnnounce",
     component: editAnnounce,
+  },
+  {
+    path: "/Activity/edit/:id",
+    name: "editActivity",
+    component: editActivity,
+  },
+   {
+    path: "/News/edit/:id",
+    name: "editNews",
+    component: editNews,
   },
   // components
   {

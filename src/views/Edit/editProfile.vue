@@ -141,7 +141,7 @@ export default {
     };
   },
 
-  async created() {
+  async mounted(){
     try {
       const result = await axios.get("/users/profile");
       this.user = result.data;

@@ -4,20 +4,23 @@
       <!-- Activity  Do v-for loop-->
       <div class="mx-xxl-5 row">
         <li class="col-12 col-lg-6 align-self-start mt-2">
-          <router-link
-            :to="{ path: '/admin/activity/' + act[index]._id }"
-            target="_blank"
-          >
-            <span> {{ act[index].name }} </span></router-link
+          <router-link :to="{ path: '/admin/activity/' + activity._id }" target="_blank">
+            <span> {{ activity.title }} </span></router-link
           >
         </li>
         <span class="co-12 mt-3 mt-lg-0 col-lg-6 text-end-lg butn">
-          <button type="" @click="Approve(act[index]._id)" class="btn btn-info text-white mx-1 mb-3">Approve</button>
-          <button type="" @click="delAct(act[index]._id)" class="btn btn-danger mx-1 mb-3">Delete</button>
+          <button
+            type=""
+            @click="Approve(activity._id)"
+            class="btn btn-info text-white mx-1 mb-3"
+          >
+            Approve
+          </button>
+         
           <button
             type=""
             class="btn btn-secondary mx-1 mb-3 comment"
-            @click="act[index].comment = !act[index].comment"
+            @click="activity.comment = !activity.comment"
           >
             Reject
           </button>
@@ -36,9 +39,15 @@
               id="floatingTextarea2"
               style="height: 100px"
               v-model="comment"
-            ></textarea>
+            >  </textarea>
             <label for="floatingTextarea2">Comments</label>
-            <button type="button" @click="Reject(act[index]._id)" class="btn btn-outline-warning mb-3">Send</button>
+            <button
+              type="button"
+              @click="Reject(act[index]._id)"
+              class="btn btn-outline-warning mb-3"
+            >
+              Send
+            </button>
           </div>
         </form>
       </div>
@@ -58,13 +67,13 @@ export default {
   data() {
     return {
       textbox: true,
-      act: [],
+      act: {},
       user: {},
-      comment: '',
+      comment: "",
       index: "0",
     };
   },
-  async created() {
+  async mounted() {
     try {
       const result = await axios.get("/admin/activities");
       this.act = result.data;
@@ -74,25 +83,17 @@ export default {
     }
   },
   methods: {
-    async delAct(ActId) {
-      try {
-        if (window.confirm("Do you want to delete this Announcement?")) {
-          const result = await axios.delete(`/admin/activities/${ActId}`);
-          this.announce.splice(ActId, 1);
-          console.log(result);
-        }
-      } catch (err) {
-        alert("Something went wrong!");
-      }
-    },
+    
     async Approve(ActId) {
       try {
         if (window.confirm("Do you want to Approve this Announcement?")) {
-          const result = await axios.post(`/admin/activities/${ActId}`);
+          const result = await axios.post(`/admin/activities/${ActId}`, 
+          {comment: "Approved",
+           status: "Approved" });
           console.log(result);
           setTimeout(() => {
-          this.$router.push('/homepage');
-        }, 1500);
+            this.$router.go();
+          }, 1500);
         }
       } catch (err) {
         alert("Something went wrong!");
@@ -101,19 +102,18 @@ export default {
     async Reject(ActId) {
       try {
         if (window.confirm("Do you want to Reject this Announcement?")) {
-          const result = await axios.put(`/admin/activities/${ActId}`,
-          {comment : this.comment });
+          const result = await axios.post(`/admin/activities/${ActId}`, 
+          {comment: this.comment,
+           status: "Rejected" });
           console.log(result);
           setTimeout(() => {
-          this.$router.push('/homepage');
-        }, 1500);
+            this.$router.push("/homepage");
+          }, 1500);
         }
       } catch (err) {
         alert(err);
       }
     },
-    
-
   },
 };
 </script>

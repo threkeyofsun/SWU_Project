@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <p class="mt-5 mb-4 anounce-title text-uppercase">{{ ann.name }}</p>
+    <p class="mt-5 mb-4 anounce-title text-uppercase">{{ $store.state.announceInfo.title }}</p>
     <div class="posting">
       <div class="badge user-badge">
-        <img class="profile-img" src="/img/Mask-Group-25.png" alt="profile.img" />
-        <p class="firstname d-inline px-2">{{ ann.createdBy.firstname }}Firstname</p>
-        <p class="lastname d-inline px-1">L.</p>
-        <p class="time-badge">Jan 7, 2020</p>
+        <img class="profile-img" :src="ann.profile_img" alt="profile.img" />
+        <p class="firstname d-inline px-2">{{ ann.firstname }}</p>
+        <p class="lastname d-inline px-1"> </p>
+        <p class="time-badge">{{ createAt() }}</p>
       </div>
     </div>
     <hr />
@@ -14,14 +14,7 @@
     <div class="detail my-4">
       <p>Announcement Details</p>
       <p class="lorem">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lorem Ipsum is simply dummy text
-        of the printing and typesetting industry. Lorem Ipsum has been the industry's
-        standard dummy text ever since the 1500s, when an unknown printer took a galley of
-        type and scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining essentially
-        unchanged. It was popularised in the 1960s with the release of Letraset sheets
-        containing Lorem Ipsum passages, and more recently with desktop publishing
-        software like Aldus PageMaker including versions of Lorem Ipsum
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $store.state.announceInfo.description }}
       </p>
     </div>
     <hr />
@@ -33,6 +26,8 @@
 <script>
 import HPfooter from "@/components/homepageFooter";
 import axios from "axios";
+import moment from "moment";
+
 
 export default {
   setup() {
@@ -40,13 +35,20 @@ export default {
   },
   data() {
     return {
-      ann: {},
+      ann: "",
     };
   },
-  async created() {
+  async mounted()  {
     const res = await axios.get(`/announcements/${this.$route.params.id}`);
-    this.ann = res.data;
-    console.log(res);
+    this.$store.state.announceInfo = res.data;
+    this.ann = res.data.createdBy;
+    
+  },
+  methods: {
+    createAt() {
+      const thisMoment = moment(this.$store.state.announceInfo.createdAt).format("LL");
+      return thisMoment;
+    },
   },
 };
 </script>
@@ -79,7 +81,7 @@ export default {
 .time-badge {
   color: #636468;
   margin-top: -8px;
-  margin-left: 47px;
+  margin-left: 93px;
   line-height: 0;
 }
 .anounce-title {

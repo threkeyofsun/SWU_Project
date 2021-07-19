@@ -6,44 +6,57 @@
       <div class="headline mt-3 mt-md-none">
         <p>&nbsp; &nbsp;&nbsp; Select your cover image</p>
       </div>
-      <form class="ac-req-form">
+      <form
+        id="submitAct"
+        action=""
+        @submit.prevent="submitAct"
+        method="post"
+        enctype="multipar/form-data"
+        class="ac-req-form"
+      >
         <div class="coverpost">
           <div class="row radiocollection">
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <!-- radio image -->
-                <input type="radio" name="test" value="0" v-model="picked" checked />
+                <input
+                  type="radio"
+                  name="test"
+                  :value="coverimg[0]"
+                  v-model="value"
+                  checked
+                />
                 <img class="radioim" :src="'/img/' + coverimg[0]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="1" v-model="picked" />
+                <input type="radio" name="test" :value="coverimg[1]" v-model="value" />
                 <img class="radioim" :src="'/img/' + coverimg[1]" />
               </label>
             </div>
 
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="2" v-model="picked" />
+                <input type="radio" name="test" :value="coverimg[2]" v-model="value" />
                 <img class="radioim" :src="'/img/' + coverimg[2]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="3" v-model="picked" />
+                <input type="radio" name="test" :value="coverimg[3]" v-model="value" />
                 <img class="radioim" :src="'/img/' + coverimg[3]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="4" v-model="picked" />
+                <input type="radio" name="test" :value="coverimg[4]" v-model="value" />
                 <img class="radioim" :src="'/img/' + coverimg[4]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="5" v-model="picked" />
+                <input type="radio" name="test" :value="coverimg[5]" v-model="value" />
                 <img class="radioim" :src="'/img/' + coverimg[5]" />
               </label>
             </div>
@@ -57,22 +70,40 @@
         </div>
 
         <div class="posting">
-          <input
-            type="file"
-            class="form-control-file btn btn-light mt-2"
-            id="exampleFormControlFile1"
-          />
-
-          <div class="user-badge">
-            <img
-              class="profile-img cover-img mt-5 my-4 card-img"
-              :src="'/img/' + coverimg[picked]"
-              alt="profile.
-            img"
+          <!--  -->
+          <label class="file-label profile-badge">
+            <input
+              name="file"
+              type="file"
+              ref="file"
+              @change="selectFile"
+              accept="image/*"
+              class="form-control-file btn btn-light mt-2 file-input"
+              id="file"
             />
-          </div>
+            <div v-if="preview" class="previewImage">
+              <div>
+                <img :src="preview" class="profile-img cover-img mt-5 my-4 card-img" />
+              </div>
+              <div class="text-danger firstname">
+                {{ message }}
+              </div>
+            </div>
+            <div v-else>
+              <div class="user-badge">
+                <img
+                  class="profile-img cover-img mt-5 my-4 card-img"
+                  :src="'/img/' + value"
+                  alt="profile.img"
+                />
+              </div>
+            </div>
+          </label>
+          <!--  -->
         </div>
-
+        <div v-if="preview" class="cancelbtn mt-2">
+          <button class="btn btn-dark" @click="Empyty">Cancel</button>
+        </div>
         <div class="headline mt-3">
           <p class="firstname">&nbsp; &nbsp;&nbsp; News details</p>
         </div>
@@ -108,6 +139,7 @@
                 style="height: 100px"
                 required
                 v-model="shDes"
+                maxlength="100"
               ></textarea>
             </div>
           </div>
@@ -143,11 +175,6 @@
             Create
           </button>
         </div>
-        <div class="row">
-          <div class="image-preview col-6"></div>
-
-          <div class="image-preview col-6"></div>
-        </div>
       </form>
       <hr />
       <!-- Detail -->
@@ -172,12 +199,7 @@ export default {
   },
   data() {
     return {
-      quantity: 10,
-      mquantity: 50,
-      value: 1,
-      title: "",
-      shDes: "",
-      detail: "",
+      value: "swu-water.jpg",
       picked: "0",
       coverimg: [
         "swu-water.jpg",
@@ -187,25 +209,105 @@ export default {
         "IMG_20190629_173826.jpg",
         "2019-08-08 15.27.48-1.jpg",
       ],
+      title: "",
+      shDes: "",
+      detail: "",
+      max: 36,
+      // Upload Image
+      uploadFiles: [],
+      files: [],
+      message: false,
+      error: false,
+      dropzonefile: "",
+      uploading: false,
+      preview: "",
+      coverPreview: "",
+      image: "",
+      alertMessage: "",
+      selectedFile: "",
+      dipimg: {},
     };
   },
-  async submitAct() {
+  methods: {
+    Empyty() {
+      this.preview = "";
+    },
+    // 
+    async submitAct() {
       try {
-        const response = await axios.post("/activities/", {
-          
+        const response = await axios.post("/news/", {
+          cover_img: this.coverimg[this.picked],
+          title: this.title,
+          description: this.detail,
+          short_description: this.shDes,
         });
         console.log(response.config);
-        alert("Activity has been created!");
-        // this.$router.push({ name: "history" });
+        alert("Your News has been Created!");
+        this.$router.push({ name: "history" });
       } catch (err) {
         alert(err.response.data.error_message);
         console.log(err.response.data.error_message);
       }
     },
+    // single file upload
+    selectFile() {
+      //ชื่อเหมือน iput@change
+      const selectFile = this.$refs.file.files[0];
+      this.selectedFile = selectFile;
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+      const MAX_SIZE = 200000;
+      const tooLarge = selectFile.size > MAX_SIZE;
+
+      if (allowedTypes.includes(selectFile.type) && !tooLarge) {
+        this.error = false;
+        this.message = "";
+      } else {
+        this.error = true;
+        this.message = tooLarge
+          ? `Too large. Max size is ${MAX_SIZE / 1000}Kb`
+          : "Only images are allowed";
+        this.selectedFile = "";
+      }
+
+      // Preview Image
+      const input = this.$refs.file;
+      const files = input.files;
+      if (files && files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.preview = e.target.result;
+        };
+        reader.readAsDataURL(files[0]);
+        this.$emit("input", files[0]);
+      }
+    },
+    // Upload file
+    async sendFile() {
+      const formdata = new FormData();
+      formdata.append("selectedFile", this.selectedFile);
+
+      try {
+        await axios.post("/api/posts/upload", formdata);
+        this.message = "File has been uploaded!";
+        this.selectedFile = "";
+        this.error = false;
+        console.log(this.message);
+        setTimeout(() => {
+          this.$router.push("homepage");
+        }, 1000);
+      } catch (err) {
+        this.message = err.response.data.error;
+        this.error = true;
+      }
+    },
+  },
 };
 </script>
 
 <style scoped>
+.cancelbtn {
+  text-align: -webkit-center;
+}
 .card-img {
   border-radius: 15px;
   max-height: 414px;

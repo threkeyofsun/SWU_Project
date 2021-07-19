@@ -43,11 +43,26 @@
                       </div>
                     </div>
                     <div v-else>
-                      <img
-                        class="profile-img mb-3"
-                        :src="user.profile_img"
-                        alt="profile.img"
-                      />
+                      <div v-if="loading" class="text-center">
+                        <div class="loadingio-spinner-ellipsis-zn4fhzwgb">
+                          <div class="loadingio-spinner-ellipsis-e2dlnyc4ytc">
+                            <div class="ldio-8xpx2o6sd04">
+                              <div></div>
+                              <div></div>
+                              <div></div>
+                              <div></div>
+                              <div></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div v-else>
+                        <img
+                          class="profile-img mb-3"
+                          :src="user.profile_img"
+                          alt="profile.img"
+                        />
+                      </div>
                     </div>
                   </span>
                 </span>
@@ -64,7 +79,7 @@
                 <button
                   type="button"
                   class="my-4 btn btn-light"
-                  @click="onUpload"
+                  @click="sendFile"
                   :class="`message ${
                     selectedFile
                       ? ''
@@ -78,8 +93,20 @@
           </div>
         </div>
         <hr />
-
-        <div class="detail my-4 ml-md-5">
+        <div v-if="loading" class="text-center my-5">
+          <div class="loadingio-spinner-ellipsis-zn4fhzwgb">
+            <div class="loadingio-spinner-ellipsis-e2dlnyc4ytc">
+              <div class="ldio-8xpx2o6sd04">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="detail my-4 ml-md-5" v-else>
           <h5>
             Name: &nbsp;&nbsp;&nbsp; {{ user.firstname }}&nbsp; &nbsp;
             {{ user.lastname }}
@@ -101,67 +128,6 @@
         </div>
 
         <hr />
-        <div>
-          <p class="anounce-title">Activities Category Subscribe</p>
-          <p class="detail">**Select the box below for notification</p>
-
-          <form
-            @submit.prevent="sendFile"
-            action=""
-            method="post"
-            enctype="multipar/form-data"
-          >
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value="volunteer"
-                v-model="actType"
-                id="volunteer"
-              />
-
-              <label class="form-check-label detail" for="volunteer">
-                Volunteer Activities
-              </label>
-            </div>
-
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value="regular"
-                v-model="actType"
-                id="regular"
-              />
-              <label class="form-check-label detail" for="regular">
-                Regular Activities
-              </label>
-            </div>
-
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                v-model="actType"
-                value="force"
-                id="force"
-              />
-              <label class="form-check-label detail" for="force">
-                Force Activities
-              </label>
-            </div>
-
-            <button
-              :disabled="isEmpty"
-              class="btn btn-light my-3 detail"
-              type="submit"
-              value="submit"
-              @click="onUpload"
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
       </div>
     </div>
   </div>
@@ -203,18 +169,24 @@ export default {
       error: false,
       dropzonefile: "",
       uploading: false,
+      loading: true,
     };
   },
-
-  async created() {
+  // created() {
+  //   setTimeout(() => {
+  //     this.loading = false;
+  //   }, 1900);
+  // },
+  async mounted() {
     // try {
     const result = await axios.get("/users/profile");
     this.user = result.data;
     //
     const resulted = await axios.get("/users/profile");
-
+    this.loading = false;
     this.$store.state.info = resulted.data;
     this.$store.commit("setAuthentication", true);
+    console.log(result.data)
     // this.$store.commit("setAuthentication", true);
     // } catch (err) {
     //   this.$router.push({ name: "login" });
@@ -225,6 +197,7 @@ export default {
       const thisMoment = moment(this.user.createdAt).format("LL");
       return thisMoment;
     },
+
     // single file upload
     selectFile() {
       //ชื่อเหมือน iput@change
@@ -257,6 +230,7 @@ export default {
         reader.readAsDataURL(files[0]);
         this.$emit("input", files[0]);
       }
+      //
     },
     // Uploadfile
     async sendFile() {
@@ -268,6 +242,12 @@ export default {
         this.message = "File has been uploaded!";
         this.selectedFile = "";
         this.error = false;
+        for (var pair of formdata.entries()) {
+          console.log(pair[0] + " - " + pair[1]);
+        }
+        // setTimeout(() => {
+        //   this.$router.push("homepage");
+        // }, 1000);
       } catch (err) {
         this.message = err.response.data.error;
         this.error = true;
@@ -279,6 +259,101 @@ export default {
   },
 };
 </script>
+
+<style type="text/css">
+@keyframes ldio-8xpx2o6sd04 {
+  0% {
+    transform: translate(5.699999999999999px, 44.459999999999994px) scale(0);
+  }
+  25% {
+    transform: translate(5.699999999999999px, 44.459999999999994px) scale(0);
+  }
+  50% {
+    transform: translate(5.699999999999999px, 44.459999999999994px) scale(1);
+  }
+  75% {
+    transform: translate(44.459999999999994px, 44.459999999999994px) scale(1);
+  }
+  100% {
+    transform: translate(83.22px, 44.459999999999994px) scale(1);
+  }
+}
+@keyframes ldio-8xpx2o6sd04-r {
+  0% {
+    transform: translate(83.22px, 44.459999999999994px) scale(1);
+  }
+  100% {
+    transform: translate(83.22px, 44.459999999999994px) scale(0);
+  }
+}
+@keyframes ldio-8xpx2o6sd04-c {
+  0% {
+    background: #85a2b6;
+  }
+  25% {
+    background: #fdfdfd;
+  }
+  50% {
+    background: #dce4eb;
+  }
+  75% {
+    background: #bbcedd;
+  }
+  100% {
+    background: #85a2b6;
+  }
+}
+.ldio-8xpx2o6sd04 div {
+  position: absolute;
+  width: 25.08px;
+  height: 25.08px;
+  border-radius: 50%;
+  transform: translate(44.459999999999994px, 44.459999999999994px) scale(1);
+  background: #85a2b6;
+  animation: ldio-8xpx2o6sd04 5.5555555555555545s infinite cubic-bezier(0, 0.5, 0.5, 1);
+}
+.ldio-8xpx2o6sd04 div:nth-child(1) {
+  background: #bbcedd;
+  transform: translate(83.22px, 44.459999999999994px) scale(1);
+  animation: ldio-8xpx2o6sd04-r 1.3888888888888886s infinite cubic-bezier(0, 0.5, 0.5, 1),
+    ldio-8xpx2o6sd04-c 5.5555555555555545s infinite step-start;
+}
+.ldio-8xpx2o6sd04 div:nth-child(2) {
+  animation-delay: -1.3888888888888886s;
+  background: #85a2b6;
+}
+.ldio-8xpx2o6sd04 div:nth-child(3) {
+  animation-delay: -2.7777777777777772s;
+  background: #bbcedd;
+}
+.ldio-8xpx2o6sd04 div:nth-child(4) {
+  animation-delay: -4.166666666666666s;
+  background: #dce4eb;
+}
+.ldio-8xpx2o6sd04 div:nth-child(5) {
+  animation-delay: -5.5555555555555545s;
+  background: #fdfdfd;
+}
+.loadingio-spinner-ellipsis-e2dlnyc4ytc {
+  width: 114px;
+  height: 114px;
+  display: inline-block;
+  overflow: hidden;
+  background: none;
+}
+.ldio-8xpx2o6sd04 {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
+}
+.ldio-8xpx2o6sd04 div {
+  box-sizing: content-box;
+}
+/* generated by https://loading.io/ */
+</style>
 
 <style scoped>
 /* Upload profile image */

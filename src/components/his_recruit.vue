@@ -9,35 +9,73 @@
         <p class="d-inline mx-2 sq-approve"><span class="square"></span>Approve</p>
       </div>
       <!--  -->
+      <p> {{}} </p>
       <div>
         <div v-if="act">
-          <div
-            v-for="(activity, index) in act.history.activity.recruitment"
-            :key="(activity, index)"
-          >
+          <div v-for="(activity, index) in recruitment_act" :key="(activity, index)">
             <!--  -->
-            <div class="mx-xxl-5 my-3 row" v-if="act.history.activity.recruitment[index].status != 'Approve' ">
+            <div
+              class="mx-xxl-5 my-3 row"
+              v-if="activity.status == 'Rejected' || activity.status == 'Pending'"
+            >
               <div class="col col-sm-6 col-12 col-6 ms-0 me-0 align-self-center">
-                <router-link :to="{ path: '/event/activities/' + act.history.activity.recruitment[index]._id }" target="_blank">
-                  {{ act.history.activity.recruitment[index].name }}
+                <router-link
+                  :to="{
+                    path: '/event/activities/' + activity._id,
+                  }"
+                  
+                >
+                  <span
+                    class=""
+                    :class="
+                      activity.status === 'Rejected' ? 'square sq-reject' : 'square sq-de'
+                    "
+                  ></span>
+
+                  {{ activity.title }}
                 </router-link>
               </div>
               <span class="col-sm-6 col-12 col mx-0 mt-3 mt-sm-0 align-self-center">
                 <button
                   type=""
-                  class="mx-1 btn bg-white btn-outline-warning border border-warning text-warning"
-                  :class="`${comments ? 'd-none' : ''}`"
+                  class="mx-1 btn-sm  btn-warning fw-bolder border border-warning "
+                  :class="`${activity.status == 'Rejected' ? 'd-NotPending' : 'd-none'}`"
+                  @click="hidden[index] = !hidden[index]"
                 >
+               
                   Comment
+           
                 </button>
+                <!-- Edit -->
+                <router-link :to="{ path: '/Activity/edit/' + activity._id }">
+                  <button
+                    type=""
+                    class="mx-1 btn-sm  btn-warning fw-bolder border border-warning"
+                    :class="`${activity.comment ? '' : 'd-none'}`"
+                  >
+                    Edit
+                  </button></router-link
+                >
+                <!-- Cancel -->
                 <button
                   type=""
                   :class="`${approve ? 'd-none' : ''}`"
-                  class="btn mx-1 text-white bg-secondary"
+                  class="btn-sm mx-1 border-0 text-white bg-secondary"
+                  @click="delAct(activity._id)"
                 >
                   Cancel
                 </button>
               </span>
+
+              <!-- Message from admin -->
+              <div v-if="activity.status === 'Rejected'">
+                <div class="mb-0" v-show="hidden[index]">
+                  <div class="commentbox mb-0">
+                    <p class="mb-0">{{ activity.comment }}</p>
+                  </div>
+                </div>
+              </div>
+              <!--  -->
               <hr class="mt-3" />
             </div>
           </div>
@@ -48,43 +86,66 @@
     <div>
       <p class="btn draw-border draw-border1">On Going</p>
       <div v-if="act">
-        <div v-for="(activity, index) in act.history.activity.recruitment"
-            :key="(activity, index)">
-          <div v-if="act.history.activity.recruitment[index].status === 'Approve' ">
-            {{ act.history.activity.recruitment[index].name }}
+        <div v-for="(activity, index) in recruitment_act" :key="(activity, index)">
+          <div class="mb-0" v-if="activity.status === 'Approved'">
+            <div class="row">
+              <div class="col-sm-6 col-12">
+                <router-link
+                  :to="{
+                    path: '/event/activities/' + activity._id,
+                  }"
+                  
+                >
+                  <span
+                    class=" mx-2"
+                    :class="
+                      activity.status === 'Approved'
+                        ? 'square sq-approve'
+                        : 'square'
+                    "
+                  ></span>
+                  {{ activity.title }}
+                </router-link>
+              </div>
+
+              <div class="d-inline col-sm-6 col-12">
+                <button class="button btn-sm mx-1  btn-open">Close</button>
+                <button class="button btn-red mx-1">End</button>
+              </div>
+            </div>
+            <hr class="mt-1" />
           </div>
         </div>
       </div>
-
-      <!-- <div class="mx-xxl-5 row">
-        <div class="col col-sm-6 col-12 col-6 ms-0 me-0 align-self-center">
-          <router-link to="/event/activities/:id">
-            <span class="square sq-approve"></span>
-            Orientation Day
-          </router-link>
-        </div>
-        <span class="col-sm-6 col-12 col mx-0 mt-3 mt-sm-0 align-self-center">
-          <button type="" class="btn mx-1 text-white bg-secondary fw-normal">Edit</button>
-          <button type="" class="btn mx-1 text-white bg-secondary fw-normal">
-            Cancel
-          </button>
-        </span>
-        <hr class="mt-3" />
-      </div> -->
     </div>
 
     <div>
-      <p class="btn draw-border draw-border2">Completed Activity</p>
+      <p class="btn draw-border draw-border2 mt-2">Completed Activity</p>
       <div class="mx-xxl-5">
         <p class="text-center"></p>
         <div v-if="act">
-        <div v-for="(activity, index) in act.history.activity.recruitment"
-            :key="(activity, index)">
-          <div v-if="act.history.activity.recruitment[index].status === 'Completed' ">
-            {{ act.history.activity.recruitment[index].name }}
+          <div v-for="(activity, index) in recruitment_act" :key="(activity, index)">
+            <div class="mb-0" v-if="activity.status === 'Completed'">
+              <div class="row">
+                <div class="col-sm-6 col-12">
+                  <router-link
+                    :to="{
+                      path: '/event/activities/' + activity._id,
+                    }"
+                    
+                  >
+                    {{ activity.name }}
+                  </router-link>
+                </div>
+
+                <div class="d-inline col-sm-6 col-12">
+                  <button class="button mx-1 btn-open">Open</button>
+                  <button class="button btn-red mx-1">Delete</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
         <hr />
       </div>
@@ -101,25 +162,85 @@ export default {
       comments: "false",
       act: null,
       recruitment_act: null,
+      hidden: [],
+      a:''
     };
   },
   async mounted() {
     try {
-      const { data } = await axios.get("/users/history/recruitment");
+      const result = await axios.get("/users/profile");
+      this.$store.state.info = result.data;
+      // End Profile
+      const { data } = await axios.get("/users/history/activities/recruited");
       this.act = data;
-      this.recruitment_act = this.act.history.activity.recruitment;
-      console.log(this.recruitment_act);
+      this.recruitment_act = this.act.history.activity.recruited;
+      console.log(this.act);
+     
     } catch (err) {
-      alert(err);
+      // alert(err);
     }
+  },
+  methods: {
+    toggleDetails() {
+      this.showDetails = !this.showDetails;
+    },
+    async delAct(ActId) {
+      try {
+        if (window.confirm("Do you want to delete this Activity?")) {
+          const deleteAct = await axios.delete(`/activities/${ActId}`);
+          this.recruitment_act.splice(ActId, 1);
+          console.log(deleteAct);
+          window.location.reload();
+        }
+      } catch (err) {
+        alert("Something went wrong!");
+        console.log(err);
+      }
+    },
   },
 };
 </script>
 
 <style lang="css" scoped>
+.button {
+  width: 20%;
+  height: 50px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  transition: background-color ease-in-out 0.5s;
+  font-family: THSarabanBold;
+}
+.btn-red {
+  background-color: #f68fa0;
+}
+.btn-open {
+  background-color: rgb(80, 158, 158);
+}
+button:hover {
+  background-color: transparent;
+}
+.btn-red:hover {
+  border: 1px solid #f68fa0;
+  color: #f68fa0;
+}
+.btn-open:hover {
+  border: 1px solid rgb(80, 158, 158);
+  color: rgb(80, 158, 158);
+}
+.commentbox {
+  border-left: 6px solid #ccc;
+  border-right: 6px solid #ccc;
+  background-color: #ffaa9c40;
+  color: #555555;
+  font-family: "THSarabanBold";
+  margin-top: 15px;
+}
 .status-color {
   border-bottom: solid 3px;
   padding-bottom: 3px;
+  margin-bottom: 3%;
 }
 .square {
   width: 10px;

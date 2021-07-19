@@ -6,13 +6,16 @@
           <router-link
             :to="{ path: '/admin/announce/' + announce[index]._id }"
             target="_blank"
-            >" <span> {{ announce[index].name }} </span></router-link
+          >
+            <span> {{ announce[index].title }} </span></router-link
           >
         </li>
         <span class="co-12 mt-3 mt-lg-0 col-md-6 text-end-lg butn">
-          <button type="" class="btn btn-outline-warning fw-bolder mx-1 mb-3">
-            Edit
-          </button>
+          <router-link :to="{ path: '/Announcement/edit/' + announce[index]._id }"
+            ><button type="" class="btn btn-outline-warning fw-bolder mx-1 mb-3">
+              Edit
+            </button></router-link
+          >
           <button
             type=""
             @click="delAnnounce(announce[index]._id)"
@@ -50,7 +53,7 @@ export default {
     try {
       const result = await axios.get("/announcements/");
       this.announce = result.data;
-      console.log(result);
+      console.log(result.data);
     } catch (err) {
       alert("Something went wrong");
     }
@@ -65,6 +68,7 @@ export default {
         }
       } catch (err) {
         alert("Something went wrong!");
+        console.log(err);
       }
     },
   },
