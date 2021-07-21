@@ -51,7 +51,7 @@
 
         <div class="row1">
           <select
-            class="smallIn d-inline"
+            class="smallIn d-inline border-0"
             id="faculty"
             v-model.trim="user.faculty"
             required
