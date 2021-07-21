@@ -51,10 +51,11 @@
 
         <div class="row1">
           <select
-            class="smallIn d-inline border-0"
+            class="smallIn d-inline form-select"
             id="faculty"
             v-model.trim="user.faculty"
             required
+       
           >
             <option disabled selected class="faculty-disble" value="0">| Faculty</option>
 
