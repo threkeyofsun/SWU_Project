@@ -134,7 +134,7 @@
                     }"
                     
                   >
-                    {{ activity.name }}
+                    {{ activity.title }}
                   </router-link>
                 </div>
 
