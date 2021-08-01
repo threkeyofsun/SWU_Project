@@ -7,9 +7,9 @@
         <p>&nbsp; &nbsp;&nbsp; Select your cover image</p>
       </div>
       <form
-        id="submitAct"
+        id="sendFile"
         action=""
-        @submit.prevent="submitAct"
+        @submit.prevent="sendFile"
         method="post"
         enctype="multipar/form-data"
         class="ac-req-form"
@@ -26,38 +26,38 @@
                   v-model="value"
                   checked
                 />
-                <img class="radioim" :src="'/img/' + coverimg[0]" />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg'" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[1]" v-model="value" />
-                <img class="radioim" :src="'/img/' + coverimg[1]" />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_2_asy8rz.jpg'" />
               </label>
             </div>
 
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[2]" v-model="value" />
-                <img class="radioim" :src="'/img/' + coverimg[2]" />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311776/S-E-a-N/default/cover_img/cover_3_o1odod.jpg'" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[3]" v-model="value" />
-                <img class="radioim" :src="'/img/' + coverimg[3]" />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_4_rfrtux.jpg'" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[4]" v-model="value" />
-                <img class="radioim" :src="'/img/' + coverimg[4]" />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311778/S-E-a-N/default/cover_img/cover_5_oebcbe.jpg'" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[5]" v-model="value" />
-                <img class="radioim" :src="'/img/' + coverimg[5]" />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_6_rubhbx.jpg'" />
               </label>
             </div>
           </div>
@@ -93,7 +93,7 @@
               <div class="user-badge">
                 <img
                   class="profile-img cover-img mt-5 my-4 card-img"
-                  :src="'/img/' + value"
+                  :src="picked[value]"
                   alt="profile.img"
                 />
               </div>
@@ -164,7 +164,16 @@
 
         <div class="mb-3">
           <label for="formFileSm" class="form-label">Insert Image</label>
-          <input class="form-control form-control-sm" id="formFileSm" type="file" />
+          <input
+            class="form-control form-control-sm"
+            name="imagesfile"
+            id="imagefile"
+            type="file"
+            ref="selectedimages"
+            @change="imagesfiles"
+            accept="image/*"
+          />
+
           <button
             :disabled="isEmpty"
             class="btn btn btn-secondary mb-2 mt-4"
@@ -199,15 +208,21 @@ export default {
   },
   data() {
     return {
-      value: "swu-water.jpg",
-      picked: "0",
+      value: 0,
+      picked: ['https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg',
+              'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_2_asy8rz.jpg',
+              'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311776/S-E-a-N/default/cover_img/cover_3_o1odod.jpg',
+              'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_4_rfrtux.jpg',
+              'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311778/S-E-a-N/default/cover_img/cover_5_oebcbe.jpg',
+              'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_6_rubhbx.jpg'],
       coverimg: [
-        "swu-water.jpg",
-        "IMG_20190126_114352_2.jpg",
-        "swu_lotus.jpg",
-        "00100dPORTRAIT_00100_BURST20190703172640303_COVER.jpg",
-        "IMG_20190629_173826.jpg",
-        "2019-08-08 15.27.48-1.jpg",
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
       ],
       title: "",
       shDes: "",
@@ -226,13 +241,14 @@ export default {
       alertMessage: "",
       selectedFile: "",
       dipimg: {},
+      selectImage: [],
     };
   },
   methods: {
     Empyty() {
       this.preview = "";
     },
-    // 
+    //
     async submitAct() {
       try {
         const response = await axios.post("/news/", {
@@ -249,11 +265,16 @@ export default {
         console.log(err.response.data.error_message);
       }
     },
+    //Multuple Images Upload
+    imagesfiles() {
+      this.selectImage = this.$refs.selectedimages.files[0];
+    },
     // single file upload
     selectFile() {
       //ชื่อเหมือน iput@change
       const selectFile = this.$refs.file.files[0];
-      this.selectedFile = selectFile;
+      this.value = selectFile;
+
       const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
       const MAX_SIZE = 200000;
       const tooLarge = selectFile.size > MAX_SIZE;
@@ -281,10 +302,33 @@ export default {
         this.$emit("input", files[0]);
       }
     },
+    //Multuple Images Upload
+    imagesfile() {
+      const selectedImage = this.$refs.selectedimages.files[0];
+      this.selectImage = selectedImage;
+
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+      const MAX_SIZE = 200000;
+      const tooLarge = selectedImage.size > MAX_SIZE;
+
+      if (allowedTypes.includes(selectedImage.type) && !tooLarge) {
+        this.error = false;
+        this.message = "";
+      } else {
+        this.error = true;
+        this.message = tooLarge
+          ? `Too large. Max size is ${MAX_SIZE / 1000}Kb`
+          : "Only images are allowed";
+        this.selectedFile = "";
+      }
+    },
     // Upload file
     async sendFile() {
       const formdata = new FormData();
-      formdata.append("selectedFile", this.selectedFile);
+      formdata.append("cover_img", this.selectedFile);
+      formdata.append("title", this.title);
+      formdata.append("description", this.description);
+      formdata.append("short_description", this.short_description);
 
       try {
         await axios.post("/api/posts/upload", formdata);
@@ -318,7 +362,7 @@ export default {
   text-align-last: center;
 }
 img.profile-img {
-  width: 85%;
+  width: 63vw;
   height: 200px;
   object-fit: cover;
 }

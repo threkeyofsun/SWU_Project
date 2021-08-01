@@ -30,7 +30,7 @@
         <div class="">
           <p class="qa d-inline">At Place :</p>
           <p class="mx-3 d-inline">
-            {{ actDetail.place }}
+            {{ actDetail.location }}
           </p>
         </div>
         <div class="d-inline">
@@ -70,11 +70,13 @@
       <div class="btn draw-border">Apply HERE</div>
     </button>
     <hr />
-
-    <div class="mb-5">
-      <img class="img-act" src="/img/whale.jpg" alt="..." />
-      <img class="img-act" src="/img/3505624.png" />
-    </div>
+      <div class="row">
+        <div v-for="(image, index) in actDetail.images" :key="index" class="mx-0 col-12 col-sm-6">
+          <div class="row mb-3 justify-content-center">
+            <img :src="actDetail.images[index].url" class="col-12 rounded-0 sample-img"   />
+            </div>
+        </div>
+      </div>
   </div>
 
   <HPfooter />
@@ -103,9 +105,7 @@ export default {
   // },
   async created() {
     try {
-      const result = await axios.get(
-        `/admin/activities/${this.$route.params.id}`
-      );
+      const result = await await axios.get(`/activities/${this.$route.params.id}`);
       this.actDetail = result.data;
       const res = await axios.get("/users/profile");
       this.$store.state.info = res.data;
@@ -141,6 +141,12 @@ export default {
 </script>
 
 <style scoped>
+    .sample-img{
+    width: 100%;
+    height: 345px;
+    object-fit: cover;
+    object-position: top;
+  }
 /* Start QA */
 .cust-btn {
   box-shadow: none;

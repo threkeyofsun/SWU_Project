@@ -170,6 +170,7 @@ export default {
       dropzonefile: "",
       uploading: false,
       loading: true,
+      selectImage:[],
     };
   },
   // created() {
@@ -232,7 +233,28 @@ export default {
       }
       //
     },
-    // Uploadfile
+    // Upload Profile Images file To Backend
+    //Multuple Images Upload
+    imagesfile() {
+      const selectedImage = this.$refs.selectedimages.files[0];
+      this.selectImage = selectedImage;
+
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+      const MAX_SIZE = 200000;
+      const tooLarge = selectedImage.size > MAX_SIZE;
+
+      if (allowedTypes.includes(selectedImage.type) && !tooLarge) {
+        this.error = false;
+        this.message = "";
+      } else {
+        this.error = true;
+        this.message = tooLarge
+          ? `Too large. Max size is ${MAX_SIZE / 1000}Kb`
+          : "Only images are allowed";
+        this.selectedFile = "";
+      }
+    },
+
     async sendFile() {
       const formdata = new FormData();
       formdata.append("selectedFile", this.selectedFile);

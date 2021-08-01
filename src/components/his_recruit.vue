@@ -18,12 +18,12 @@
               class="mx-xxl-5 my-3 row"
               v-if="activity.status == 'Rejected' || activity.status == 'Pending'"
             >
-              <div class="col col-sm-6 col-12 col-6 ms-0 me-0 align-self-center">
+              <div class="col col-sm-6 col-12 col-6 ms-0 me-0 align-self-center text-md-start ps-md-5">
                 <router-link
                   :to="{
                     path: '/event/activities/' + activity._id,
                   }"
-                  
+                  class="ps-xl-5"
                 >
                   <span
                     class=""
@@ -35,7 +35,7 @@
                   {{ activity.title }}
                 </router-link>
               </div>
-              <span class="col-sm-6 col-12 col mx-0 mt-3 mt-sm-0 align-self-center">
+              <span class="col-sm-6 col-12 col mx-0 mt-3 mt-sm-0 align-self-center ">
                 <button
                   type=""
                   class="mx-1 btn-sm  btn-warning fw-bolder border border-warning "
@@ -82,19 +82,19 @@
         </div>
       </div>
     </div>
-
+   
     <div>
       <p class="btn draw-border draw-border1">On Going</p>
       <div v-if="act">
         <div v-for="(activity, index) in recruitment_act" :key="(activity, index)">
           <div class="mb-0" v-if="activity.status === 'Approved'">
             <div class="row">
-              <div class="col-sm-6 col-12">
+              <div class="col-sm-6 col-12 text-md-start ps-md-5">
                 <router-link
                   :to="{
                     path: '/event/activities/' + activity._id,
                   }"
-                  
+                  class="ps-xl-5"
                 >
                   <span
                     class=" mx-2"
@@ -109,7 +109,7 @@
               </div>
 
               <div class="d-inline col-sm-6 col-12">
-                <button class="button btn-sm mx-1  btn-open">Close</button>
+                <router-link :to="{ path: '/Activity/edit/' + activity._id }"><button class="button btn-sm mx-1  btn-open">Edit</button></router-link>
                 <button class="button btn-red mx-1">End</button>
               </div>
             </div>
@@ -139,7 +139,7 @@
                 </div>
 
                 <div class="d-inline col-sm-6 col-12">
-                  <button class="button mx-1 btn-open">Open</button>
+                  <!-- <button class="button mx-1 btn-open">Open</button> -->
                   <button class="button btn-red mx-1">Delete</button>
                 </div>
               </div>

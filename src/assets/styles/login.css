@@ -97,10 +97,11 @@ text-align-last: center;
   width: 496px;
   height: 55px;
   margin-bottom: 40px;
-  padding: 2px 15px 2px 15px;
+  padding: 2px 15px 2px 20px;
+  font-size: 31px;
 }
 #login-form input::placeholder {
-  padding-left: 32px;
+  padding-left: 10px;
   color: #636468;
 }
 button#login-btn {
@@ -129,7 +130,7 @@ button#login-btn {
   padding: 2px 15px 2px 15px;
 }
 #regis-form input::placeholder {
-  padding-left: 32px;
+  padding-left: 13px;
   color: #636468;
 }
 select::-ms-expand {
@@ -154,7 +155,7 @@ select {
   width: 220px;
   height: 41px;
   margin: 12px 18px;
-  padding: 2px 15px 2px 15px;
+  padding: 2px 15px 2px 18px;
 }
 .checkB {
   margin: 0px 36px 0px 85px;

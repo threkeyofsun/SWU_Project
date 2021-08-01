@@ -9,7 +9,7 @@
       <form
         id="submitAct"
         action=""
-        @submit.prevent="submitAct"
+        @submit.prevent="sendFile"
         method="post"
         enctype="multipar/form-data"
         class="ac-req-form"
@@ -26,38 +26,38 @@
                   v-model="value"
                   checked
                 />
-                <img class="radioim" :src="'/img/' + coverimg[0]" />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg'" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[1]" v-model="value" />
-                <img class="radioim" :src="'/img/' + coverimg[1]" />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_2_asy8rz.jpg'" />
               </label>
             </div>
 
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[2]" v-model="value" />
-                <img class="radioim" :src="'/img/' + coverimg[2]" />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311776/S-E-a-N/default/cover_img/cover_3_o1odod.jpg'" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[3]" v-model="value" />
-                <img class="radioim" :src="'/img/' + coverimg[3]" />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_4_rfrtux.jpg'" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[4]" v-model="value" />
-                <img class="radioim" :src="'/img/' + coverimg[4]" />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311778/S-E-a-N/default/cover_img/cover_5_oebcbe.jpg'" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[5]" v-model="value" />
-                <img class="radioim" :src="'/img/' + coverimg[5]" />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_6_rubhbx.jpg'" />
               </label>
             </div>
           </div>
@@ -80,7 +80,8 @@
               class="form-control-file btn btn-light mt-2 file-input"
               id="file"
             />
-            <div v-if="preview" class="previewImage">
+
+            <div v-if="preview">
               <div>
                 <img :src="preview" class="profile-img cover-img mt-5 my-4" />
               </div>
@@ -92,7 +93,7 @@
               <div class="user-badge">
                 <img
                   class="profile-img cover-img mt-5 my-4"
-                  :src="'/img/' + value"
+                  :src="picked[value]"
                   alt="profile.img"
                 />
               </div>
@@ -308,33 +309,40 @@
             </div>
           </div>
         </div>
-
         <div class="mb-3">
           <!--  -->
-          <label for="formFileSm" class="form-label">Insert Image</label>
-          <form
-            @submit.prevent="sendFile"
-            action=""
-            method="post"
-            enctype="multipar/form-data"
-          >
-            <input
-              class="form-control form-control-sm"
-              name="imagefile"
-              id="imagefile"
-              type="file"
-              ref="imagefile"
-              @change="imagefile"
-              accept="image/*"
-            />
+          <label for="imagesfile" class="form-label">Insert Image</label>
 
-            <div
-              v-if="message"
-              :class="`message mt-2 ${error ? 'text-danger' : 'bg-success'} `"
-            >
-              <div class="message-body text-danger">**{{ message }}**</div>
+          <input
+            multiple
+            class="form-control form-control-sm"
+            name="imagesfile"
+            id="imagefile"
+            type="file"
+            ref="selectedimages"
+            @change="imagesfile"
+            accept="image/*"
+          />
+
+<!-- Preview File Name  -->
+          <div v-for="(file, index) in selectedimages" :key="index"
+            :class="`${file.invalidMessage && 'text-danger'}`">
+            <div class="row my-2 ">
+              <div class="col-7 col mx-3">
+                {{file.name}}
+                <span v-if="file.invalidMessage"> &nbsp;- {{file.invalidMessage}}</span>
+                <span v-if="!file.invalidMessage">&nbsp;{{error_warning = ''}}</span>
+                </div>
+              <div @click="selectedimages.splice(index, 1); uploadImages.splice(index,1); imagesI.splice(index,1) " class="col-3 col btn-close mt-1 bg-light rounded-circle"></div>
+               
             </div>
-          </form>
+          </div>
+          <div
+            v-if="message"
+            :class="`message mt-2 ${error ? 'text-danger' : 'bg-success'} `"
+          >
+            <div class="message-body text-danger bg-white">**{{ message }}**</div>
+          </div>
           <!-- End of Insert Image -->
           <button
             :disabled="isEmpty"
@@ -342,7 +350,7 @@
             type="submit"
             value="submit"
             :class="` ${
-              message ? 'disabled bg-secondary border-secondary text-white' : ''
+               warning || message || error_warning ? 'disabled bg-secondary border-secondary text-white' : ''
             }`"
             
           >
@@ -352,10 +360,14 @@
       </form>
 
       <hr />
-      <!-- Detail -->
+
       <div class="row">
-        <div class="col">
-          <!-- <img :src="preview" class="profile-img" /> -->
+        <div v-for="(image, key) in imagesI" :key='key' class="mx-0 col-12 col-sm-6">
+          <div class="row mb-3 justify-content-center">
+            <img :src="showimg[key]" class="col-12 rounded-0 sample-img"   />
+            <div v-if="key >= 1" class="d-none" >{{warning = true}}</div>
+            <div v-if="key < 2" class="d-none">{{warning = false}}</div>
+            </div>
         </div>
       </div>
     </div>
@@ -370,6 +382,7 @@ import HomepageHeader from "../components/HomepageHeader";
 import HPfooter from "../components/homepageFooter";
 import axios from "axios";
 import moment from "moment";
+import _ from 'lodash';
 
 export default {
   name: "ProductDetailPage",
@@ -380,15 +393,21 @@ export default {
   },
   data() {
     return {
-      value: "swu-water.jpg",
-      picked: "0",
+      value: 0,
+      picked: ['https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg',
+              'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_2_asy8rz.jpg',
+              'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311776/S-E-a-N/default/cover_img/cover_3_o1odod.jpg',
+              'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_4_rfrtux.jpg',
+              'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311778/S-E-a-N/default/cover_img/cover_5_oebcbe.jpg',
+              'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_6_rubhbx.jpg'],
       coverimg: [
-        "swu-water.jpg",
-        "IMG_20190126_114352_2.jpg",
-        "swu_lotus.jpg",
-        "00100dPORTRAIT_00100_BURST20190703172640303_COVER.jpg",
-        "IMG_20190629_173826.jpg",
-        "2019-08-08 15.27.48-1.jpg",
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
       ],
       description: "",
       department: "",
@@ -406,15 +425,17 @@ export default {
       files: [],
       message: false,
       error: false,
-      dropzonefile: "",
-      uploading: false,
       preview: "",
       coverPreview: "",
       image: "",
       alertMessage: "",
-      selectedFile: "",
-      dipimg: {},
-      Test1:{}
+      images: "",
+      selectedimages: [],
+      uploadImages: [],
+      error_warning:'',
+      warning:false,
+      imagesI: [],
+      showimg:[]
     };
   },
   methods: {
@@ -460,8 +481,8 @@ export default {
     selectFile() {
       //ชื่อเหมือน iput@change
       const selectFile = this.$refs.file.files[0];
-      this.selectedFile = selectFile;
-
+      this.value = selectFile;
+      //
       const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
       const MAX_SIZE = 200000;
       const tooLarge = selectFile.size > MAX_SIZE;
@@ -474,10 +495,10 @@ export default {
         this.message = tooLarge
           ? `Too large. Max size is ${MAX_SIZE / 1000}Kb`
           : "Only images are allowed";
-        this.selectedFile = "";
+        this.images = "";
       }
 
-      // Preview Image
+      // Single Preview Image
       const input = this.$refs.file;
       const files = input.files;
       if (files && files[0]) {
@@ -489,35 +510,93 @@ export default {
         this.$emit("input", files[0]);
       }
     },
+
+    //Multuple Images Upload
+    imagesfile() {
+      const selectedImage = this.$refs.selectedimages.files;
+      this.uploadImages = [...this.uploadImages, ...selectedImage];
+      this.selectedimages = [
+        ...this.selectedimages,
+        ..._.map(selectedImage, file => ({
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            invalidMessage: this.validation(file),
+        }))
+      ];
+   
+
+        //Preview Multiple Images 
+        const selectedFile = this.$refs.selectedimages.files;
+        for(let i = 0; i < selectedFile.length; i++){
+          console.log(selectedFile[i]);
+          this.imagesI.push(selectedFile[i]);
+        }
+
+        for(let i = 0; i < this.imagesI.length; i++){
+          let reader = new FileReader();
+          reader.onload = (e) => {
+            this.showimg[i] = e.target.result;
+            // console.log(this.showimg);
+            // this.$refs.image[i].src = e.reader.result;
+          };
+          reader.readAsDataURL(this.imagesI[i]);
+    
+        }
+    },
+    validation(file){
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+      const MAX_SIZE = 500000;
+
+        if(file.size > MAX_SIZE){ 
+          return this.error_warning = `Max size: ${MAX_SIZE/1000}Kb`;
+        }
+
+        if(!allowedTypes.includes(file.type)){
+          return this.error_warning = `Not an image`;
+        }
+        
+      return '';
+    },
+
     // Upload file
     async sendFile() {
       const formdata = new FormData();
-      formdata.append("selectedFile", this.selectedFile);
-      formdata.append("cover_img",  this.value);
-      formdata.append("title",  this.title);
-      formdata.append("type",  this.type);
-      formdata.append("faculty",  this.faculty);
-      formdata.append("department",  this.department);
-      formdata.append("start_date",   moment(this.start_date).format("YYYY-MM-DD HH:mm:ss"));
-      formdata.append("end_date",   moment(this.end_date).format("YYYY-MM-DD HH:mm:ss"));
-      formdata.append("member_amount",  this.member_amount);
-      formdata.append("location",  this.place);
-      formdata.append("description",  this.description);
+
+      //Images
+      _.forEach(this.uploadImages, file => {
+          if(this.validation(file) === "") {
+            formdata.append('images', file);
+          }
+        });
       
+      // formdata.append("images", this.images);
+      formdata.append("cover_img", this.value);
+      formdata.append("title", this.title);
+      formdata.append("type", this.type);
+      formdata.append("faculty", this.faculty);
+      formdata.append("department", this.department);
+      formdata.append("start_date",moment(this.start_date).format("YYYY-MM-DD HH:mm:ss"));
+      formdata.append("end_date", moment(this.end_date).format("YYYY-MM-DD HH:mm:ss"));
+      formdata.append("member_amount", this.member_amount);
+      formdata.append("location", this.place);
+      formdata.append("description", this.description);
+
       try {
-        await axios.post("/activities/", formdata);
+        const response = await axios.post("/activities/", formdata);
         this.message = "File has been uploaded!";
-        this.selectedFile = "";
+        // this.images = "";
         this.error = false;
 
         for (var pair of formdata.entries()) {
           console.log(pair[0] + " - " + pair[1]);
         }
         setTimeout(() => {
-          this.$router.push("homepage");
+          this.$router.push("profile");
         }, 1000);
+        this.Test1 = response;
       } catch (err) {
-        this.message = err.response.data.error;
+        alert(err.response.data.error_message);
         this.error = true;
       }
     },
@@ -526,6 +605,12 @@ export default {
 </script>
 
 <style scoped>
+  .sample-img{
+    width: 100%;
+    height: 345px;
+    object-fit: cover;
+    object-position: top;
+  }
 .cancelbtn {
   text-align: -webkit-center;
 }

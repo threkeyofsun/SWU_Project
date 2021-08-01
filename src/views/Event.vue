@@ -54,8 +54,7 @@
                 alt="profile.img"
               />
             </span>
-
-            <img :src="'/img/' + activity.cover_img" class="card-img-top" alt="..." />
+            <img :src="activity.cover_img.url" class="card-img-top" alt="..." />
 
             <div class="card-body">
               <div class="row">
@@ -69,7 +68,7 @@
                   <i class="fas fa-user-check"></i>
                   <br />
                   <div class="applicants">
-                    <span>{{ activity.current_member }}</span
+                    <span>{{ activity.member_list.length }}</span
                     ><span>/</span><span>{{ activity.member_amount }}</span>
                   </div>
                 </div>
@@ -79,7 +78,6 @@
         </div>
         <!--  -->
       </div>
-      <h1>{{ appliedList }}</h1>
     </div>
   </section>
   <HPfooter />
@@ -105,7 +103,10 @@ export default {
       re_act: null,
       recruitment_act: null,
       recruitList: [],
-      // recruited:[]
+      // recruited:[],
+      cover_images:[],
+      i:1,
+      text:[]
     };
   },
   computed: {
@@ -130,7 +131,15 @@ export default {
     const event = await axios.get("/activities/");
     this.$store.state.event = event.data;
     this.act = event.data;
-    // console.log(this.act);
+    // this.cover_images = event.data.cover_image;
+    // console.log(event.data[3].cover_img);
+    // console.log(this.$store.state.event);
+
+
+  // for (this.i = 0; this.i < event.data.length; this.i++) {
+  // this.$store.state.cover_image += event.data[this.i].cover_img.url;
+  // }
+
     this.$store.state.eventLoading = false;
     // User
     const resulted = await axios.get("/users/profile");

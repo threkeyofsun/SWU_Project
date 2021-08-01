@@ -72,7 +72,7 @@
         </div>
       </div>
       <hr />
-      <p class="py-0 my-3">Attivity Description</p>
+      <p class="py-0 my-3">Activity Description</p>
       <p class="lorem">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ actDetail.description }}
       </p>
@@ -114,7 +114,13 @@
 
       <hr />
 
-      <div class="mb-5"></div>
+      <div class="row">
+        <div v-for="(image, index) in actDetail.images" :key="index" class="mx-0 col-12 col-sm-6">
+          <div class="row mb-3 justify-content-center">
+            <img :src="actDetail.images[index].url" class="col-12 rounded-0 sample-img"   />
+            </div>
+        </div>
+      </div>
     </div>
 
     <HPfooter />
@@ -228,6 +234,12 @@ export default {
 </script>
 
 <style scoped type="text/css">
+    .sample-img{
+    width: 100%;
+    height: 345px;
+    object-fit: cover;
+    object-position: top;
+  }
 @keyframes ldio-yjhkrbku5e {
   0% {
     transform: translate(29.64px, 113.62px) scale(0);

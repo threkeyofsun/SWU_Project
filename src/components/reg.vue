@@ -51,13 +51,13 @@
 
         <div class="row1">
           <select
-            class="smallIn d-inline form-select"
+            class="smallIn d-inline "
             id="faculty"
             v-model.trim="user.faculty"
             required
-       
+            style="padding-left:22px"
           >
-            <option disabled selected class="faculty-disble" value="0">| Faculty</option>
+            <option disabled selected class="faculty-disble" value="0" >| Faculty</option>
 
             <option value="CCI">College of Creative Industry</option>
             <option value="Engineering">Faculty of Engineering</option>

@@ -22,6 +22,7 @@ export default Vuex.createStore({
     event:{},
     news:{},
     eventLoading:true,
+    cover_image:{},
     // Admin
     AdminNews:{},
     newsData:{},

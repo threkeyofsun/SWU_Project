@@ -1,6 +1,7 @@
 <template>
   <HomepageHeader />
   <div class="row topspace">
+    <Sidebar />
     <div class="container">
       <div class="headline">
         <p>&nbsp; &nbsp;&nbsp; Select your cover image</p>
@@ -8,7 +9,7 @@
       <form
         id="submitAct"
         action=""
-        @submit.prevent="submitAct"
+        @submit.prevent="sendFile"
         method="post"
         enctype="multipar/form-data"
         class="ac-req-form"
@@ -21,98 +22,110 @@
                 <input
                   type="radio"
                   name="test"
-                  value="swu-water.jpg"
-                  v-model="anInfo.cover_img"
+                  :value="coverimg[0]"
+                  v-model="value"
+                  checked
                 />
-                <img class="radioim" :src="'/img/' + 'swu-water.jpg'" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg'"
+                />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input
-                  type="radio"
-                  name="test"
-                  value="IMG_20190126_114352_2.jpg"
-                  v-model="anInfo.cover_img"
+                <input type="radio" name="test" :value="coverimg[1]" v-model="value" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_2_asy8rz.jpg'"
                 />
-                <img class="radioim" :src="'/img/' + user.coverimg[1]" />
               </label>
             </div>
 
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input
-                  type="radio"
-                  name="test"
-                  value="swu_lotus.jpg"
-                  v-model="anInfo.cover_img"
+                <input type="radio" name="test" :value="coverimg[2]" v-model="value" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311776/S-E-a-N/default/cover_img/cover_3_o1odod.jpg'"
                 />
-                <img class="radioim" :src="'/img/' + user.coverimg[2]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input
-                  type="radio"
-                  name="test"
-                  value="00100dPORTRAIT_00100_BURST20190703172640303_COVER.jpg"
-                  v-model="anInfo.cover_img"
+                <input type="radio" name="test" :value="coverimg[3]" v-model="value" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_4_rfrtux.jpg'"
                 />
-                <img class="radioim" :src="'/img/' + user.coverimg[3]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input
-                  type="radio"
-                  name="test"
-                  value="IMG_20190629_173826.jpg"
-                  v-model="anInfo.cover_img"
+                <input type="radio" name="test" :value="coverimg[4]" v-model="value" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311778/S-E-a-N/default/cover_img/cover_5_oebcbe.jpg'"
                 />
-                <img class="radioim" :src="'/img/' + user.coverimg[4]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input
-                  type="radio"
-                  name="test"
-                  value="2019-08-08 15.27.48-1.jpg"
-                  v-model="anInfo.cover_img"
+                <input type="radio" name="test" :value="coverimg[5]" v-model="value" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_6_rubhbx.jpg'"
                 />
-                <img class="radioim" :src="'/img/' + user.coverimg[5]" />
               </label>
             </div>
           </div>
         </div>
-
         <div class="headline mt-3">
           <p class="firstname border-bottom-0">
             &nbsp; &nbsp;&nbsp; **Or upload your cover image here**
           </p>
         </div>
-
         <div class="posting">
-          <input
-            type="file"
-            class="form-control-file btn btn-light mt-2"
-            id="exampleFormControlFile1"
-          />
-
-          <div v-if="preview">
-            <img :src="preview" class="profile-img mt-5 my-4" />
-          </div>
-
-          <div class="user-badge" v-else>
-            <img
-              class="profile-img cover-img mt-5 my-4"
-              :src="'/img/' + anInfo.cover_img"
-              alt="profile.
-              img"
+          <label class="file-label profile-badge">
+            <input
+              name="file"
+              type="file"
+              ref="file"
+              @change="selectFile"
+              accept="image/*"
+              class="form-control-file btn btn-light mt-2 file-input"
+              id="file"
             />
-          </div>
-        </div>
 
+            <div v-if="!coverPreview">
+              <div v-if="!preview">
+                <img :src="picked[value]" class="profile-img cover-img mt-5 my-4" />
+              </div>
+              <div class="text-danger firstname"></div>
+            </div>
+            <div v-if="preview">
+              <div>
+                <img :src="preview" class="profile-img cover-img mt-5 my-4" />
+              </div>
+              <div class="text-danger firstname"></div>
+            </div>
+            <div v-else>
+              <div v-if="coverPreview" class="user-badge">
+                <img
+                  class="profile-img cover-img mt-5 my-4"
+                  :src="coverPreview.url"
+                  alt="profile.img"
+                />
+              </div>
+            </div>
+          </label>
+        </div>
+        <div v-if="message && preview" class="text-danger firstname text-center">
+          {{ message }}
+        </div>
+        <div class="cancelbtn mt-2 text-center">
+          <button class="btn btn-dark" @click="Empyty">Cancel</button>
+        </div>
         <div class="headline mt-3">
           <p class="firstname">&nbsp; &nbsp;&nbsp; Activity details</p>
         </div>
@@ -129,7 +142,7 @@
                 class="form-control form-control-sm"
                 id="title"
                 placeholder="e.g. Orientation Day"
-                v-model="anInfo.title"
+                v-model="actDetail.title"
                 required
               />
             </div>
@@ -146,7 +159,7 @@
               <input
                 oninput="javascript: if (this.value.length > this.value) this.value = this.value.slice(0, this.maxLength);"
                 maxlength="3"
-                v-model="anInfo.member_amount"
+                v-model="actDetail.member_amount"
                 :min="1"
                 :max="1000"
                 class="form-input"
@@ -170,7 +183,7 @@
                   name="flexRadioDefault"
                   id="flexRadioDefault1"
                   value="Volunteer"
-                  v-model="anInfo.type"
+                  v-model="actDetail.type"
                 />
                 <label class="form-check-label" for="flexRadioDefault1">
                   Volunteer Activities
@@ -183,7 +196,7 @@
                   name="flexRadioDefault"
                   id="flexRadioDefault2"
                   value="Regular"
-                  v-model="anInfo.type"
+                  v-model="actDetail.type"
                 />
                 <label class="form-check-label" for="flexRadioDefault2">
                   Regular Activities
@@ -197,7 +210,7 @@
                   name="flexRadioDefault"
                   id="flexRadioDefault3"
                   value="Force"
-                  v-model="anInfo.type"
+                  v-model="actDetail.type"
                 />
                 <label class="form-check-label" for="flexRadioDefault3">
                   Force Activities
@@ -210,7 +223,7 @@
                   name="flexRadioDefault"
                   id="flexRadioDefault4"
                   value="Others"
-                  v-model="anInfo.type"
+                  v-model="actDetail.type"
                 />
                 <label class="form-check-label" for="flexRadioDefault4">
                   Others Activities
@@ -230,7 +243,7 @@
                 id="place"
                 placeholder="e.g. Building G, Srinakharinwirot University Ongkharak Campus"
                 required
-                v-model="anInfo.location"
+                v-model="actDetail.location"
               />
             </div>
           </div>
@@ -241,13 +254,13 @@
             </div>
             <div class="col-sm-4 col-8 mx-2 mx-sm-0">
               <input
-              type="datetime-local"
+                type="datetime-local"
                 class="form-control form-control-sm"
                 id="st-date"
                 name="start_date"
                 :min="thisDay()"
                 max="2031-02-20T20:20"
-                v-model="start_date"
+                v-model="actDetail.start_date"
                 required
                 :disabledDates="disabledDates"
               />
@@ -264,7 +277,7 @@
                 id="st-time"
                 name="end_date"
                 :min="endDate()"
-                v-model="end_date"
+                v-model="actDetail.end_date"
                 required
               />
             </div>
@@ -282,7 +295,7 @@
                 id="Faculty"
                 placeholder="e.g. Enginnering"
                 required
-                v-model="anInfo.faculty"
+                v-model="actDetail.faculty"
               />
             </div>
             <div class="col-sm-2 col-12 mx-2 mx-sm-0 mt-3 mt-sm-0 px-sm-0 px-md-2">
@@ -296,7 +309,7 @@
                 id="department"
                 placeholder="e.g. Computer Enginnering"
                 required
-                v-model="anInfo.department"
+                v-model="actDetail.department"
               />
             </div>
           </div>
@@ -314,28 +327,118 @@
                 id="detail"
                 style="height: 300px"
                 required
-                v-model="anInfo.description"
+                v-model="actDetail.description"
               ></textarea>
             </div>
           </div>
         </div>
-
         <div class="mb-3">
-          <label for="formFileSm" class="form-label">Insert Image</label>
-          <input class="form-control form-control-sm" id="formFileSm" type="file" />
+          <!--  -->
+          <label for="imagesfile" class="form-label">Insert Image</label>
+
+          <input v-if="imagePreview.length < 2"
+            multiple
+            class="form-control form-control-sm"
+            name="imagesfile"
+            id="imagefile"
+            type="file"
+            ref="selectedimages"
+            @change="imagesfile"
+            accept="image/*"
+          />
+
+          <div v-if="imagePreview">
+            <div v-for="(image, key) in imagePreview" :key="key" >
+              <div class="row my-2">
+                <div class="col-7 col mx-3">
+                  {{ image.filename }}
+                </div>
+                <div
+                  @click="
+                    imagePreview.splice(index, 1);
+                  "
+                  class="col-3 col btn-close mt-1 bg-light rounded-circle"
+                ></div>
+              </div>
+            </div>
+          </div>
+          <!-- Preview File Name  -->
+          <div v-if="imagesI">
+            <div
+              v-for="(file, index) in selectedimages"
+              :key="index"
+              :class="`${file.invalidMessage && 'text-danger'}`"
+            >
+              <div class="row my-2">
+                <div class="col-7 col mx-3">
+                  {{ file.name }}
+                  <span v-if="file.invalidMessage">
+                    &nbsp;- {{ file.invalidMessage }}</span
+                  >
+                  <span v-if="!file.invalidMessage"
+                    >&nbsp;{{ (error_warning = "") }}</span
+                  >
+                </div>
+                <div
+                  @click="
+                    selectedimages.splice(index, 1);
+                    uploadImages.splice(index, 1);
+                    imagesI.splice(index, 1);
+                  "
+                  class="col-3 col btn-close mt-1 bg-light rounded-circle"
+                ></div>
+              </div>
+            </div>
+          </div>
+          <div
+            v-if="message"
+            :class="`message mt-2 ${error ? 'text-danger' : 'bg-success'} `"
+          >
+            <div class="message-body text-danger bg-white">**{{ message }}**</div>
+          </div>
+          <!-- End of Insert Image -->
           <button
             :disabled="isEmpty"
             class="btn btn btn-secondary mb-2 mt-4"
             type="submit"
             value="submit"
-            @click="editForm"
+            :class="` ${
+              warning || message || error_warning
+                ? 'disabled bg-secondary border-secondary text-white'
+                : ''
+            }`"
           >
             Update
           </button>
+          <div
+          @click="clearImages()"
+            class="btn btn btn-secondary mb-2 ms-4 mt-4" 
+          >
+            Clear Images
+          </div>
         </div>
       </form>
+
       <hr />
-      <!-- Detail -->
+
+      <div class="row" v-if="imagesI">
+        <div v-for="(image, key) in imagesI" :key="key" class="mx-0 col-12 col-sm-6">
+          <div class="row mb-3 justify-content-center">
+            <img :src="showimg[key]" class="col-12 rounded-0 sample-img" />
+            <div v-if="key >= 1" class="d-none">{{ (warning = true) }}</div>
+            <div v-if="key < 2" class="d-none">{{ (warning = false) }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!--  -->
+      <div class="row" v-if="imagePreview">
+        <div v-for="(image, key) in imagePreview" :key="key" class="mx-0 col-12 col-sm-6">
+          <div class="row mb-3 justify-content-center">
+            <img :src="image.url" class="col-12 rounded-0 sample-img" />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -347,6 +450,7 @@ import HomepageHeader from "@/components/HomepageHeader";
 import HPfooter from "@/components/homepageFooter";
 import axios from "axios";
 import moment from "moment";
+import _ from "lodash";
 
 export default {
   name: "ProductDetailPage",
@@ -356,66 +460,227 @@ export default {
   },
   data() {
     return {
-      value: 1,
-      picked: "0",
-      user: {
-        coverimg: [
-          "swu-water.jpg",
-          "IMG_20190126_114352_2.jpg",
-          "swu_lotus.jpg",
-          "00100dPORTRAIT_00100_BURST20190703172640303_COVER.jpg",
-          "IMG_20190629_173826.jpg",
-          "2019-08-08 15.27.48-1.jpg",
-        ],
-      },  
+      value: 0,
+      picked: [
+        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg",
+        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_2_asy8rz.jpg",
+        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311776/S-E-a-N/default/cover_img/cover_3_o1odod.jpg",
+        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_4_rfrtux.jpg",
+        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311778/S-E-a-N/default/cover_img/cover_5_oebcbe.jpg",
+        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_6_rubhbx.jpg",
+      ],
+      coverimg: [0, 1, 2, 3, 4, 5, 6],
+      description: "",
+      department: "",
+      faculty: "",
       end_date: "",
+      title: "",
+      member_amount: "",
       start_date: "",
-      anInfo: {},
-      actDetail: {},
+      type: "",
+      place: "",
+      appliedList: [],
+      today: "",
+      // Upload Image
+      uploadFiles: [],
+      files: [],
+      message: false,
+      error: false,
+      preview: "",
+      coverPreview: "",
+      image: "",
+      alertMessage: "",
+      images: "",
+      selectedimages: [],
+      uploadImages: [],
+      error_warning: "",
+      warning: false,
+      imagesI: [],
+      showimg: [],
+      actDetail: [],
+      imagePreview: [],
     };
   },
   async mounted() {
-    // Get News History
-    const { data } = await axios.get(`/activities/${this.$route.params.id}`);
-    this.anInfo = data;
-    console.log(data);
+    // Get Information
+    const result = await axios.get(`/activities/${this.$route.params.id}`);
+    this.actDetail = result.data;
+    console.log(result);
+    this.creator = this.actDetail.createdBy;
+    this.coverPreview = this.actDetail.cover_img;
+    this.imagePreview = this.actDetail.images;
   },
   methods: {
-    async editForm() {
-      const res = await axios.put(`/activities/${this.$route.params.id}`, {
-          cover_img: this.anInfo.cover_img,
-          name: this.anInfo.name,
-          type: this.anInfo.type,
-          faculty: this.anInfo.faculty,
-          department: this.anInfo.department,
-          start_date: moment(this.start_date).format("YYYY-MM-DD HH:mm:ss"),
-          end_date: moment(this.end_date).format("YYYY-MM-DD HH:mm:ss"),
-          member_amount: this.anInfo.member_amount,
-          place: this.anInfo.place,
-          description: this.anInfo.description,
-      });
-      this.anInfo = res.data;
-      alert("Updated");
-      this.$router.push({ name: "history"});
-      console.log(this.anInfo);
-    },
+    // async editForm() {
+    //   const res = await axios.put(`/activities/${this.$route.params.id}`, {
+    //     cover_img: this.anInfo.cover_img.url,
+    //     name: this.anInfo.title,
+    //     type: this.anInfo.type,
+    //     faculty: this.anInfo.faculty,
+    //     department: this.anInfo.department,
+    //     start_date: moment(this.start_date).format("YYYY-MM-DD HH:mm:ss"),
+    //     end_date: moment(this.end_date).format("YYYY-MM-DD HH:mm:ss"),
+    //     member_amount: this.anInfo.member_amount,
+    //     place: this.anInfo.place,
+    //     description: this.anInfo.description,
+    //   });
+    //   this.anInfo = res.data;
+    //   alert("Updated");
+    //   this.$router.push({ name: "history" });
+    //   console.log(this.anInfo);
+    // },
     thisDay() {
       const thisMoment = moment().format("YYYY-MM-DDTHH:mm");
       return thisMoment;
     },
     endDate() {
-      const thisMoment = moment(this.start_date).format("YYYY-MM-DDTHH:mm");
+      const thisMoment = moment(this.actDetail.start_date).format("YYYY-MM-DDTHH:mm");
       return thisMoment;
     },
     Empyty() {
       this.preview = "";
+      this.coverPreview = "";
+      this.value = "0";
+    },
+    clearImages(){
+      this.imagesI = [];
+      // this.error_warning = '';
+      this.selectedimages ='';
+      this.imagePreview='';
+    },
+
+    // single file upload
+    selectFile() {
+      //ชื่อเหมือน iput@change
+      const selectFile = this.$refs.file.files[0];
+      this.value = selectFile;
+      //
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+      const MAX_SIZE = 200000;
+      const tooLarge = selectFile.size > MAX_SIZE;
+
+      if (allowedTypes.includes(selectFile.type) && !tooLarge) {
+        this.error = false;
+        this.message = "";
+      } else {
+        this.error = true;
+        this.message = tooLarge
+          ? `Too large. Max size is ${MAX_SIZE / 1000}Kb`
+          : "Only images are allowed";
+        this.images = "";
+      }
+
+      // Single Preview Image
+      const input = this.$refs.file;
+      const files = input.files;
+      if (files && files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.preview = e.target.result;
+        };
+        reader.readAsDataURL(files[0]);
+        this.$emit("input", files[0]);
+      }
+    },
+
+    //Multuple Images Upload
+    imagesfile() {
+      const selectedImage = this.$refs.selectedimages.files;
+      this.uploadImages = [...this.uploadImages, ...selectedImage];
+      this.selectedimages = [
+        ...this.selectedimages,
+        ..._.map(selectedImage, (file) => ({
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          invalidMessage: this.validation(file),
+        })),
+      ];
+
+      //Preview Multiple Images
+      const selectedFile = this.$refs.selectedimages.files;
+      for (let i = 0; i < selectedFile.length; i++) {
+        console.log(selectedFile[i]);
+        this.imagesI.push(selectedFile[i]);
+      }
+
+      for (let i = 0; i < this.imagesI.length; i++) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          this.showimg[i] = e.target.result;
+          // console.log(this.showimg);
+          // this.$refs.image[i].src = e.reader.result;
+        };
+        reader.readAsDataURL(this.imagesI[i]);
+      }
+    },
+    validation(file) {
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+      const MAX_SIZE = 500000;
+
+      if (file.size > MAX_SIZE) {
+        return (this.error_warning = `Max size: ${MAX_SIZE / 1000}Kb`);
+      }
+
+      if (!allowedTypes.includes(file.type)) {
+        return (this.error_warning = `Not an image`);
+      }
+
+      return "";
+    },
+
+    // Upload Image
+    async sendFile() {
+      const formdata = new FormData();
+
+      //Images
+      _.forEach(this.uploadImages, file => {
+          if(this.validation(file) === "") {
+            formdata.append('images', file);
+          }
+        });
+      if(this.preview == "") {
+          formdata.append("cover_img", this.value);
+          }
+      formdata.append("title", this.actDetail.title);
+      formdata.append("type", this.actDetail.type);
+      formdata.append("faculty", this.actDetail.faculty);
+      formdata.append("department", this.actDetail.department);
+      formdata.append("start_date",moment(this.actDetail.start_date).format("YYYY-MM-DD HH:mm:ss"));
+      formdata.append("end_date", moment(this.actDetail.end_date).format("YYYY-MM-DD HH:mm:ss"));
+      formdata.append("member_amount", this.actDetail.member_amount);
+      formdata.append("location", this.actDetail.location);
+      formdata.append("description", this.actDetail.description);
+
+      try {
+        const response = await axios.post("/activities/", formdata);
+        this.message = "File has been uploaded!";
+        // this.images = "";
+        this.error = false;
+
+        for (var pair of formdata.entries()) {
+          console.log(pair[0] + " - " + pair[1]);
+        }
+        setTimeout(() => {
+          this.$router.push("profile");
+        }, 1000);
+        this.Test1 = response;
+      } catch (err) {
+        alert(err.response.data.error_message);
+        this.error = true;
+      }
     },
   },
-  
 };
 </script>
 
 <style scoped>
+.sample-img {
+  width: 100%;
+  height: 345px;
+  object-fit: cover;
+  object-position: top;
+}
 /* Cover Image */
 img.cover-img {
   -o-object-position: unset;
