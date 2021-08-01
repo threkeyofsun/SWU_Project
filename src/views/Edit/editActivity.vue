@@ -639,7 +639,7 @@ export default {
             formdata.append('images', file);
           }
         });
-      if(this.preview == "") {
+      if(this.coverPreview == "") {
           formdata.append("cover_img", this.value);
           }
       formdata.append("title", this.actDetail.title);
@@ -653,7 +653,7 @@ export default {
       formdata.append("description", this.actDetail.description);
 
       try {
-        const response = await axios.post("/activities/", formdata);
+        const response = await axios.put(`/activities/${this.$route.params.id}`, formdata);
         this.message = "File has been uploaded!";
         // this.images = "";
         this.error = false;
