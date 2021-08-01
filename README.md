@@ -1,5 +1,8 @@
 # thenewproject
 
+# Deployed
+https://swu-activity-management.netlify.app/
+
 ## Project setup
 ```
 npm install
