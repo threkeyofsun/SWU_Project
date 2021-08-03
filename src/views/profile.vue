@@ -59,7 +59,7 @@
                       <div v-else>
                         <img
                           class="profile-img mb-3"
-                          :src="user.profile_img"
+                          :src="user.profile_img.url"
                           alt="profile.img"
                         />
                       </div>
@@ -182,6 +182,8 @@ export default {
     // try {
     const result = await axios.get("/users/profile");
     this.user = result.data;
+    this.$store.state.profileimg = result.data.profile_img;
+
     //
     const resulted = await axios.get("/users/profile");
     this.loading = false;
@@ -257,19 +259,19 @@ export default {
 
     async sendFile() {
       const formdata = new FormData();
-      formdata.append("selectedFile", this.selectedFile);
+      formdata.append("profile_img", this.selectedFile);
 
       try {
-        await axios.post("/api/posts/upload", formdata);
+        await axios.put("/users/profile", formdata);
         this.message = "File has been uploaded!";
         this.selectedFile = "";
         this.error = false;
         for (var pair of formdata.entries()) {
           console.log(pair[0] + " - " + pair[1]);
         }
-        // setTimeout(() => {
-        //   this.$router.push("homepage");
-        // }, 1000);
+        setTimeout(() => {
+          this.$router.push({name : 'homepage'});
+        }, 1000);
       } catch (err) {
         this.message = err.response.data.error;
         this.error = true;

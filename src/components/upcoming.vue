@@ -18,7 +18,7 @@
                   path: '/event/activities/' + activity._id,
                 }"
               >
-                {{ activity }}
+                {{ activity.title }}
               </router-link>
             </li>
             <span class="col-sm-6 col-12 col mx-0 mt-3 mt-sm-0 align-self-center">
@@ -27,7 +27,7 @@
                 type=""
                 :class="`${approve ? 'd-none' : ''}`"
                 class="btn-sm mx-1 border-0 text-white bg-secondary"
-                @click="delAct(activity._id)"
+                @click="toCancel(activity._id)"
               >
                 Cancel
               </button>
@@ -83,8 +83,8 @@ export default {
   async mounted() {
     try {
       // Get user's recruitment
-      const { data } = await axios.get("/users/history/activities/recruited");
-      this.upcomming_act = data.history.activity.participated;
+      const { data } = await axios.get("users/history/events/participated");
+      this.upcomming_act = data.history.events.participated;
       // this.recruitList = this.re_act.history.activity.recruitment;
       // this.recruitedList = data{};
       console.log(this.upcomming_act);
@@ -101,13 +101,13 @@ export default {
     }
   },
   methods: {
-    async toCancel() {
-      const result = await axios.patch(`/activities/${this.$route.params.id}`);
+    async toCancel(ActId) {
+      const result = await axios.post(`/events/${ActId}/cancel`);
       console.log(result.data);
       alert("You have successfully cancel the activity!");
       setTimeout(() => {
           this.$router.push('/event');
-        }, 1500);
+        }, 1000);
     },
   },
 };

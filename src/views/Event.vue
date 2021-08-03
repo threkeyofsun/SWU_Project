@@ -50,7 +50,7 @@
               <p class="lastname d-inline px-2">{{ activity.createdBy.lastname }}</p>
               <img
                 class="profile-img"
-                v-bind:src="activity.createdBy.profile_img"
+                v-bind:src="activity.createdBy.profile_img.url"
                 alt="profile.img"
               />
             </span>
@@ -118,9 +118,9 @@ export default {
   async mounted() {
     // User's Event
     // list
-    const { data } = await axios.get("/users/history/activities/recruited");
+    const { data } = await axios.get("/users/history/events/recruited");
     this.re_act = data;
-    this.recruitment_act = this.re_act.history.activity.recruited;
+    this.recruitment_act = this.re_act.history.events.recruited;
     //
     // const { data: {history: {activity: {recruitment:recruitment}}} } = await axios.get('users/history/recruitment');
     // this.recruitList = recruitment;
@@ -128,7 +128,7 @@ export default {
     //
 
     // get Event
-    const event = await axios.get("/activities/");
+    const event = await axios.get("/events/");
     this.$store.state.event = event.data;
     this.act = event.data;
     // this.cover_images = event.data.cover_image;

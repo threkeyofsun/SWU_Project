@@ -72,6 +72,8 @@ import Sidebar from "../components/sliderbar";
 import Participate from "../components/participate";
 import Recruit from "../components/his_recruit";
 import Upcoming from "../components/upcoming";
+import axios from "axios";
+
 
 export default {
   components: {
@@ -91,6 +93,15 @@ export default {
     };
   },
   async created() {},
+  async mounted() {
+    try {
+      const result = await axios.get("/users/profile");
+      this.$store.state.info = result.data;
+      this.$store.state.profileimg = result.data.profile_img;     
+    } catch (err) {
+      // alert(err);
+    }
+  },
   methods: {},
   computed: {
     compClass: function () {

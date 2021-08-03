@@ -91,6 +91,9 @@ export default {
   async mounted() {
     const result = await axios.get("/users/profile");
     this.$store.state.info = result.data;
+    this.$store.state.profileimg = result.data.profile_img;
+    console.log(this.$store.state.profileimg);
+
     this.$store.commit("setAuthentication", true);
     // Get Announcement
     const announce = await axios.get("/announcements/");

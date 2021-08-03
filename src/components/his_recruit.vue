@@ -170,10 +170,12 @@ export default {
     try {
       const result = await axios.get("/users/profile");
       this.$store.state.info = result.data;
+      this.$store.state.profileimg = result.data.profile_img;
+
       // End Profile
-      const { data } = await axios.get("/users/history/activities/recruited");
+      const { data } = await axios.get("/users/history/events/recruited");
       this.act = data;
-      this.recruitment_act = this.act.history.activity.recruited;
+      this.recruitment_act = this.act.history.events.recruited;
       console.log(this.act);
      
     } catch (err) {
@@ -187,7 +189,7 @@ export default {
     async delAct(ActId) {
       try {
         if (window.confirm("Do you want to delete this Activity?")) {
-          const deleteAct = await axios.delete(`/activities/${ActId}`);
+          const deleteAct = await axios.delete(`/events/${ActId}`);
           this.recruitment_act.splice(ActId, 1);
           console.log(deleteAct);
           window.location.reload();

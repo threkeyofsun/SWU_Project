@@ -312,7 +312,6 @@
         <div class="mb-3">
           <!--  -->
           <label for="imagesfile" class="form-label">Insert Image</label>
-
           <input
             multiple
             class="form-control form-control-sm"
@@ -393,15 +392,15 @@ export default {
   },
   data() {
     return {
-      value: 0,
-      picked: ['https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg',
+      value: 1,
+      picked: ['',
+              'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg',
               'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_2_asy8rz.jpg',
               'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311776/S-E-a-N/default/cover_img/cover_3_o1odod.jpg',
               'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_4_rfrtux.jpg',
               'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311778/S-E-a-N/default/cover_img/cover_5_oebcbe.jpg',
               'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_6_rubhbx.jpg'],
       coverimg: [
-        0,
         1,
         2,
         3,
@@ -583,17 +582,17 @@ export default {
       formdata.append("description", this.description);
 
       try {
-        const response = await axios.post("/activities/", formdata);
+        const response = await axios.post("/events/", formdata);
         this.message = "File has been uploaded!";
         // this.images = "";
         this.error = false;
-
+        setTimeout(() => {
+          this.$router.push("/user/myProfile");
+        }, 1000);
         for (var pair of formdata.entries()) {
           console.log(pair[0] + " - " + pair[1]);
         }
-        setTimeout(() => {
-          this.$router.push("profile");
-        }, 1000);
+        
         this.Test1 = response;
       } catch (err) {
         alert(err.response.data.error_message);

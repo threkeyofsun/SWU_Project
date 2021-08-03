@@ -51,6 +51,7 @@
                 />
               </label>
             </div>
+
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[3]" v-model="value" />
@@ -60,6 +61,7 @@
                 />
               </label>
             </div>
+
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[4]" v-model="value" />
@@ -69,6 +71,7 @@
                 />
               </label>
             </div>
+            
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[5]" v-model="value" />
@@ -460,16 +463,16 @@ export default {
   },
   data() {
     return {
-      value: 0,
+      value: 1,
       picked: [
-        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg",
+        '',"https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg",
         "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_2_asy8rz.jpg",
         "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311776/S-E-a-N/default/cover_img/cover_3_o1odod.jpg",
         "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_4_rfrtux.jpg",
         "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311778/S-E-a-N/default/cover_img/cover_5_oebcbe.jpg",
         "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_6_rubhbx.jpg",
       ],
-      coverimg: [0, 1, 2, 3, 4, 5, 6],
+      coverimg: [1, 2, 3, 4, 5, 6],
       description: "",
       department: "",
       faculty: "",
@@ -503,13 +506,18 @@ export default {
   },
   async mounted() {
     // Get Information
-    const result = await axios.get(`/activities/${this.$route.params.id}`);
+    const result = await axios.get(`/events/${this.$route.params.id}`);
     this.actDetail = result.data;
     console.log(result);
     this.creator = this.actDetail.createdBy;
     this.coverPreview = this.actDetail.cover_img;
     this.imagePreview = this.actDetail.images;
+    // console.log(this.creator);
+    const res = await axios.get("/users/profile");
+      this.$store.state.info = res.data;
+      this.$store.state.profileimg = res.data.profile_img;
   },
+  
   methods: {
     // async editForm() {
     //   const res = await axios.put(`/activities/${this.$route.params.id}`, {
@@ -628,6 +636,7 @@ export default {
 
       return "";
     },
+    
 
     // Upload Image
     async sendFile() {
@@ -653,7 +662,7 @@ export default {
       formdata.append("description", this.actDetail.description);
 
       try {
-        const response = await axios.put(`/activities/${this.$route.params.id}`, formdata);
+        const response = await axios.put(`/events/${this.$route.params.id}`, formdata);
         this.message = "File has been uploaded!";
         // this.images = "";
         this.error = false;
@@ -662,7 +671,7 @@ export default {
           console.log(pair[0] + " - " + pair[1]);
         }
         setTimeout(() => {
-          this.$router.push("profile");
+          this.$router.push("homepage");
         }, 1000);
         this.Test1 = response;
       } catch (err) {

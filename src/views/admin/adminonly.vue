@@ -5,7 +5,7 @@
       <div class="badge user-badge">
         <img
           class="profile-img"
-          :src="actDetail.createdBy.profile_img"
+          :src="actDetail.createdBy.profile_img.url"
           alt="profile.img"
         />
         <p class="firstname d-inline px-2 ps-4">{{ actDetail.createdBy.firstname }}</p>
@@ -105,10 +105,11 @@ export default {
   // },
   async created() {
     try {
-      const result = await await axios.get(`/activities/${this.$route.params.id}`);
+      const result = await await axios.get(`/events/${this.$route.params.id}`);
       this.actDetail = result.data;
       const res = await axios.get("/users/profile");
       this.$store.state.info = res.data;
+      this.$store.state.profileimg = res.data.profile_img;
       console.log(result);
     } catch (err) {
       alert(err.result.data.error_message);

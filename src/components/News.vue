@@ -9,7 +9,6 @@
       </div>
 
 <div v-for="(news, index) in $store.state.news" :key="(news, index)"> 
-  <p> {{news.status}} </p>
   <div class="postloop ">
     <router-link :to="{ path: '/event/news/' + news._id }">
     <div class="card text-white  ">
@@ -19,14 +18,14 @@
       <span class="badge user-badge fw-light ">
         <img
           class=" profile-img  "
-          v-bind:src="news.createdBy.profile_img"
+          v-bind:src="news.createdBy.profile_img.url"
           alt="profile.img"
         />
 
         <p class="firstname d-inline mx-0 ms-md-2">{{news.createdBy.firstname}}</p>
         <!-- <p class="lastname  d-inline ">{{news.createdBy.lastname}}</p> -->
       </span>
-      <img :src="'/img/' + news.cover_img" class="card-img  " alt="..." />
+      <img :src="news.cover_img.url" class="card-img  " alt="..." />
       <div class="card-img-overlay mx-auto">
         <h3 class="card-title">{{news.name}}</h3>
         <p class="card-text">
@@ -81,6 +80,8 @@ export default {
     this.$store.state.news = result.data;
     const res = await axios.get("/users/profile");
       this.$store.state.info = res.data;
+      this.$store.state.profileimg = res.data.profile_img;
+
   },
   methods: {
     createAt() {

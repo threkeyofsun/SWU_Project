@@ -14,41 +14,41 @@
         <div class="coverpost">
           <div class="row radiocollection">
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
-              <label>
+              <label> 
                 <!-- radio image -->
-                <input type="radio" name="test" value="0" v-model="picked" checked />
-                <img class="radioim" :src="'/img/' + user.coverimg[0]" />
+                <input type="radio" name="test" :value="coverimg[0]" v-model="value" checked />
+                <img class="radioim" :src="'/img/' + picked[7]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="1" v-model="picked" />
-                <img class="radioim" :src="'/img/' + user.coverimg[1]" />
+                <input type="radio" name="test" :value="coverimg[1]" v-model="value"  />
+                <img class="radioim" :src="'/img/' + picked[8]" />
               </label>
             </div>
 
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="2" v-model="picked" />
-                <img class="radioim" :src="'/img/' + user.coverimg[2]" />
+                <input type="radio" name="test" :value="coverimg[2]" v-model="value" />
+                <img class="radioim" :src="'/img/' + picked[9]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="3" v-model="picked" />
-                <img class="radioim" :src="'/img/' + user.coverimg[3]" />
+                <input type="radio" name="test" :value="coverimg[3]" v-model="value" />
+                <img class="radioim" :src="'/img/' + picked[10]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="4" v-model="picked" />
-                <img class="radioim" :src="'/img/' + user.coverimg[4]" />
+                <input type="radio" name="test" :value="coverimg[4]" v-model="value" />
+                <img class="radioim" :src="'/img/' + picked[11]" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="5" v-model="picked" />
-                <img class="radioim" :src="'/img/' + user.coverimg[5]" />
+                <input type="radio" name="test" :value="coverimg[5]" v-model="value" />
+                <img class="radioim" :src="'/img/' + picked[12]" />
               </label>
             </div>
           </div>
@@ -59,7 +59,6 @@
             &nbsp; &nbsp;&nbsp;Select your Cover Image
           </p>
         </div>
-
         <div class="posting">
           <span class="file-cta">
             <span class="file-label">
@@ -70,7 +69,7 @@
               <div v-else>
                 <img
                   class="profile-img mt-5 my-4"
-                  :src="'/img/' + user.coverimg[picked]"
+                  :src="'/img/' + picked[value]"
                   alt="coverimg"
                 />
               </div>
@@ -168,10 +167,8 @@ export default {
     return {
       quantity: 10,
       mquantity: 50,
-      value: 1,
-      picked: "0",
-      user: {
-        coverimg: [
+      value: 7,
+      picked: ['','','','','','','',
           "photo-989-full.jpeg",
           "photo-1032-large.jpeg",
           "photo-985-full.jpeg",
@@ -180,17 +177,26 @@ export default {
           "swu4.jpg",
           "swu2.jpg",
         ],
-      },
+      coverimg: [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+      ],
     };
   },
   methods: {
     async submitAnnounce() {
       try {
-        const response = await axios.post("/admin/announcements", {
-          cover_img: this.user.coverimg[this.picked],
-          name: this.title,
-          description: this.description,
-        });
+        const formdata = new FormData();
+        formdata.append("cover_img", this.value);
+        formdata.append("title", this.title);
+        formdata.append("description", this.description);
+
+        const response = await axios.post("/admin/announcements",formdata);
         console.log(response.config);
         alert("Activity has been created!");
           this.$router.push({ name: "adminpage" });

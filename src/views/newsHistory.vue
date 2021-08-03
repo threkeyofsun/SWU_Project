@@ -139,7 +139,7 @@ export default {
     const { data } = await axios.get("/users/history/news");
     this.numA = data; //Get history
     this.$store.state.newspost = this.numA.history.news; //get news in history
-    console.log(this.numA.history.news);
+    console.log(this.numA);
     if(this.numA.history.news == ''){
       this.allAct=true;
     }
@@ -148,6 +148,7 @@ export default {
     // Profile
     const result = await axios.get("/users/profile");
     this.$store.state.info = result.data;
+    this.$store.state.profileimg = result.data.profile_img;
   },
 };
 </script>

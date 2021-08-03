@@ -75,7 +75,7 @@ export default {
   },
   async mounted() {
     try {
-      const result = await axios.get("/admin/activities");
+      const result = await axios.get("/admin/events");
       this.act = result.data;
       console.log(result);
     } catch (err) {
@@ -87,7 +87,7 @@ export default {
     async Approve(ActId) {
       try {
         if (window.confirm("Do you want to Approve this Announcement?")) {
-          const result = await axios.post(`/admin/activities/${ActId}`, 
+          const result = await axios.post(`/admin/events/${ActId}`, 
           {comment: "Approved",
            status: "Approved" });
           console.log(result);
@@ -102,7 +102,7 @@ export default {
     async Reject(ActId) {
       try {
         if (window.confirm("Do you want to Reject this Announcement?")) {
-          const result = await axios.post(`/admin/activities/${ActId}`, 
+          const result = await axios.post(`/admin/events/${ActId}`, 
           {comment: this.comment,
            status: "Rejected" });
           console.log(result);

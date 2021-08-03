@@ -21,7 +21,7 @@
       </div>
       <!-- profile -->
       <div class="badge user-badge fw-light">
-        <img class="profile-img mx-1" v-bind:src="profile.img" alt="profile.img" />
+        <img class="profile-img mx-1" :src="$store.state.profileimg.url" alt="profile.img" />
         <p class="firstname d-inline px-1 align-bottom">
           {{ $store.state.info.firstname }}
         </p>
@@ -101,7 +101,7 @@
           <div class="profile-1 d-flex flex-wrap justify-content-center">
             <img
               class="img-fluid profile-img"
-              v-bind:src="$store.state.info.profile_img"
+              v-bind:src="$store.state.profileimg.url"
               alt="profile.img"
             />
             <div class="username px-3">
@@ -148,6 +148,10 @@ export default {
     this.user = result.data;
     // this.firstname = "Admin";
     this.$store.commit("setAuthenticationAdmin", true);
+    // console.log(this.creator);
+    const res = await axios.get("/users/profile");
+    this.$store.state.profileimg = res.data.profile_img;
+    console.log(this.$store.state.profileimg.url)
   },
   methods: {
     async logout() {

@@ -5,7 +5,7 @@
     <p class="mt-3 mb-4 anounce-title text-center text-md-start"> {{$store.state.newsData.title}} </p>
     <div class="posting">
       <div class="badge user-badge">
-        <img class="profile-img" :src="creator.profile_img" alt="profile.img" />
+        <img class="profile-img" :src="crePro.url" alt="profile.img" />
         <p class="firstname d-inline px-2"> {{creator.firstname}} </p>
         <p class="lastname d-inline px-1">{{creator.lastname}}</p>
         <p class="time-badge"> {{createAt()}} </p>
@@ -41,16 +41,22 @@ export default {
       creator: {},
       newsDetail:{},
       test:"",
+      crePro:'',
     };
   },
   async mounted()  {
     const newsdata = await axios.get(`/news/${this.$route.params.id}`);
     this.$store.state.newsData = newsdata.data;
-    this.creator = this.$store.state.newsData.createdBy;    
+    this.creator = this.$store.state.newsData.createdBy;  
+    this.crePro = this.creator.profile_img;
+    console.log(this.creator )
+    console.log(this.creator )
     console.log(newsdata);
     console.log(this.$store.state.newsData);
     const res = await axios.get("/users/profile");
       this.$store.state.info = res.data;
+      this.$store.state.profileimg = res.data.profile_img;
+
   },
   methods: {
     createAt() {
@@ -58,7 +64,7 @@ export default {
       return thisMoment;
     },
     async endActivity() {
-      const result = await axios.put(`/activity/announcements/${this.$route.params.id}`, this.anInfo);
+      const result = await axios.put(`/events/announcements/${this.$route.params.id}`, this.anInfo);
       this.anInfo = result.data;
       alert("Updated");
       this.$router.push({ name: "adminpage" });

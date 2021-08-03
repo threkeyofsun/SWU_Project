@@ -11,6 +11,7 @@
         method="post"
         enctype="multipar/form-data"
         class="ac-req-form">
+
         <div class="coverpost">
           <div class="row radiocollection">
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
@@ -19,66 +20,63 @@
                 <input
                   type="radio"
                   name="test"
-                  value="swu-water.jpg"
-                  v-model="anInfo.cover_img"
+                  :value="coverimg[0]"
+                  v-model="value"
+                  checked
                 />
-                <img class="radioim" :src="'/img/' + 'swu-water.jpg'" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg'"
+                />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input
-                  type="radio"
-                  name="test"
-                  value="IMG_20190126_114352_2.jpg"
-                  v-model="anInfo.cover_img"
+                <input type="radio" name="test" :value="coverimg[1]" v-model="value" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_2_asy8rz.jpg'"
                 />
-                <img class="radioim" :src="'/img/' + user.coverimg[1]" />
               </label>
             </div>
 
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input
-                  type="radio"
-                  name="test"
-                  value="swu_lotus.jpg"
-                  v-model="anInfo.cover_img"
+                <input type="radio" name="test" :value="coverimg[2]" v-model="value" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311776/S-E-a-N/default/cover_img/cover_3_o1odod.jpg'"
                 />
-                <img class="radioim" :src="'/img/' + user.coverimg[2]" />
               </label>
             </div>
+
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
-              <label>
-                <input
-                  type="radio"
-                  name="test"
-                  value="00100dPORTRAIT_00100_BURST20190703172640303_COVER.jpg"
-                  v-model="anInfo.cover_img"
+            <label>
+                <input type="radio" name="test" :value="coverimg[3]" v-model="value" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_4_rfrtux.jpg'"
                 />
-                <img class="radioim" :src="'/img/' + user.coverimg[3]" />
               </label>
             </div>
+
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input
-                  type="radio"
-                  name="test"
-                  value="IMG_20190629_173826.jpg"
-                  v-model="anInfo.cover_img"
+                <input type="radio" name="test" :value="coverimg[4]" v-model="value" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311778/S-E-a-N/default/cover_img/cover_5_oebcbe.jpg'"
                 />
-                <img class="radioim" :src="'/img/' + user.coverimg[4]" />
               </label>
             </div>
+
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input
-                  type="radio"
-                  name="test"
-                  value="2019-08-08 15.27.48-1.jpg"
-                  v-model="anInfo.cover_img"
+                <input type="radio" name="test" :value="coverimg[5]" v-model="value" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_6_rubhbx.jpg'"
                 />
-                <img class="radioim" :src="'/img/' + user.coverimg[5]" />
               </label>
             </div>
           </div>

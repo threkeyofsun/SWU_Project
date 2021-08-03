@@ -17,7 +17,7 @@
       <p class="mb-4 anounce-title text-center text-md-start">{{ actDetail.name }}</p>
       <div class="posting">
         <div class="badge user-badge">
-          <img class="profile-img" :src="creator.profile_img" alt="profile_img" />
+          <img class="profile-img" :src="creator.profile_img.url" alt="profile_img" />
           <p class="firstname d-inline px-2 ps-4">{{ creator.firstname }}</p>
           <p class="lastname d-inline px-1">{{ creator.lastname }}</p>
           <p class="time-badge">{{ createAt() }}</p>
@@ -159,6 +159,7 @@ export default {
       somethingI: false,
       test: "a lot of work to compute this string!",
       loading: true,
+      profileimg:[]
     };
   },
   computed: {
@@ -175,14 +176,14 @@ export default {
   async mounted() {
     try {
       // Get user's recruitment
-      const { data } = await axios.get("/users/history/activities/recruited");
+      const { data } = await axios.get("/users/history/events/recruited");
       this.re_act = data;
-      this.recruitList = this.re_act.history.activity.recruited;
-      this.participated = this.re_act.history.activity.participated;
+      this.recruitList = this.re_act.history.events.recruited;
+      this.participated = this.re_act.history.events.participated;
       // this.recruitedList = data{};
       console.log(this.participated);
 
-      const result = await axios.get(`/activities/${this.$route.params.id}`);
+      const result = await axios.get(`/events/${this.$route.params.id}`);
       this.actDetail = result.data;
       console.log(result);
       this.creator = this.actDetail.createdBy;
@@ -192,6 +193,8 @@ export default {
       // console.log(this.creator);
       const res = await axios.get("/users/profile");
       this.$store.state.info = res.data;
+      this.$store.state.profileimg = res.data.profile_img;
+
       // console.log(result); 
 
     } catch (err) {
@@ -222,7 +225,7 @@ export default {
     },
     // Apply Activity
     async toApply() {
-      const result = await axios.patch(`/activities/${this.$route.params.id}`);
+      const result = await axios.post(`/events/${this.$route.params.id}/apply`);
       console.log(result.data);
       alert("You have successfully apply the activity!");
       setTimeout(() => {

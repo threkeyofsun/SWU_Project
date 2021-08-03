@@ -70,7 +70,6 @@
         </div>
 
         <div class="posting">
-          <!--  -->
           <label class="file-label profile-badge">
             <input
               name="file"
@@ -81,25 +80,29 @@
               class="form-control-file btn btn-light mt-2 file-input"
               id="file"
             />
-            <div v-if="preview" class="previewImage">
+
+            <div v-if="!coverPreview">
+              <div v-if="!preview">
+                <img :src="picked[value]" class="profile-img cover-img mt-5 my-4" />
+              </div>
+              <div class="text-danger firstname"></div>
+            </div>
+            <div v-if="preview">
               <div>
-                <img :src="preview" class="profile-img cover-img mt-5 my-4 card-img" />
+                <img :src="preview" class="profile-img cover-img mt-5 my-4" />
               </div>
-              <div class="text-danger firstname">
-                {{ message }}
-              </div>
+              <div class="text-danger firstname"></div>
             </div>
             <div v-else>
-              <div class="user-badge">
+              <div v-if="coverPreview" class="user-badge">
                 <img
-                  class="profile-img cover-img mt-5 my-4 card-img"
-                  :src="picked[value]"
+                  class="profile-img cover-img mt-5 my-4"
+                  :src="coverPreview.url"
                   alt="profile.img"
                 />
               </div>
             </div>
           </label>
-          <!--  -->
         </div>
         <div v-if="preview" class="cancelbtn mt-2">
           <button class="btn btn-dark" @click="Empyty">Cancel</button>
@@ -138,7 +141,7 @@
                 id="shDes"
                 style="height: 100px"
                 required
-                v-model="shDes"
+                v-model="short_description"
                 maxlength="100"
               ></textarea>
             </div>
@@ -156,7 +159,7 @@
                 id="detail"
                 style="height: 300px"
                 required
-                v-model="detail"
+                v-model="description"
               ></textarea>
             </div>
           </div>
@@ -165,28 +168,62 @@
         <div class="mb-3">
           <label for="formFileSm" class="form-label">Insert Image</label>
           <input
+            multiple
             class="form-control form-control-sm"
             name="imagesfile"
             id="imagefile"
             type="file"
             ref="selectedimages"
-            @change="imagesfiles"
+            @change="imagesfile"
             accept="image/*"
           />
 
+          <!-- Preview File Name  -->
+          <div v-for="(file, index) in selectedimages" :key="index"
+            :class="`${file.invalidMessage && 'text-danger'}`">
+            <div class="row my-2 ">
+              <div class="col-7 col mx-3">
+                {{file.name}}
+                <span v-if="file.invalidMessage"> &nbsp;- {{file.invalidMessage}}</span>
+                <span v-if="!file.invalidMessage">&nbsp;{{error_warning = ''}}</span>
+                </div>
+              <div @click="selectedimages.splice(index, 1); uploadImages.splice(index,1); imagesI.splice(index,1) " class="col-3 col btn-close mt-1 bg-light rounded-circle"></div>
+               
+            </div>
+          </div>
+          <div
+            v-if="message"
+            :class="`message mt-2 ${error ? 'text-danger' : 'bg-success'} `"
+          >
+            <div class="message-body text-danger bg-white">**{{ message }}**</div>
+          </div>
+          <!-- End of Insert Image -->
           <button
             :disabled="isEmpty"
             class="btn btn btn-secondary mb-2 mt-4"
             type="submit"
             value="submit"
-            @click="onUpload"
+            :class="` ${
+               warning || message || error_warning ? 'disabled bg-secondary border-secondary text-white' : ''
+            }`"
+            
           >
             Create
           </button>
         </div>
       </form>
+
       <hr />
-      <!-- Detail -->
+
+      <div class="row">
+        <div v-for="(image, key) in imagesI" :key='key' class="mx-0 col-12 col-sm-6">
+          <div class="row mb-3 justify-content-center">
+            <img :src="showimg[key]" class="col-12 rounded-0 sample-img"   />
+            <div v-if="key >= 1" class="d-none" >{{warning = true}}</div>
+            <div v-if="key < 2" class="d-none">{{warning = false}}</div>
+            </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -198,6 +235,7 @@ import Sidebar from "../components/sliderbar";
 import HomepageHeader from "../components/HomepageHeader";
 import HPfooter from "../components/homepageFooter";
 import axios from "axios";
+import _ from 'lodash';
 
 export default {
   name: "ProductDetailPage",
@@ -208,15 +246,14 @@ export default {
   },
   data() {
     return {
-      value: 0,
-      picked: ['https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg',
+      value: 1,
+      picked: ['','https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg',
               'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_2_asy8rz.jpg',
               'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311776/S-E-a-N/default/cover_img/cover_3_o1odod.jpg',
               'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_4_rfrtux.jpg',
               'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311778/S-E-a-N/default/cover_img/cover_5_oebcbe.jpg',
               'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_6_rubhbx.jpg'],
       coverimg: [
-        0,
         1,
         2,
         3,
@@ -225,23 +262,25 @@ export default {
         6,
       ],
       title: "",
-      shDes: "",
-      detail: "",
+      shoer_description: "",
+      description: "",
       max: 36,
       // Upload Image
       uploadFiles: [],
       files: [],
       message: false,
       error: false,
-      dropzonefile: "",
-      uploading: false,
       preview: "",
       coverPreview: "",
       image: "",
       alertMessage: "",
-      selectedFile: "",
-      dipimg: {},
-      selectImage: [],
+      images: "",
+      selectedimages: [],
+      uploadImages: [],
+      error_warning:'',
+      warning:false,
+      imagesI: [],
+      showimg:[]
     };
   },
   methods: {
@@ -267,7 +306,50 @@ export default {
     },
     //Multuple Images Upload
     imagesfiles() {
-      this.selectImage = this.$refs.selectedimages.files[0];
+      const selectedImage = this.$refs.selectedimages.files;
+      this.uploadImages = [...this.uploadImages, ...selectedImage];
+      this.selectedimages = [
+        ...this.selectedimages,
+        ..._.map(selectedImage, file => ({
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            invalidMessage: this.validation(file),
+        }))
+      ];
+   
+
+        //Preview Multiple Images 
+        const selectedFile = this.$refs.selectedimages.files;
+        for(let i = 0; i < selectedFile.length; i++){
+          console.log(selectedFile[i]);
+          this.imagesI.push(selectedFile[i]);
+        }
+
+        for(let i = 0; i < this.imagesI.length; i++){
+          let reader = new FileReader();
+          reader.onload = (e) => {
+            this.showimg[i] = e.target.result;
+            // console.log(this.showimg);
+            // this.$refs.image[i].src = e.reader.result;
+          };
+          reader.readAsDataURL(this.imagesI[i]);
+    
+        }
+    },
+    validation(file){
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+      const MAX_SIZE = 500000;
+
+        if(file.size > MAX_SIZE){ 
+          return this.error_warning = `Max size: ${MAX_SIZE/1000}Kb`;
+        }
+
+        if(!allowedTypes.includes(file.type)){
+          return this.error_warning = `Not an image`;
+        }
+        
+      return '';
     },
     // single file upload
     selectFile() {
@@ -325,13 +407,13 @@ export default {
     // Upload file
     async sendFile() {
       const formdata = new FormData();
-      formdata.append("cover_img", this.selectedFile);
+      formdata.append("cover_img", this.value);
       formdata.append("title", this.title);
       formdata.append("description", this.description);
       formdata.append("short_description", this.short_description);
 
       try {
-        await axios.post("/api/posts/upload", formdata);
+        await axios.post("/news", formdata);
         this.message = "File has been uploaded!";
         this.selectedFile = "";
         this.error = false;

@@ -21,7 +21,7 @@
       </div>
       <!-- profile -->
       <div class="badge user-badge fw-light">
-        <img class="profile-img mx-1" :src="information.profile_img" alt="profile.img" />
+        <img class="profile-img mx-1" :src="information.profile_img.url" alt="profile.img" />
         <p class="firstname d-inline px-1 align-bottom">{{ information.firstname }}</p>
         <p class="lastname d-inline px-1 align-bottom">{{ information.lastname }}</p>
       </div>
@@ -96,7 +96,7 @@
           <div class="profile-1 d-flex flex-wrap justify-content-center">
             <img
               class="img-fluid profile-img"
-              :src="$store.state.info.profile_img"
+              :src="$store.state.profileimg.url"
               alt="profile.img"
             />
             <div class="username px-3">
