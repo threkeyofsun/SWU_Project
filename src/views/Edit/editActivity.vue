@@ -71,7 +71,7 @@
                 />
               </label>
             </div>
-            
+
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[5]" v-model="value" />
@@ -88,6 +88,7 @@
             &nbsp; &nbsp;&nbsp; **Or upload your cover image here**
           </p>
         </div>
+
         <div class="posting">
           <label class="file-label profile-badge">
             <input
@@ -548,7 +549,7 @@ export default {
     Empyty() {
       this.preview = "";
       this.coverPreview = "";
-      this.value = "0";
+      this.value = "1";
     },
     clearImages(){
       this.imagesI = [];

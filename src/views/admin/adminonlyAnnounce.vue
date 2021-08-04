@@ -3,7 +3,7 @@
     <p class="mt-5 mb-4 anounce-title text-uppercase">{{ $store.state.announceInfo.title }}</p>
     <div class="posting">
       <div class="badge user-badge">
-        <img class="profile-img" :src="ann.profile_img" alt="profile.img" />
+        <img class="profile-img" :src="profile.url" alt="profile.img" />
         <p class="firstname d-inline px-2">{{ ann.firstname }}</p>
         <p class="lastname d-inline px-1"> </p>
         <p class="time-badge">{{ createAt() }}</p>
@@ -36,12 +36,14 @@ export default {
   data() {
     return {
       ann: "",
+      profile:{}
     };
   },
   async mounted()  {
     const res = await axios.get(`/announcements/${this.$route.params.id}`);
     this.$store.state.announceInfo = res.data;
     this.ann = res.data.createdBy;
+    this.profile = this.ann.profile_img;
     
   },
   methods: {

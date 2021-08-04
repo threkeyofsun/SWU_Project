@@ -6,6 +6,20 @@
       <p class="btn draw-border">Volunteer Activities</p>
       <div class="mx-xxl-5">
         <!--  -->
+        <div class="text-start ms-sm-5 ps-sm-4 hello" v-for="(activity, index) in upcomming_act" :key="(activity, index)">
+          <div v-if="activity.type == 'Volunteer'">  
+            <li>
+              <router-link
+                :to="{
+                  path: '/event/activities/' + activity._id,
+                }"
+              >
+                {{ activity.title }}
+              </router-link>
+            </li>
+            <hr class="border border-3">
+            </div>
+        </div>
         <hr />
       </div>
     </div>
@@ -13,7 +27,7 @@
     <div>
       <p class="btn draw-border draw-border1">Regular Activities Activities</p>
       <div class="mx-xxl-5">
-<!--  -->
+        <!--  -->
         <hr />
       </div>
     </div>
@@ -29,14 +43,54 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      allAct:true,
-    };
-  },
-};
-</script>
+  import axios from "axios";
+  
+  export default {
+    data() {
+      return {
+        actDetail: {},
+        information: {},
+        creator: {},
+        upcomming_act: null,
+        recruitList: [],
+        recruitedList: [],
+        item: null,
+        integers: 0,
+        prevent: false,
+        something: false,
+        winner: "",
+        empty:"",
+        allAct:false,
+  
+      };
+    },
+    async mounted() {
+      try {
+        // Get user's recruitment
+        const { data } = await axios.get("users/history/events/participated");
+        this.upcomming_act = data.history.events.participated;
+        console.log(this.upcomming_act);
+        console.log(this.upcomming_act[0].type);
+        this.allAct = true;
+        const res = await axios.get("/users/profile");
+        this.$store.state.info = res.data;
+      } catch (err) {
+        this.allAct = false;
+        // alert(err.result.data.error_message);
+      }
+    },
+    methods: {
+      async toCancel(ActId) {
+        const result = await axios.post(`/events/${ActId}/cancel`);
+        console.log(result.data);
+        alert("You have successfully cancel the activity!");
+        setTimeout(() => {
+            this.$router.push('/event');
+          }, 1000);
+      },
+    },
+  };
+  </script>
 
 <style lang="css" scoped>
   .commentbox {

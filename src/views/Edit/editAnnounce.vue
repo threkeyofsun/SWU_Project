@@ -14,41 +14,41 @@
         <div class="coverpost">
           <div class="row radiocollection">
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
-              <label>
+              <label> 
                 <!-- radio image -->
-                <input type="radio" name="test" value="photo-989-full.jpeg"  v-model="anInfo.cover_img" />
-                <img class="radioim" :src="'/img/' + 'photo-989-full.jpeg'" />
+                <input type="radio" name="test" :value="coverimg[0]" v-model="value" checked />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1628001517/S-E-a-N/default/cover_img/cover_7_jilzbh.jpg'" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="photo-1032-large.jpeg" v-model="anInfo.cover_img"  />
-                <img class="radioim" :src="'/img/' + user.coverimg[1]" />
+                <input type="radio" name="test" :value="coverimg[1]" v-model="value"  />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1628001510/S-E-a-N/default/cover_img/cover_8_zfrxyv.jpg'" />
               </label>
             </div>
 
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="photo-985-full.jpeg" v-model="anInfo.cover_img" />
-                <img class="radioim" :src="'/img/' + user.coverimg[2]" />
+                <input type="radio" name="test" :value="coverimg[2]" v-model="value" />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1628001515/S-E-a-N/default/cover_img/cover_9_zvqj5d.jpg'" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="photo-11471-full.jpeg" v-model="anInfo.cover_img" />
-                <img class="radioim" :src="'/img/' + user.coverimg[3]" />
+                <input type="radio" name="test" :value="coverimg[3]" v-model="value" />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1628002248/S-E-a-N/default/cover_img/cover_10_ywvguz.jpg'" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="swu3.jpg" v-model="anInfo.cover_img" />
-                <img class="radioim" :src="'/img/' + user.coverimg[4]" />
+                <input type="radio" name="test" :value="coverimg[4]" v-model="value" />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1628001510/S-E-a-N/default/cover_img/cover_11_ctucru.jpg'" />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
-                <input type="radio" name="test" value="swu4.jpg" v-model="anInfo.cover_img" />
-                <img class="radioim" :src="'/img/' + user.coverimg[5]" />
+                <input type="radio" name="test" :value="coverimg[5]" v-model="value" />
+                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1628001510/S-E-a-N/default/cover_img/cover_12_wtv56f.jpg'" />
               </label>
             </div>
           </div>
@@ -56,34 +56,35 @@
 
         <div class="headline mt-3">
           <p class="firstname border-bottom-0">
-            &nbsp; &nbsp;&nbsp; **Or upload your cover image here**
           </p>
         </div>
 
         <div class="posting">
-          <input
-            type="file"
-            class="form-control-file btn btn-light mt-2"
-            id="exampleFormControlFile1"
-          />
+
 
           <span class="file-cta">
             <span class="file-label">
 
-              <div v-if="preview">
-                <img :src="preview" class="profile-img mt-5 my-4" />
-              </div>
-
-              <div v-else>
-                <img
+                <div v-if="profile.url">
+                  <img
                   class="profile-img mt-5 my-4"
-                  :src="'/img/' + anInfo.cover_img"
+                  :src="profile.url"
                   alt="coverimg"
                 />
-              </div>
+                </div>
+                <div v-if="!profile.url">
+                  <img
+                  class="profile-img mt-5 my-4"
+                  :src="picked[value]"
+                  alt="coverimg"
+                />
+                </div>
+            
             </span>
           </span>
-
+          <div class="cancelbtn mt-2 text-center">
+          <button class="btn btn-dark" @click="Empyty">Cancel</button>
+        </div>
           <!-- <div class="user-badge">
               <img
                 class="profile-img mt-5 my-4"
@@ -133,8 +134,7 @@
         </div>
 
         <div class="mb-3">
-          <label for="formFileSm" class="form-label">Insert Image</label>
-          <input class="form-control form-control-sm" id="formFileSm" type="file" />
+     
           <button
             :disabled="isEmpty"
             class="btn btn btn-secondary mb-2 mt-4"
@@ -148,14 +148,7 @@
         <div class="row">
           <div class="image-preview col-6"></div>
 
-          <div class="image-preview col-6">
-            <!-- <img class="cover row" src="/img/3505624.png" />
-              <img class="cover row" src="/img/whale.jpg" />
-              <img
-                class="cover row"
-                src="https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/83672173_2601817849931005_1524955282638110720_o.jpg?_nc_cat=107&ccb=1-3&_nc_sid=730e14&_nc_eui2=AeEQEU-pgFqkDyFuDgAilBPxpQWyrrPbf_mlBbKus9t_-ZcAxlvVWMZGBYnvh2WO9-_aa36uu_IyAu7iI6nam4kY&_nc_ohc=h9EagkiFNEUAX_51sfe&_nc_ht=scontent.fbkk10-1.fna&oh=bdd9d0df9ea3586d2ed7ee3dc846093d&oe=60750AD2"
-              /> -->
-          </div>
+
         </div>
       </form>
       <hr />
@@ -182,34 +175,51 @@ export default {
     return {
       quantity: 10,
       mquantity: 50,
-      value: 1,
-      picked: '',
-      user: {
-        coverimg: [
-          "photo-989-full.jpeg",
-          "photo-1032-large.jpeg",
-          "photo-985-full.jpeg",
-          "photo-11471-full.jpeg",
-          "swu3.jpg",
-          "swu4.jpg",
-          "swu2.jpg",
+      value: 7,
+      picked: ['','','','','','','',
+      'https://res.cloudinary.com/dgizzny4y/image/upload/v1628001517/S-E-a-N/default/cover_img/cover_7_jilzbh.jpg',
+        'https://res.cloudinary.com/dgizzny4y/image/upload/v1628001510/S-E-a-N/default/cover_img/cover_8_zfrxyv.jpg',
+        'https://res.cloudinary.com/dgizzny4y/image/upload/v1628001515/S-E-a-N/default/cover_img/cover_9_zvqj5d.jpg',
+        'https://res.cloudinary.com/dgizzny4y/image/upload/v1628002248/S-E-a-N/default/cover_img/cover_10_ywvguz.jpg',
+        'https://res.cloudinary.com/dgizzny4y/image/upload/v1628001510/S-E-a-N/default/cover_img/cover_11_ctucru.jpg',
+        'https://res.cloudinary.com/dgizzny4y/image/upload/v1628001510/S-E-a-N/default/cover_img/cover_12_wtv56f.jpg'
         ],
-      },
+      coverimg: [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+      ],
       anInfo:{},
+      profile:{},
     };
   },
   async mounted() {
     // Get News History
     const res = await axios.get(`/announcements/${this.$route.params.id}`);
     this.anInfo = res.data;
+    this.profile = res.data.cover_img;
   },
   methods: {
+    Empyty() {
+      this.profile = '';
+      this.value = '7';
+    },
     async editForm() {
-      const result = await axios.put(`/admin/announcements/${this.$route.params.id}`, this.anInfo);
-      this.anInfo = result.data;
-      alert("Updated");
-      this.$router.push({ name: "adminpage" });
-      console.log(this.anInfo);
+      const formdata = new FormData();
+      if(this.coverPreview == "") {
+          formdata.append("cover_img", this.value);
+          }
+        formdata.append("title", this.anInfo.title);
+        formdata.append("description", this.anInfo.description);
+
+        const response = await axios.put(`/admin/announcements/${this.$route.params.id}`,formdata);
+        console.log(response.config);
+        alert("Activity has been updated!");
+        this.$router.push({ name: "adminpage" });
 
     },
   },

@@ -13,6 +13,7 @@
     <p class="text-center wellcome-text my-3" >Announcement</p>
     <hr class="hr-main" />
   </section>
+
 <!-- v-for="(activity, index) in act" :key="(activity, index) -->
   <!-- Slider Section -->
   <section class="slider-part">
@@ -31,9 +32,10 @@
           :class="{ active: idx == 0 }"
           :key="activity"
         >
+        <h1>{{}}</h1>
           <div class="row">
             <router-link :to="'/homepage/annoucement/' + activity._id">
-              <img :src="'/img/' + activity.cover_img" alt="" class="img-fluid col-12" />
+              <img :src="activity.cover_img.url" alt="" class="img-fluid col-12" />
             </router-link>
           </div>
           <div class="carousel-caption">
@@ -124,7 +126,7 @@ export default {
 .carousel-caption {
   font-size: xx-large;
   background: #c0757591;
-  top: 0;
+  top: 10px;
   bottom: auto;
   width: 100%;
   right: 0%;

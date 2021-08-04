@@ -20,7 +20,13 @@
     </p>
     <hr />
     <div class="mb-5">
-      
+      <div class="row">
+        <div v-for="(image, index) in $store.state.newsData.images" :key="index" class="mx-0 col-12 col-sm-6">
+          <div class="row mb-3 justify-content-center">
+            <img :src="$store.state.newsData.images[index].url" class="col-12 rounded-0 sample-img"   />
+            </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -76,6 +82,12 @@ export default {
 </script>
 
 <style scoped>
+  .sample-img {
+  width: 100%;
+  height: 345px;
+  object-fit: cover;
+  object-position: top;
+}
 .img-act {
   width: 100%;
   object-fit: cover;

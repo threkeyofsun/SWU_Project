@@ -166,7 +166,8 @@
         </div>
 
         <div class="mb-3">
-          <label for="formFileSm" class="form-label">Insert Image</label>
+          <!--  -->
+          <label for="imagesfile" class="form-label">Insert Image</label>
           <input
             multiple
             class="form-control form-control-sm"
@@ -247,24 +248,26 @@ export default {
   data() {
     return {
       value: 1,
-      picked: ['','https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg',
-              'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_2_asy8rz.jpg',
-              'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311776/S-E-a-N/default/cover_img/cover_3_o1odod.jpg',
-              'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_4_rfrtux.jpg',
-              'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311778/S-E-a-N/default/cover_img/cover_5_oebcbe.jpg',
-              'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_6_rubhbx.jpg'],
-      coverimg: [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
+      picked: [
+        '',"https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg",
+        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_2_asy8rz.jpg",
+        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311776/S-E-a-N/default/cover_img/cover_3_o1odod.jpg",
+        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_4_rfrtux.jpg",
+        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311778/S-E-a-N/default/cover_img/cover_5_oebcbe.jpg",
+        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_6_rubhbx.jpg",
       ],
-      title: "",
-      shoer_description: "",
+      coverimg: [1, 2, 3, 4, 5, 6],
       description: "",
-      max: 36,
+      department: "",
+      faculty: "",
+      end_date: "",
+      title: "",
+      member_amount: "",
+      start_date: "",
+      type: "",
+      place: "",
+      appliedList: [],
+      today: "",
       // Upload Image
       uploadFiles: [],
       files: [],
@@ -277,19 +280,25 @@ export default {
       images: "",
       selectedimages: [],
       uploadImages: [],
-      error_warning:'',
-      warning:false,
+      error_warning: "",
+      warning: false,
       imagesI: [],
-      showimg:[]
+      showimg: [],
+      actDetail: [],
+      imagePreview: [],
+      anInfo:[]
     };
   },
   methods: {
     Empyty() {
       this.preview = "";
-    },
+      this.coverPreview = "";    },
     //
     async submitAct() {
       try {
+        const result = await axios.get("/users/profile");
+        this.$store.state.info = result.data;
+        this.$store.state.profileimg = result.data.profile_img;
         const response = await axios.post("/news/", {
           cover_img: this.coverimg[this.picked],
           title: this.title,
@@ -304,59 +313,12 @@ export default {
         console.log(err.response.data.error_message);
       }
     },
-    //Multuple Images Upload
-    imagesfiles() {
-      const selectedImage = this.$refs.selectedimages.files;
-      this.uploadImages = [...this.uploadImages, ...selectedImage];
-      this.selectedimages = [
-        ...this.selectedimages,
-        ..._.map(selectedImage, file => ({
-            name: file.name,
-            size: file.size,
-            type: file.type,
-            invalidMessage: this.validation(file),
-        }))
-      ];
-   
-
-        //Preview Multiple Images 
-        const selectedFile = this.$refs.selectedimages.files;
-        for(let i = 0; i < selectedFile.length; i++){
-          console.log(selectedFile[i]);
-          this.imagesI.push(selectedFile[i]);
-        }
-
-        for(let i = 0; i < this.imagesI.length; i++){
-          let reader = new FileReader();
-          reader.onload = (e) => {
-            this.showimg[i] = e.target.result;
-            // console.log(this.showimg);
-            // this.$refs.image[i].src = e.reader.result;
-          };
-          reader.readAsDataURL(this.imagesI[i]);
-    
-        }
-    },
-    validation(file){
-      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
-      const MAX_SIZE = 500000;
-
-        if(file.size > MAX_SIZE){ 
-          return this.error_warning = `Max size: ${MAX_SIZE/1000}Kb`;
-        }
-
-        if(!allowedTypes.includes(file.type)){
-          return this.error_warning = `Not an image`;
-        }
-        
-      return '';
-    },
-    // single file upload
-    selectFile() {
+       // single file upload
+       selectFile() {
       //ชื่อเหมือน iput@change
       const selectFile = this.$refs.file.files[0];
       this.value = selectFile;
-
+      //
       const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
       const MAX_SIZE = 200000;
       const tooLarge = selectFile.size > MAX_SIZE;
@@ -369,10 +331,10 @@ export default {
         this.message = tooLarge
           ? `Too large. Max size is ${MAX_SIZE / 1000}Kb`
           : "Only images are allowed";
-        this.selectedFile = "";
+        this.images = "";
       }
 
-      // Preview Image
+      // Single Preview Image
       const input = this.$refs.file;
       const files = input.files;
       if (files && files[0]) {
@@ -386,23 +348,48 @@ export default {
     },
     //Multuple Images Upload
     imagesfile() {
-      const selectedImage = this.$refs.selectedimages.files[0];
-      this.selectImage = selectedImage;
+      const selectedImage = this.$refs.selectedimages.files;
+      this.uploadImages = [...this.uploadImages, ...selectedImage];
+      this.selectedimages = [
+        ...this.selectedimages,
+        ..._.map(selectedImage, (file) => ({
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          invalidMessage: this.validation(file),
+        })),
+      ];
 
-      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
-      const MAX_SIZE = 200000;
-      const tooLarge = selectedImage.size > MAX_SIZE;
-
-      if (allowedTypes.includes(selectedImage.type) && !tooLarge) {
-        this.error = false;
-        this.message = "";
-      } else {
-        this.error = true;
-        this.message = tooLarge
-          ? `Too large. Max size is ${MAX_SIZE / 1000}Kb`
-          : "Only images are allowed";
-        this.selectedFile = "";
+      //Preview Multiple Images
+      const selectedFile = this.$refs.selectedimages.files;
+      for (let i = 0; i < selectedFile.length; i++) {
+        console.log(selectedFile[i]);
+        this.imagesI.push(selectedFile[i]);
       }
+
+      for (let i = 0; i < this.imagesI.length; i++) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          this.showimg[i] = e.target.result;
+          // console.log(this.showimg);
+          // this.$refs.image[i].src = e.reader.result;
+        };
+        reader.readAsDataURL(this.imagesI[i]);
+      }
+    },
+    validation(file) {
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+      const MAX_SIZE = 500000;
+
+      if (file.size > MAX_SIZE) {
+        return (this.error_warning = `Max size: ${MAX_SIZE / 1000}Kb`);
+      }
+
+      if (!allowedTypes.includes(file.type)) {
+        return (this.error_warning = `Not an image`);
+      }
+
+      return "";
     },
     // Upload file
     async sendFile() {
@@ -431,6 +418,14 @@ export default {
 </script>
 
 <style scoped>
+    .sample-img {
+    width: 100%;
+    height: 345px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: top;
+    object-position: top;
+}
 .cancelbtn {
   text-align: -webkit-center;
 }

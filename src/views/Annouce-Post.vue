@@ -7,7 +7,7 @@
       <div class="badge user-badge">
         <img
           class=" profile-img  "
-          :src="creator.profile_img"
+          :src="profile.url"
           alt="profile.img"
         />
         <p class="firstname d-inline px-2 ">{{ creator.firstname }}</p>
@@ -44,12 +44,14 @@ export default {
     return {
       creator: {},
       ann:{},
+      profile:{}
     };
   },
   async mounted()  {
     const res = await axios.get(`/announcements/${this.$route.params.id}`);
     this.ann = res.data;
-    this.creator = res.data.createdBy;    
+    this.creator = res.data.createdBy;  
+    this.profile =   res.data.createdBy.profile_img;
     console.log(this.creator);
   },
   methods: {

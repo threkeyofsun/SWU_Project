@@ -206,7 +206,7 @@ export default {
 <style lang="css" scoped>
 .button {
   width: 20%;
-  height: 50px;
+  height: 37px;
   margin-bottom: 15px;
   border: none;
   border-radius: 5px;
@@ -216,6 +216,10 @@ export default {
 }
 .btn-red {
   background-color: #f68fa0;
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    font-family: unset;
+    font-weight: 700;
 }
 .btn-open {
   background-color: rgb(80, 158, 158);

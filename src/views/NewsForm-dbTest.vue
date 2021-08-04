@@ -323,7 +323,7 @@
             accept="image/*"
           />
 
-<!-- Preview File Name  -->
+          <!-- Preview File Name  -->
           <div v-for="(file, index) in selectedimages" :key="index"
             :class="`${file.invalidMessage && 'text-danger'}`">
             <div class="row my-2 ">
@@ -452,6 +452,9 @@ export default {
           location: this.place,
           description: this.description,
         });
+        const result = await axios.get("/users/profile");
+        this.$store.state.info = result.data;
+        this.$store.state.profileimg = result.data.profile_img;
         this.Test1 = response;
         alert("Activity has been created!");
         // this.$router.push({ name: "history" });

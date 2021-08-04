@@ -7,7 +7,7 @@
       </div>
       <form id="submitAct"
         action=""
-        @submit.prevent="submitAct"
+        @submit.prevent="sendFile"
         method="post"
         enctype="multipar/form-data"
         class="ac-req-form">
@@ -89,23 +89,45 @@
         </div>
 
         <div class="posting">
-          <input
-            type="file"
-            class="form-control-file btn btn-light mt-2"
-            id="exampleFormControlFile1"
-          />
-          <div v-if="preview">
-            <img :src="preview" class="profile-img mt-5 my-4" />
-          </div>
-
-          <div class="user-badge">
-            <img
-              class="profile-img cover-img mt-5 my-4 card-img"
-              :src="'/img/' + anInfo.cover_img"
-              alt="profile.
-              img"
+          <label class="file-label profile-badge">
+            <input
+              name="file"
+              type="file"
+              ref="file"
+              @change="selectFile"
+              accept="image/*"
+              class="form-control-file btn btn-light mt-2 file-input"
+              id="file"
             />
-          </div>
+
+            <div v-if="!coverPreview">
+              <div v-if="!preview">
+                <img :src="picked[value]" class="profile-img cover-img mt-5 my-4" />
+              </div>
+              <div class="text-danger firstname"></div>
+            </div>
+            <div v-if="preview">
+              <div>
+                <img :src="preview" class="profile-img cover-img mt-5 my-4" />
+              </div>
+              <div class="text-danger firstname"></div>
+            </div>
+            <div v-else>
+              <div v-if="coverPreview" class="user-badge">
+                <img
+                  class="profile-img cover-img mt-5 my-4"
+                  :src="coverPreview.url"
+                  alt="profile.img"
+                />
+              </div>
+            </div>
+          </label>
+        </div>
+        <div v-if="message && preview" class="text-danger firstname text-center">
+          {{ message }}
+        </div>
+        <div class="cancelbtn mt-2 text-center">
+          <div class="btn btn-dark" @click="Empyty">Cancel</div>
         </div>
 
         <div class="headline mt-3">
@@ -167,21 +189,110 @@
         </div>
 
         <div class="mb-3">
-          <label for="formFileSm" class="form-label">Insert Image</label>
-          <input class="form-control form-control-sm" id="formFileSm" type="file" />
+          <!--  -->
+          <label for="imagesfile" class="form-label">Insert Image</label>
+
+          <input v-if="imagePreview.length < 2"
+            multiple
+            class="form-control form-control-sm"
+            name="imagesfile"
+            id="imagefile"
+            type="file"
+            ref="selectedimages"
+            @change="imagesfile"
+            accept="image/*"
+          />
+
+          <div v-if="imagePreview">
+            <div v-for="(image, key) in imagePreview" :key="key" >
+              <div class="row mt-2">
+                <div class="col-7 col mx-3">
+                  {{ image.filename }}
+                </div>
+                <div
+                  @click="
+                    imagePreview.splice(index, 1);
+                  "
+                  class="col-3 col btn-close mt-1 bg-light rounded-circle"
+                ></div>
+              </div>
+            </div>
+          </div>
+          <!-- Preview File Name  -->
+          <div v-if="imagesI">
+            <div
+              v-for="(file, index) in selectedimages"
+              :key="index"
+              :class="`${file.invalidMessage && 'text-danger'}`"
+            >
+              <div class="row mt-2">
+                <div class="col-7 col mx-3">
+                  {{ file.name }}
+                  <span v-if="file.invalidMessage">
+                    &nbsp;- {{ file.invalidMessage }}</span
+                  >
+                  <span v-if="!file.invalidMessage"
+                    >&nbsp;{{ (error_warning = "") }}</span
+                  >
+                </div>
+                <div
+                  @click="
+                    selectedimages.splice(index, 1);
+                    uploadImages.splice(index, 1);
+                    imagesI.splice(index, 1);
+                  "
+                  class="col-3 col btn-close mt-1 bg-light rounded-circle"
+                ></div>
+              </div>
+            </div>
+          </div>
+          <div
+            v-if="message"
+            :class="`message mt-2 ${error ? 'text-danger' : 'bg-success'} `"
+          >
+            <div class="message-body text-danger bg-white">**{{ message }}**</div>
+          </div>
+          <!-- End of Insert Image -->
           <button
             :disabled="isEmpty"
             class="btn btn btn-secondary mb-2 mt-4"
             type="submit"
             value="submit"
-            @click="editNews()"
+            :class="` ${
+              warning || message || error_warning
+                ? 'disabled bg-secondary border-secondary text-white'
+                : ''
+            }`"
           >
             Update
           </button>
+          <div
+          @click="clearImages()"
+            class="btn btn btn-secondary mb-2 ms-4 mt-4" 
+          >
+            Clear Images
+          </div>
         </div>
       </form>
       <hr />
       <!-- Detail -->
+      <div class="row" v-if="imagesI">
+        <div v-for="(image, key) in imagesI" :key="key" class="mx-0 col-12 col-sm-6">
+          <div class="row mb-3 justify-content-center">
+            <img :src="showimg[key]" class="col-12 rounded-0 sample-img" />
+            <div v-if="key >= 1" class="d-none">{{ (warning = true) }}</div>
+            <div v-if="key < 2" class="d-none">{{ (warning = false) }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="row" v-if="imagePreview">
+        <div v-for="(image, key) in imagePreview" :key="key" class="mx-0 col-12 col-sm-6">
+          <div class="row mb-3 justify-content-center">
+            <img :src="image.url" class="col-12 rounded-0 sample-img" />
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -192,38 +303,58 @@
 import HomepageHeader from "@/components/HomepageHeader";
 import HPfooter from "@/components/homepageFooter";
 import axios from "axios";
+import _ from "lodash";
+
 
 export default {
   name: "ProductDetailPage",
   components: {
     HomepageHeader,
     HPfooter,
+    
   },
   data() {
     return {
-      quantity: 10,
-      mquantity: 50,
       value: 1,
+      picked: [
+        '',"https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg",
+        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_2_asy8rz.jpg",
+        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311776/S-E-a-N/default/cover_img/cover_3_o1odod.jpg",
+        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_4_rfrtux.jpg",
+        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311778/S-E-a-N/default/cover_img/cover_5_oebcbe.jpg",
+        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_6_rubhbx.jpg",
+      ],
+      coverimg: [1, 2, 3, 4, 5, 6],
+      description: "",
+      department: "",
+      faculty: "",
+      end_date: "",
       title: "",
-      shDes: "",
-      detail: "",
-      picked: "0",
-      user: {
-        coverimg: [
-          "swu-water.jpg",
-          "IMG_20190126_114352_2.jpg",
-          "swu_lotus.jpg",
-          "00100dPORTRAIT_00100_BURST20190703172640303_COVER.jpg",
-          "IMG_20190629_173826.jpg",
-          "2019-08-08 15.27.48-1.jpg",
-        ],
-      },  
-      anInfo:{},
-      cover_img:"",
-       name:"",
-       description:"",
-       short_description:""
-
+      member_amount: "",
+      start_date: "",
+      type: "",
+      place: "",
+      appliedList: [],
+      today: "",
+      // Upload Image
+      uploadFiles: [],
+      files: [],
+      message: false,
+      error: false,
+      preview: "",
+      coverPreview: "",
+      image: "",
+      alertMessage: "",
+      images: "",
+      selectedimages: [],
+      uploadImages: [],
+      error_warning: "",
+      warning: false,
+      imagesI: [],
+      showimg: [],
+      actDetail: [],
+      imagePreview: [],
+      anInfo:[]
     };
   },
   async mounted() {
@@ -231,6 +362,12 @@ export default {
     const res = await axios.get(`/news/${this.$route.params.id}`);
     this.anInfo = res.data;
     console.log(this.anInfo);
+    this.creator = this.anInfo.createdBy;
+    this.coverPreview = this.anInfo.cover_img;
+    this.imagePreview = this.anInfo.images;
+    const result = await axios.get("/users/profile");
+      this.$store.state.info = result.data;
+      this.$store.state.profileimg = result.data.profile_img;
 
   },
   methods: {
@@ -241,11 +378,132 @@ export default {
       this.$router.push({ name: "history" });
       console.log( this.anInfo);
     },
+    Empyty() {
+      this.preview = "";
+      this.coverPreview = "";
+      this.value = '1' 
+       },
+    // single file upload
+    selectFile() {
+      //ชื่อเหมือน iput@change
+      const selectFile = this.$refs.file.files[0];
+      this.value = selectFile;
+      //
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+      const MAX_SIZE = 200000;
+      const tooLarge = selectFile.size > MAX_SIZE;
+
+      if (allowedTypes.includes(selectFile.type) && !tooLarge) {
+        this.error = false;
+        this.message = "";
+      } else {
+        this.error = true;
+        this.message = tooLarge
+          ? `Too large. Max size is ${MAX_SIZE / 1000}Kb`
+          : "Only images are allowed";
+        this.images = "";
+      }
+
+      // Single Preview Image
+      const input = this.$refs.file;
+      const files = input.files;
+      if (files && files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.preview = e.target.result;
+        };
+        reader.readAsDataURL(files[0]);
+        this.$emit("input", files[0]);
+      }
+    },
+    //Multuple Images Upload
+    imagesfile() {
+      const selectedImage = this.$refs.selectedimages.files;
+      this.uploadImages = [...this.uploadImages, ...selectedImage];
+      this.selectedimages = [
+        ...this.selectedimages,
+        ..._.map(selectedImage, (file) => ({
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          invalidMessage: this.validation(file),
+        })),
+      ];
+
+      //Preview Multiple Images
+      const selectedFile = this.$refs.selectedimages.files;
+      for (let i = 0; i < selectedFile.length; i++) {
+        console.log(selectedFile[i]);
+        this.imagesI.push(selectedFile[i]);
+      }
+
+      for (let i = 0; i < this.imagesI.length; i++) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          this.showimg[i] = e.target.result;
+          // console.log(this.showimg);
+          // this.$refs.image[i].src = e.reader.result;
+        };
+        reader.readAsDataURL(this.imagesI[i]);
+      }
+    },
+    validation(file) {
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+      const MAX_SIZE = 500000;
+
+      if (file.size > MAX_SIZE) {
+        return (this.error_warning = `Max size: ${MAX_SIZE / 1000}Kb`);
+      }
+
+      if (!allowedTypes.includes(file.type)) {
+        return (this.error_warning = `Not an image`);
+      }
+
+      return "";
+    },
+        // Upload file
+      async sendFile() {
+      const formdata = new FormData();
+      _.forEach(this.uploadImages, file => {
+          if(this.validation(file) === "") {
+            formdata.append('images', file);
+          }
+        });
+      if(this.coverPreview == "") {
+          formdata.append("cover_img", this.value);
+          }
+      formdata.append("title", this.anInfo.title);
+      formdata.append("description", this.anInfo.description);
+      formdata.append("short_description", this.anInfo.short_description);
+
+      try {
+        await axios.put(`/news/${this.$route.params.id}`, formdata);
+        this.message = "File has been uploaded!";
+        this.selectedFile = "";
+        this.error = false;
+        console.log(this.message);
+        setTimeout(() => {
+          this.$router.push({name: 'homepage'});
+        }, 1000);
+        alert("Updated");
+      } catch (err) {
+        this.message = err.response.data.error;
+        this.error = true;
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
+  .sample-img {
+    width: 100%;
+    height: 345px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: top;
+    object-position: top;
+}
 .card-img {
   border-radius: 15px;
   max-height: 414px;
@@ -256,7 +514,7 @@ export default {
   text-align-last: center;
 }
 img.profile-img {
-  width: 85%;
+  width: 63vw;
   height: 200px;
   object-fit: cover;
 }
