@@ -1,7 +1,6 @@
-# thenewproject
 
 # Deployed
-https://swu-activity-management.netlify.app/
+https://sean-app.netlify.app/login
 
 ## Project setup
 ```
