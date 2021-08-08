@@ -1,28 +1,43 @@
 <template>
-  <div v-if="$store.state.info.username == $store.state.admin" >
-<AdminHeader />
-</div>
-<div v-else>
-    <HomepageHeader /> 
-</div>
+  <div v-if="$store.state.info.username == $store.state.admin">
+    <AdminHeader />
+  </div>
+  <div v-else>
+    <HomepageHeader />
+  </div>
 
   <section class="content">
     <div class="cover-img d-none d-md-block">
       <img class="cover" src="/img/MaskGroup132x.png" alt="Responsive image" />
     </div>
-    <p class="text-center wellcome-text my-3" >Announcement</p>
+    <p class="text-center wellcome-text my-3">Announcement</p>
     <hr class="hr-main" />
   </section>
 
-<!-- v-for="(activity, index) in act" :key="(activity, index) -->
-  <!-- Slider Section -->
+  <!-- v-for="(activity, index) in act" :key="(activity, index) -->
+  <!-- Slider Section -->\
+  <div v-if="$store.state.eventLoading" class="text-center">
+    <div class="loadingio-spinner-ellipsis-zn4fhzwgb">
+      <div class="ldio-yjhkrbku5e">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+  <!--  -->
+
   <section class="slider-part">
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
       <ol class="carousel-indicators">
-        <li v-for="(activity, idx) in $store.state.anno" :key="activity" :class="{ active: idx == 0 }"
+        <li
+          v-for="(activity, idx) in $store.state.anno"
+          :key="activity"
+          :class="{ active: idx == 0 }"
           data-bs-target="#carouselExampleCaptions"
           data-bs-slide-to="0"
-          
         ></li>
       </ol>
       <div class="carousel-inner">
@@ -32,7 +47,6 @@
           :class="{ active: idx == 0 }"
           :key="activity"
         >
-        <h1>{{}}</h1>
           <div class="row">
             <router-link :to="'/homepage/annoucement/' + activity._id">
               <img :src="activity.cover_img.url" alt="" class="img-fluid col-12" />
@@ -87,7 +101,9 @@ export default {
         img:
           "https://gswuacth-my.sharepoint.com/personal/nattawade_inala_g_swu_ac_th/Documents/Adobe%20XD%20Design%20I/Object%20Ver.I/Mask%20Group%2013@2x.png",
       },
-      anny:{}
+      anny: {},
+      loading: true,
+      load: true,
     };
   },
   async mounted() {
@@ -95,17 +111,121 @@ export default {
     this.$store.state.info = result.data;
     this.$store.state.profileimg = result.data.profile_img;
     console.log(this.$store.state.profileimg);
+    this.load = false;
 
     this.$store.commit("setAuthentication", true);
     // Get Announcement
     const announce = await axios.get("/announcements/");
     this.$store.state.anno = announce.data;
     console.log(this.$store.state.anno);
-   
+    this.$store.state.eventLoading = false;
   },
-
 };
 </script>
+
+<style scoped type="text/css">
+.sample-img {
+  width: 100%;
+  height: 345px;
+  object-fit: cover;
+  object-position: top;
+}
+@keyframes ldio-yjhkrbku5e {
+  0% {
+    transform: translate(29.64px, 113.62px) scale(0);
+  }
+  25% {
+    transform: translate(29.64px, 113.62px) scale(0);
+  }
+  50% {
+    transform: translate(29.64px, 113.62px) scale(1);
+  }
+  75% {
+    transform: translate(113.62px, 113.62px) scale(1);
+  }
+  100% {
+    transform: translate(197.60000000000002px, 113.62px) scale(1);
+  }
+}
+@keyframes ldio-yjhkrbku5e-r {
+  0% {
+    transform: translate(197.60000000000002px, 113.62px) scale(1);
+  }
+  100% {
+    transform: translate(197.60000000000002px, 113.62px) scale(0);
+  }
+}
+@keyframes ldio-yjhkrbku5e-c {
+  0% {
+    background: #ffffff;
+  }
+  25% {
+    background: #ffdbdb;
+  }
+  50% {
+    background: #ffe7e7;
+  }
+  75% {
+    background: #fff5f5;
+  }
+  100% {
+    background: #ffffff;
+  }
+}
+.ldio-yjhkrbku5e div {
+  position: absolute;
+  width: 19.76px;
+  height: 19.76px;
+  border-radius: 50%;
+  transform: translate(113.62px, 113.62px) scale(1);
+  background: #ffffff;
+  animation: ldio-yjhkrbku5e 5.5555555555555545s infinite cubic-bezier(0, 0.5, 0.5, 1);
+}
+.ldio-yjhkrbku5e div:nth-child(1) {
+  background: #fff5f5;
+  transform: translate(197.60000000000002px, 113.62px) scale(1);
+  animation: ldio-yjhkrbku5e-r 1.3888888888888886s infinite cubic-bezier(0, 0.5, 0.5, 1),
+    ldio-yjhkrbku5e-c 5.5555555555555545s infinite step-start;
+}
+.ldio-yjhkrbku5e div:nth-child(2) {
+  animation-delay: -1.3888888888888886s;
+  background: #ffffff;
+}
+.ldio-yjhkrbku5e div:nth-child(3) {
+  animation-delay: -2.7777777777777772s;
+  background: #fff5f5;
+}
+.ldio-yjhkrbku5e div:nth-child(4) {
+  animation-delay: -4.166666666666666s;
+  background: #ffe7e7;
+}
+.ldio-yjhkrbku5e div:nth-child(5) {
+  animation-delay: -5.5555555555555545s;
+  background: #ffdbdb;
+}
+.loadingio-spinner-ellipsis-zn4fhzwgb {
+  width: 247px;
+  height: 247px;
+  display: inline-block;
+  overflow: hidden;
+  background: #ffffff;
+}
+.ldio-yjhkrbku5e {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
+}
+.ldio-yjhkrbku5e div {
+  box-sizing: content-box;
+}
+/* generated by https://loading.io/ */
+[v-cloak] {
+  display: none;
+}
+</style>
 
 <style>
 @import "../assets/styles/login.css";
@@ -126,7 +246,7 @@ export default {
 .carousel-caption {
   font-size: xx-large;
   background: #c0757591;
-  top: 10px;
+  top: 0;
   bottom: auto;
   width: 100%;
   right: 0%;

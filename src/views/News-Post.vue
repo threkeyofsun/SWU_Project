@@ -1,14 +1,27 @@
 <template>
   <HomepageHeader />
-
-  <div class="container">
-    <p class="mt-3 mb-4 anounce-title text-center text-md-start"> {{$store.state.newsData.title}} </p>
+  <div v-if="loading" class="text-center">
+    <div class="loadingio-spinner-ellipsis-zn4fhzwgb">
+      <div class="ldio-yjhkrbku5e">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+  <!--  -->
+  <div class="container" v-if="!loading">
+    <p class="mt-3 mb-4 anounce-title text-center text-md-start">
+      {{ $store.state.newsData.title }}
+    </p>
     <div class="posting">
       <div class="badge user-badge">
         <img class="profile-img" :src="crePro.url" alt="profile.img" />
-        <p class="firstname d-inline px-2"> {{creator.firstname}} </p>
-        <p class="lastname d-inline px-1">{{creator.lastname}}</p>
-        <p class="time-badge"> {{createAt()}} </p>
+        <p class="firstname d-inline px-2">{{ creator.firstname }}</p>
+        <p class="lastname d-inline px-1">{{ creator.lastname }}</p>
+        <p class="time-badge">{{ createAt() }}</p>
       </div>
     </div>
     <hr />
@@ -16,15 +29,23 @@
       <p>News Details</p>
     </div>
     <p class="lorem">
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{$store.state.newsData.description}}
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{ $store.state.newsData.description }}
     </p>
     <hr />
     <div class="mb-5">
       <div class="row">
-        <div v-for="(image, index) in $store.state.newsData.images" :key="index" class="mx-0 col-12 col-sm-6">
+        <div
+          v-for="(image, index) in $store.state.newsData.images"
+          :key="index"
+          class="mx-0 col-12 col-sm-6"
+        >
           <div class="row mb-3 justify-content-center">
-            <img :src="$store.state.newsData.images[index].url" class="col-12 rounded-0 sample-img"   />
-            </div>
+            <img
+              :src="$store.state.newsData.images[index].url"
+              class="col-12 rounded-0 sample-img"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -45,44 +66,146 @@ export default {
       HomepageHeader,
       HPfooter,
       creator: {},
-      newsDetail:{},
-      test:"",
-      crePro:'',
+      newsDetail: {},
+      test: "",
+      crePro: "",
     };
   },
-  async mounted()  {
+  data() {
+    return {
+      loading: true,
+    };
+  },
+  async mounted() {
     const newsdata = await axios.get(`/news/${this.$route.params.id}`);
     this.$store.state.newsData = newsdata.data;
-    this.creator = this.$store.state.newsData.createdBy;  
+    this.creator = this.$store.state.newsData.createdBy;
     this.crePro = this.creator.profile_img;
-    console.log(this.creator )
-    console.log(this.creator )
+    this.loading = false;
+
+    console.log(this.creator);
+    console.log(this.creator);
     console.log(newsdata);
     console.log(this.$store.state.newsData);
-    const res = await axios.get("/users/profile");
-      this.$store.state.info = res.data;
-      this.$store.state.profileimg = res.data.profile_img;
 
+    const res = await axios.get("/users/profile");
+    this.$store.state.info = res.data;
+    this.$store.state.profileimg = res.data.profile_img;
   },
   methods: {
     createAt() {
       const thisMoment = moment(this.$store.state.newsData.createdAt).format("LL");
       return thisMoment;
     },
-    async endActivity() {
-      const result = await axios.put(`/events/announcements/${this.$route.params.id}`, this.anInfo);
-      this.anInfo = result.data;
-      alert("Updated");
-      this.$router.push({ name: "adminpage" });
-      console.log(this.anInfo);
-
-    },
   },
 };
 </script>
+<style scoped type="text/css">
+  .sample-img{
+  width: 100%;
+  height: 345px;
+  object-fit: cover;
+  object-position: top;
+}
+@keyframes ldio-yjhkrbku5e {
+0% {
+  transform: translate(29.64px, 113.62px) scale(0);
+}
+25% {
+  transform: translate(29.64px, 113.62px) scale(0);
+}
+50% {
+  transform: translate(29.64px, 113.62px) scale(1);
+}
+75% {
+  transform: translate(113.62px, 113.62px) scale(1);
+}
+100% {
+  transform: translate(197.60000000000002px, 113.62px) scale(1);
+}
+}
+@keyframes ldio-yjhkrbku5e-r {
+0% {
+  transform: translate(197.60000000000002px, 113.62px) scale(1);
+}
+100% {
+  transform: translate(197.60000000000002px, 113.62px) scale(0);
+}
+}
+@keyframes ldio-yjhkrbku5e-c {
+0% {
+  background: #ffffff;
+}
+25% {
+  background: #ffdbdb;
+}
+50% {
+  background: #ffe7e7;
+}
+75% {
+  background: #fff5f5;
+}
+100% {
+  background: #ffffff;
+}
+}
+.ldio-yjhkrbku5e div {
+position: absolute;
+width: 19.76px;
+height: 19.76px;
+border-radius: 50%;
+transform: translate(113.62px, 113.62px) scale(1);
+background: #ffffff;
+animation: ldio-yjhkrbku5e 5.5555555555555545s infinite cubic-bezier(0, 0.5, 0.5, 1);
+}
+.ldio-yjhkrbku5e div:nth-child(1) {
+background: #fff5f5;
+transform: translate(197.60000000000002px, 113.62px) scale(1);
+animation: ldio-yjhkrbku5e-r 1.3888888888888886s infinite cubic-bezier(0, 0.5, 0.5, 1),
+  ldio-yjhkrbku5e-c 5.5555555555555545s infinite step-start;
+}
+.ldio-yjhkrbku5e div:nth-child(2) {
+animation-delay: -1.3888888888888886s;
+background: #ffffff;
+}
+.ldio-yjhkrbku5e div:nth-child(3) {
+animation-delay: -2.7777777777777772s;
+background: #fff5f5;
+}
+.ldio-yjhkrbku5e div:nth-child(4) {
+animation-delay: -4.166666666666666s;
+background: #ffe7e7;
+}
+.ldio-yjhkrbku5e div:nth-child(5) {
+animation-delay: -5.5555555555555545s;
+background: #ffdbdb;
+}
+.loadingio-spinner-ellipsis-zn4fhzwgb {
+width: 247px;
+height: 247px;
+display: inline-block;
+overflow: hidden;
+background: #ffffff;
+}
+.ldio-yjhkrbku5e {
+width: 100%;
+height: 100%;
+position: relative;
+transform: translateZ(0) scale(1);
+backface-visibility: hidden;
+transform-origin: 0 0; /* see note above */
+}
+.ldio-yjhkrbku5e div {
+box-sizing: content-box;
+}
+/* generated by https://loading.io/ */
+[v-cloak] {
+display: none;
+}
+</style>
 
 <style scoped>
-  .sample-img {
+.sample-img {
   width: 100%;
   height: 345px;
   object-fit: cover;

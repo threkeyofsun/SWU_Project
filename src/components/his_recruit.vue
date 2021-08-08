@@ -9,8 +9,21 @@
         <p class="d-inline mx-2 sq-approve"><span class="square"></span>Approve</p>
       </div>
       <!--  -->
-      <p> {{}} </p>
-      <div>
+      <div v-if="$store.state.eventLoading" class="text-center">
+        <div class="loadingio-spinner-ellipsis-zn4fhzwgb">
+          <div class="loadingio-spinner-ellipsis-e2dlnyc4ytc">
+            <div class="ldio-8xpx2o6sd04">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--  -->
+      <div v-if="!$store.state.eventLoading">
         <div v-if="act">
           <div v-for="(activity, index) in recruitment_act" :key="(activity, index)">
             <!--  -->
@@ -18,7 +31,9 @@
               class="mx-xxl-5 my-3 row"
               v-if="activity.status == 'Rejected' || activity.status == 'Pending'"
             >
-              <div class="col col-sm-6 col-12 col-6 ms-0 me-0 align-self-center text-md-start ps-md-5">
+              <div
+                class="col col-sm-6 col-12 col-6 ms-0 me-0 align-self-center text-md-start ps-md-5"
+              >
                 <router-link
                   :to="{
                     path: '/event/activities/' + activity._id,
@@ -35,22 +50,20 @@
                   {{ activity.title }}
                 </router-link>
               </div>
-              <span class="col-sm-6 col-12 col mx-0 mt-3 mt-sm-0 align-self-center ">
+              <span class="col-sm-6 col-12 col mx-0 mt-3 mt-sm-0 align-self-center">
                 <button
                   type=""
-                  class="mx-1 btn-sm  btn-warning fw-bolder border border-warning "
+                  class="mx-1 btn-sm btn-warning fw-bolder border border-warning"
                   :class="`${activity.status == 'Rejected' ? 'd-NotPending' : 'd-none'}`"
                   @click="hidden[index] = !hidden[index]"
                 >
-               
                   Comment
-           
                 </button>
                 <!-- Edit -->
                 <router-link :to="{ path: '/Activity/edit/' + activity._id }">
                   <button
                     type=""
-                    class="mx-1 btn-sm  btn-warning fw-bolder border border-warning"
+                    class="mx-1 btn-sm btn-warning fw-bolder border border-warning"
                     :class="`${activity.comment ? '' : 'd-none'}`"
                   >
                     Edit
@@ -82,8 +95,8 @@
         </div>
       </div>
     </div>
-   
-    <div>
+
+    <div v-if="!$store.state.eventLoading">
       <p class="btn draw-border draw-border1">On Going</p>
       <div v-if="act">
         <div v-for="(activity, index) in recruitment_act" :key="(activity, index)">
@@ -97,11 +110,9 @@
                   class="ps-xl-5"
                 >
                   <span
-                    class=" mx-2"
+                    class="mx-2"
                     :class="
-                      activity.status === 'Approved'
-                        ? 'square sq-approve'
-                        : 'square'
+                      activity.status === 'Approved' ? 'square sq-approve' : 'square'
                     "
                   ></span>
                   {{ activity.title }}
@@ -109,7 +120,9 @@
               </div>
 
               <div class="d-inline col-sm-6 col-12">
-                <router-link :to="{ path: '/Activity/edit/' + activity._id }"><button class="button btn-sm mx-1  btn-open">Edit</button></router-link>
+                <router-link :to="{ path: '/Activity/edit/' + activity._id }"
+                  ><button class="button btn-sm mx-1 btn-open">Edit</button></router-link
+                >
                 <button class="button btn-red mx-1">End</button>
               </div>
             </div>
@@ -119,7 +132,7 @@
       </div>
     </div>
 
-    <div>
+    <div v-if="!$store.state.eventLoading">
       <p class="btn draw-border draw-border2 mt-2">Completed Activity</p>
       <div class="mx-xxl-5">
         <p class="text-center"></p>
@@ -132,7 +145,6 @@
                     :to="{
                       path: '/event/activities/' + activity._id,
                     }"
-                    
                   >
                     {{ activity.title }}
                   </router-link>
@@ -163,7 +175,8 @@ export default {
       act: null,
       recruitment_act: null,
       hidden: [],
-      a:''
+      a: "",
+      loading: true,
     };
   },
   async mounted() {
@@ -177,7 +190,7 @@ export default {
       this.act = data;
       this.recruitment_act = this.act.history.events.recruited;
       console.log(this.act);
-     
+      this.$store.state.eventLoading = false;
     } catch (err) {
       // alert(err);
     }
@@ -202,7 +215,109 @@ export default {
   },
 };
 </script>
-
+<style scoped type="text/css">
+.sample-img {
+  width: 100%;
+  height: 345px;
+  object-fit: cover;
+  object-position: top;
+}
+@keyframes ldio-yjhkrbku5e {
+  0% {
+    transform: translate(29.64px, 113.62px) scale(0);
+  }
+  25% {
+    transform: translate(29.64px, 113.62px) scale(0);
+  }
+  50% {
+    transform: translate(29.64px, 113.62px) scale(1);
+  }
+  75% {
+    transform: translate(113.62px, 113.62px) scale(1);
+  }
+  100% {
+    transform: translate(197.60000000000002px, 113.62px) scale(1);
+  }
+}
+@keyframes ldio-yjhkrbku5e-r {
+  0% {
+    transform: translate(197.60000000000002px, 113.62px) scale(1);
+  }
+  100% {
+    transform: translate(197.60000000000002px, 113.62px) scale(0);
+  }
+}
+@keyframes ldio-yjhkrbku5e-c {
+  0% {
+    background: #ffffff;
+  }
+  25% {
+    background: #ffdbdb;
+  }
+  50% {
+    background: #ffe7e7;
+  }
+  75% {
+    background: #fff5f5;
+  }
+  100% {
+    background: #ffffff;
+  }
+}
+.ldio-yjhkrbku5e div {
+  position: absolute;
+  width: 19.76px;
+  height: 19.76px;
+  border-radius: 50%;
+  transform: translate(113.62px, 113.62px) scale(1);
+  background: #ffffff;
+  animation: ldio-yjhkrbku5e 5.5555555555555545s infinite cubic-bezier(0, 0.5, 0.5, 1);
+}
+.ldio-yjhkrbku5e div:nth-child(1) {
+  background: #fff5f5;
+  transform: translate(197.60000000000002px, 113.62px) scale(1);
+  animation: ldio-yjhkrbku5e-r 1.3888888888888886s infinite cubic-bezier(0, 0.5, 0.5, 1),
+    ldio-yjhkrbku5e-c 5.5555555555555545s infinite step-start;
+}
+.ldio-yjhkrbku5e div:nth-child(2) {
+  animation-delay: -1.3888888888888886s;
+  background: #ffffff;
+}
+.ldio-yjhkrbku5e div:nth-child(3) {
+  animation-delay: -2.7777777777777772s;
+  background: #fff5f5;
+}
+.ldio-yjhkrbku5e div:nth-child(4) {
+  animation-delay: -4.166666666666666s;
+  background: #ffe7e7;
+}
+.ldio-yjhkrbku5e div:nth-child(5) {
+  animation-delay: -5.5555555555555545s;
+  background: #ffdbdb;
+}
+.loadingio-spinner-ellipsis-zn4fhzwgb {
+  width: 247px;
+  height: 247px;
+  display: inline-block;
+  overflow: hidden;
+  background: #ffffff;
+}
+.ldio-yjhkrbku5e {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
+}
+.ldio-yjhkrbku5e div {
+  box-sizing: content-box;
+}
+/* generated by https://loading.io/ */
+[v-cloak] {
+  display: none;
+}
+</style>
 <style lang="css" scoped>
 .button {
   width: 20%;
@@ -212,14 +327,15 @@ export default {
   border-radius: 5px;
   color: #ffffff;
   transition: background-color ease-in-out 0.5s;
+
   font-family: THSarabanBold;
 }
 .btn-red {
   background-color: #f68fa0;
-    color: rgb(255, 255, 255);
-    font-size: 16px;
-    font-family: unset;
-    font-weight: 700;
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  font-family: unset;
+  font-weight: 700;
 }
 .btn-open {
   background-color: rgb(80, 158, 158);
