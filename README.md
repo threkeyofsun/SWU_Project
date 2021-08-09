@@ -11,8 +11,6 @@ https://sean-app.netlify.app
 ```
 Developed by Mr.Wongsatorn : https://github.com/mwongsatorn/SEaN-backend/tree/main/
 
-
-
 ```
 npm run serve
 ```
