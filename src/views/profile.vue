@@ -76,6 +76,7 @@
               </div>
 
               <div :class="`${error ? '' : 'mt-4'} `">
+                <div class="btn btn-dark mx-3" @click="clearfile">Cancel</div>
                 <button
                   type="button"
                   class="my-4 btn btn-light"
@@ -199,6 +200,12 @@ export default {
     timeformat() {
       const thisMoment = moment(this.user.createdAt).format("LL");
       return thisMoment;
+    },
+    clearfile(){
+      this.selectedFile = '';
+      this.preview = '';
+      this.file = '';
+
     },
 
     // single file upload

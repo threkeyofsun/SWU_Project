@@ -9,7 +9,7 @@
         <p class="d-inline mx-2 sq-approve"><span class="square"></span>Approve</p>
       </div>
       <!--  -->
-      <div v-if="$store.state.eventLoading" class="text-center">
+      <div v-if="$store.state.reLoading" class="text-center">
         <div class="loadingio-spinner-ellipsis-zn4fhzwgb">
           <div class="loadingio-spinner-ellipsis-e2dlnyc4ytc">
             <div class="ldio-8xpx2o6sd04">
@@ -23,7 +23,7 @@
         </div>
       </div>
       <!--  -->
-      <div v-if="!$store.state.eventLoading">
+      <div v-if="!$store.state.reLoading">
         <div v-if="act">
           <div v-for="(activity, index) in recruitment_act" :key="(activity, index)">
             <!--  -->
@@ -96,7 +96,7 @@
       </div>
     </div>
 
-    <div v-if="!$store.state.eventLoading">
+    <div v-if="!$store.state.reLoading">
       <p class="btn draw-border draw-border1">On Going</p>
       <div v-if="act">
         <div v-for="(activity, index) in recruitment_act" :key="(activity, index)">
@@ -132,7 +132,7 @@
       </div>
     </div>
 
-    <div v-if="!$store.state.eventLoading">
+    <div v-if="!$store.state.reLoading">
       <p class="btn draw-border draw-border2 mt-2">Completed Activity</p>
       <div class="mx-xxl-5">
         <p class="text-center"></p>
@@ -190,7 +190,7 @@ export default {
       this.act = data;
       this.recruitment_act = this.act.history.events.recruited;
       console.log(this.act);
-      this.$store.state.eventLoading = false;
+      this.$store.state.reLoading = false;
     } catch (err) {
       // alert(err);
     }

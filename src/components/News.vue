@@ -1,6 +1,14 @@
 <template>
   <HomepageHeader />
-  <div v-if="$store.state.eventLoading" class="text-center my-5">
+
+  <section class="event-content"  >
+    <div class="container">
+      <div class="header-text  mt-5 mt-md-0 mb-4 mb-sm-3 ps-1 ps-lg-3 px-xl-0 px-xxl-4 text-center text-lg-start">
+        <router-link to="/event"><p class="fs-3 d-inline  mx-4 mx-xl-0  " >Activity</p></router-link>
+        <p class="fs-3 d-inline mx-4 ps-1 text-decoration-none textheader" @click="$router.push('/news')">News</p>
+      </div>
+      
+      <div v-if="$store.state.newsLoading" class="text-center my-5">
     <div class="loadingio-spinner-ellipsis-zn4fhzwgb">
       <div class="loadingio-spinner-ellipsis-e2dlnyc4ytc">
         <div class="ldio-8xpx2o6sd04">
@@ -14,15 +22,8 @@
     </div>
   </div>
   <!--  -->
-  <section class="event-content"  v-if="!$store.state.eventLoading">
-    <div class="container">
-      <div class="header-text  mt-5 mt-md-0 mb-4 mb-sm-3 ps-1 ps-lg-3 px-xl-0 px-xxl-4 text-center text-lg-start">
-        <router-link to="/event"><p class="fs-3 d-inline  mx-4 mx-xl-0  " >Activity</p></router-link>
-        <p class="fs-3 d-inline mx-4 ps-1 text-decoration-none textheader" @click="$router.push('/news')">News</p>
-      </div>
-
 <div v-for="(news, index) in $store.state.news" :key="(news, index)"> 
-  <div class="postloop ">
+  <div v-if="!$store.state.newsLoading" class="postloop ">
     <router-link :to="{ path: '/event/news/' + news._id }">
     <div class="card text-white  ">
       <span class="decorate-line"></span>
@@ -96,7 +97,7 @@ export default {
     const res = await axios.get("/users/profile");
       this.$store.state.info = res.data;
       this.$store.state.profileimg = res.data.profile_img;
-      this.$store.state.eventLoading = false;
+      this.$store.state.newsLoading = false;
 
   },
   methods: {

@@ -26,38 +26,56 @@
                   v-model="value"
                   checked
                 />
-                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg'" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg'"
+                />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[1]" v-model="value" />
-                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_2_asy8rz.jpg'" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_2_asy8rz.jpg'"
+                />
               </label>
             </div>
 
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[2]" v-model="value" />
-                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311776/S-E-a-N/default/cover_img/cover_3_o1odod.jpg'" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311776/S-E-a-N/default/cover_img/cover_3_o1odod.jpg'"
+                />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[3]" v-model="value" />
-                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_4_rfrtux.jpg'" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_4_rfrtux.jpg'"
+                />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[4]" v-model="value" />
-                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311778/S-E-a-N/default/cover_img/cover_5_oebcbe.jpg'" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311778/S-E-a-N/default/cover_img/cover_5_oebcbe.jpg'"
+                />
               </label>
             </div>
             <div class="col-xxl-2 col-xl-3 col-sm-4 col mt-1">
               <label>
                 <input type="radio" name="test" :value="coverimg[5]" v-model="value" />
-                <img class="radioim" :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_6_rubhbx.jpg'" />
+                <img
+                  class="radioim"
+                  :src="'https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_6_rubhbx.jpg'"
+                />
               </label>
             </div>
           </div>
@@ -180,16 +198,18 @@
           />
 
           <!-- Preview File Name  -->
-          <div v-for="(file, index) in selectedimages" :key="index"
-            :class="`${file.invalidMessage && 'text-danger'}`">
-            <div class="row my-2 ">
+          <div
+            v-for="(file, index) in selectedimages"
+            :key="index"
+            :class="`${file.invalidMessage && 'text-danger'}`"
+          >
+            <div class="row my-2">
               <div class="col-7 col mx-3">
-                {{file.name}}
-                <span v-if="file.invalidMessage"> &nbsp;- {{file.invalidMessage}}</span>
-                <span v-if="!file.invalidMessage">&nbsp;{{error_warning = ''}}</span>
-                </div>
-              <div @click="selectedimages.splice(index, 1); uploadImages.splice(index,1); imagesI.splice(index,1) " class="col-3 col btn-close mt-1 bg-light rounded-circle"></div>
-               
+                {{ file.name }}
+                <span v-if="file.invalidMessage"> &nbsp;- {{ file.invalidMessage }}</span>
+                <span v-if="!file.invalidMessage">&nbsp;{{ (error_warning = "") }}</span>
+              </div>
+              <!-- <div @click="selectedimages.splice(index, 1); uploadImages.splice(index,1); imagesI.splice(index,1) " class="col-3 col btn-close mt-1 bg-light rounded-circle"></div> -->
             </div>
           </div>
           <div
@@ -205,24 +225,28 @@
             type="submit"
             value="submit"
             :class="` ${
-               warning || message || error_warning ? 'disabled bg-secondary border-secondary text-white' : ''
+              warning || message || error_warning
+                ? 'disabled bg-secondary border-secondary text-white'
+                : ''
             }`"
-            
           >
             Create
           </button>
+          <div class="btn btn-secondary mb-2 mt-4 mx-3" @click="clearImg">
+            Clear Images
+          </div>
         </div>
       </form>
 
       <hr />
 
       <div class="row">
-        <div v-for="(image, key) in imagesI" :key='key' class="mx-0 col-12 col-sm-6">
+        <div v-for="(image, key) in imagesI" :key="key" class="mx-0 col-12 col-sm-6">
           <div class="row mb-3 justify-content-center">
-            <img :src="showimg[key]" class="col-12 rounded-0 sample-img"   />
-            <div v-if="key >= 1" class="d-none" >{{warning = true}}</div>
-            <div v-if="key < 2" class="d-none">{{warning = false}}</div>
-            </div>
+            <img :src="showimg[key]" class="col-12 rounded-0 sample-img" />
+            <div v-if="key >= 1" class="d-none">{{ (warning = true) }}</div>
+            <div v-if="key < 2" class="d-none">{{ (warning = false) }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -236,7 +260,7 @@ import Sidebar from "../components/sliderbar";
 import HomepageHeader from "../components/HomepageHeader";
 import HPfooter from "../components/homepageFooter";
 import axios from "axios";
-import _ from 'lodash';
+import _ from "lodash";
 
 export default {
   name: "ProductDetailPage",
@@ -249,7 +273,8 @@ export default {
     return {
       value: 1,
       picked: [
-        '',"https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg",
+        "",
+        "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_1_woz6x4.jpg",
         "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_2_asy8rz.jpg",
         "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311776/S-E-a-N/default/cover_img/cover_3_o1odod.jpg",
         "https://res.cloudinary.com/dgizzny4y/image/upload/v1627311777/S-E-a-N/default/cover_img/cover_4_rfrtux.jpg",
@@ -286,13 +311,20 @@ export default {
       showimg: [],
       actDetail: [],
       imagePreview: [],
-      anInfo:[]
+      anInfo: [],
     };
   },
   methods: {
     Empyty() {
       this.preview = "";
-      this.coverPreview = "";    },
+      this.coverPreview = "";
+      this.value = "1";
+    },
+    clearImg() {
+      this.selectedimages = [];
+      this.imagesI.length = '';
+      this.error_warning = '';
+    },
     //
     async submitAct() {
       try {
@@ -313,8 +345,8 @@ export default {
         console.log(err.response.data.error_message);
       }
     },
-       // single file upload
-       selectFile() {
+    // single file upload
+    selectFile() {
       //ชื่อเหมือน iput@change
       const selectFile = this.$refs.file.files[0];
       this.value = selectFile;
@@ -418,13 +450,13 @@ export default {
 </script>
 
 <style scoped>
-    .sample-img {
-    width: 100%;
-    height: 345px;
-    -o-object-fit: cover;
-    object-fit: cover;
-    -o-object-position: top;
-    object-position: top;
+.sample-img {
+  width: 100%;
+  height: 345px;
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: top;
+  object-position: top;
 }
 .cancelbtn {
   text-align: -webkit-center;

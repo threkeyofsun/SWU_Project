@@ -9,9 +9,21 @@
       <div class="mx-xxl-5">
         <div class="parti mx-auto text-center">
           <p class="mb-4 anounce-title">My Activities > News History</p>
-          
-          <p class="btn draw-border">In Progress</p>
-          <div class="status-color">
+          <div v-if="$store.state.newsHisLoading" class="text-center my-5">
+    <div class="loadingio-spinner-ellipsis-zn4fhzwgb">
+      <div class="loadingio-spinner-ellipsis-e2dlnyc4ytc">
+        <div class="ldio-8xpx2o6sd04">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+          <p v-if="!$store.state.newsHisLoading" class="btn draw-border">In Progress</p>
+          <div v-if="!$store.state.newsHisLoading" class="status-color">
             Status:
             <p class="d-inline mx-2 sq-de">
               <span class="square sq-pending"></span>Pending
@@ -21,15 +33,15 @@
 
           </div>
           <!--  -->
-          <h3 class="commentbox mt-4 mb-3" v-show="allAct"> You are not Participate in any Activity yet</h3>
+          <h3 v-if="!$store.state.newsHisLoading" class="commentbox mt-4 mb-3" v-show="allAct"> You are not Participate in any Activity yet</h3>
           <!--  -->
-          <div
+          <div 
             class="mx-xxl-5 mt-4"
             v-for="(news, idx) in $store.state.newspost"
             :key="(news, idx)"
             :class="{ active: idx == 0 }"
           >
-            <div v-if="news.status === 'Pending'" class="row">
+            <div v-if="news.status === 'Pending'" class="row" && !$store.state.newsHisLoading>
               <div class="col-sm-6 col-12 ms-0 me-0 align-self-center">
                 <router-link :to="{ path: '/event/news/' + news._id }">
                   <p class="my-0">
@@ -51,13 +63,13 @@
             </div>
           </div>
           <div>
-            <p class="btn draw-border draw-border1 mt-3">Approved</p>
+            <p class="btn draw-border draw-border1 mt-3" v-if="!$store.state.newsHisLoading" >Approved</p>
             <div
               v-for="(news, idx) in $store.state.newspost"
               :key="(news, idx)"
               :class="{ active: idx == 0 }"
             >
-              <div class="mb-0" v-if="news.status === 'Approved'">
+              <div class="mb-0" v-if="news.status === 'Approved' && !$store.state.newsHisLoading">
                 <div class="row">
                   <div class="col-sm-6 col-12">
                     <router-link
@@ -139,6 +151,8 @@ export default {
     const { data } = await axios.get("/users/history/news");
     this.numA = data; //Get history
     this.$store.state.newspost = this.numA.history.news; //get news in history
+    this.$store.state.newsHisLoading = false;
+
     console.log(this.numA);
     if(this.numA.history.news == ''){
       this.allAct=true;

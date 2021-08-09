@@ -1,8 +1,24 @@
 <template>
   <div class="parti mt-2 mt-md-4">
-      <h3 class="commentbox mb-3" v-show="!allAct"> You are not Participate in any Activity yet</h3>
 
-    <div>
+    <div v-if="$store.state.upLoading" class="text-center my-5">
+    <div class="loadingio-spinner-ellipsis-zn4fhzwgb">
+      <div class="loadingio-spinner-ellipsis-e2dlnyc4ytc">
+        <div class="ldio-8xpx2o6sd04">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  -->
+
+      <h3 v-if="!$store.state.upLoading" class="commentbox mb-3" v-show="!allAct"> You are not Participate in any Activity yet</h3>
+
+    <div v-if="!$store.state.upLoading">
       <p class="btn draw-border">Volunteer Activities</p>
       <div class="mx-xxl-5">
         <!-- Strt here -->
@@ -40,7 +56,7 @@
       </div>
     </div>
 
-    <div>
+    <div v-if="!$store.state.upLoading">
       <p class="btn draw-border draw-border1">Regular Activities Activities</p>
       <div class="mx-xxl-5">
         <!--  -->
@@ -48,7 +64,7 @@
       </div>
     </div>
 
-    <div>
+    <div v-if="!$store.state.upLoading">
       <p class="btn draw-border draw-border2">Force Activities</p>
       <div class="mx-xxl-5">
        <!--  -->
@@ -85,8 +101,8 @@ export default {
       // Get user's recruitment
       const { data } = await axios.get("users/history/events/participated");
       this.upcomming_act = data.history.events.participated;
-      // this.recruitList = this.re_act.history.activity.recruitment;
-      // this.recruitedList = data{};
+      this.$store.state.upLoading = false;
+
       console.log(this.upcomming_act);
       // alert(this.upcomming_act)
       this.allAct = true;

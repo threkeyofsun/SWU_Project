@@ -235,14 +235,14 @@
                     >&nbsp;{{ (error_warning = "") }}</span
                   >
                 </div>
-                <div
+                <!-- <div
                   @click="
                     selectedimages.splice(index, 1);
                     uploadImages.splice(index, 1);
                     imagesI.splice(index, 1);
                   "
                   class="col-3 col btn-close mt-1 bg-light rounded-circle"
-                ></div>
+                ></div> -->
               </div>
             </div>
           </div>
@@ -267,7 +267,7 @@
             Update
           </button>
           <div
-          @click="clearImages()"
+          @click="clearImg"
             class="btn btn btn-secondary mb-2 ms-4 mt-4" 
           >
             Clear Images
@@ -383,6 +383,12 @@ export default {
       this.coverPreview = "";
       this.value = '1' 
        },
+    clearImg() {
+      this.selectedimages = [];
+      this.imagesI.length = '';
+      this.error_warning = '';
+    },
+
     // single file upload
     selectFile() {
       //ชื่อเหมือน iput@change

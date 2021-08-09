@@ -415,7 +415,7 @@
             Update
           </button>
           <div
-          @click="clearImages()"
+          @click="clearImages"
             class="btn btn btn-secondary mb-2 ms-4 mt-4" 
           >
             Clear Images
@@ -552,10 +552,9 @@ export default {
       this.value = "1";
     },
     clearImages(){
-      this.imagesI = [];
-      // this.error_warning = '';
-      this.selectedimages ='';
-      this.imagePreview='';
+      this.selectedimages = [];
+      this.imagesI.length = '';
+      this.error_warning = '';
     },
 
     // single file upload

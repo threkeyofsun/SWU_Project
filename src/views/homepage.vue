@@ -16,7 +16,7 @@
 
   <!-- v-for="(activity, index) in act" :key="(activity, index) -->
   <!-- Slider Section -->\
-  <div v-if="$store.state.eventLoading" class="text-center">
+  <div v-if="$store.state.annLoading" class="text-center">
     <div class="loadingio-spinner-ellipsis-zn4fhzwgb">
       <div class="ldio-yjhkrbku5e">
         <div></div>
@@ -118,7 +118,7 @@ export default {
     const announce = await axios.get("/announcements/");
     this.$store.state.anno = announce.data;
     console.log(this.$store.state.anno);
-    this.$store.state.eventLoading = false;
+    this.$store.state.annLoading = false;
   },
 };
 </script>

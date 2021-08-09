@@ -332,7 +332,7 @@
                 <span v-if="file.invalidMessage"> &nbsp;- {{file.invalidMessage}}</span>
                 <span v-if="!file.invalidMessage">&nbsp;{{error_warning = ''}}</span>
                 </div>
-              <div @click="selectedimages.splice(index, 1); uploadImages.splice(index,1); imagesI.splice(index,1) " class="col-3 col btn-close mt-1 bg-light rounded-circle"></div>
+              <!-- <div @click="selectedimages.splice(index, 1); uploadImages.splice(index,1); imagesI.splice(index,1) " class="col-3 col btn-close mt-1 bg-light rounded-circle"></div> -->
                
             </div>
           </div>
@@ -355,6 +355,9 @@
           >
             Create
           </button>
+          <div class="btn btn-secondary mb-2 mt-4 mx-3" @click="clearImg">
+            Clear Images
+          </div>
         </div>
       </form>
 
@@ -477,6 +480,13 @@ export default {
     },
     Empyty() {
       this.preview = "";
+      this.coverPreview = "";
+      this.value = '1' ;
+    },
+    clearImg() {
+      this.selectedimages = [];
+      this.imagesI.length = '';
+      this.error_warning = '';
     },
 
     // single file upload

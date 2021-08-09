@@ -1,13 +1,33 @@
 <template>
-  <div class="parti mt-2 mt-md-4">      
-      <h3 class="commentbox mb-3" v-show="allAct"> You are not Participate in any Activity yet</h3>
+  <div class="parti mt-2 mt-md-4">
+    <div v-if="$store.state.parLoading" class="text-center my-5">
+    <div class="loadingio-spinner-ellipsis-zn4fhzwgb">
+      <div class="loadingio-spinner-ellipsis-e2dlnyc4ytc">
+        <div class="ldio-8xpx2o6sd04">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  -->
+    <h3 v-if="!$store.state.parLoading" class="commentbox mb-3" v-show="allAct">
+      You are not Participate in any Activity yet
+    </h3>
 
-    <div>
+    <div v-if="!$store.state.parLoading">
       <p class="btn draw-border">Volunteer Activities</p>
       <div class="mx-xxl-5">
         <!--  -->
-        <div class="text-start ms-sm-5 ps-sm-4 hello" v-for="(activity, index) in upcomming_act" :key="(activity, index)">
-          <div v-if="activity.type == 'Volunteer'">  
+        <div
+          class="text-start ms-sm-5 ps-sm-4 hello"
+          v-for="(activity, index) in upcomming_act"
+          :key="(activity, index)"
+        >
+          <div v-if="activity.type == 'Volunteer'">
             <li>
               <router-link
                 :to="{
@@ -17,14 +37,14 @@
                 {{ activity.title }}
               </router-link>
             </li>
-            <hr class="border border-3">
-            </div>
+            <hr class="border border-3" />
+          </div>
         </div>
         <hr />
       </div>
     </div>
 
-    <div>
+    <div v-if="!$store.state.parLoading">
       <p class="btn draw-border draw-border1">Regular Activities Activities</p>
       <div class="mx-xxl-5">
         <!--  -->
@@ -32,10 +52,10 @@
       </div>
     </div>
 
-    <div>
+    <div v-if="!$store.state.parLoading">
       <p class="btn draw-border draw-border2">Force Activities</p>
       <div class="mx-xxl-5">
-<!--  -->
+        <!--  -->
         <hr />
       </div>
     </div>
@@ -43,62 +63,66 @@
 </template>
 
 <script>
-  import axios from "axios";
-  
-  export default {
-    data() {
-      return {
-        actDetail: {},
-        information: {},
-        creator: {},
-        upcomming_act: null,
-        recruitList: [],
-        recruitedList: [],
-        item: null,
-        integers: 0,
-        prevent: false,
-        something: false,
-        winner: "",
-        empty:"",
-        allAct:false,
-  
-      };
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      actDetail: {},
+      information: {},
+      creator: {},
+      upcomming_act: null,
+      recruitList: [],
+      recruitedList: [],
+      item: null,
+      integers: 0,
+      prevent: false,
+      something: false,
+      winner: "",
+      empty: "",
+      allAct: false,
+    };
+  },
+  async mounted() {
+    try {
+      // Get user's recruitment
+      const { data } = await axios.get("users/history/events/participated");
+      this.upcomming_act = data.history.events.participated;
+      console.log(this.upcomming_act);
+      console.log(this.upcomming_act[0].type);
+      this.$store.state.parLoading = false;
+      this.allAct = true;
+      const res = await axios.get("/users/profile");
+      this.$store.state.info = res.data;
+    } catch (err) {
+      this.allAct = false;
+      // alert(err.result.data.error_message);
+    }
+  },
+  methods: {
+    async toCancel(ActId) {
+      const result = await axios.post(`/events/${ActId}/cancel`);
+      console.log(result.data);
+      alert("You have successfully cancel the activity!");
+      setTimeout(() => {
+        this.$router.push("/event");
+      }, 1000);
     },
-    async mounted() {
-      try {
-        // Get user's recruitment
-        const { data } = await axios.get("users/history/events/participated");
-        this.upcomming_act = data.history.events.participated;
-        console.log(this.upcomming_act);
-        console.log(this.upcomming_act[0].type);
-        this.allAct = true;
-        const res = await axios.get("/users/profile");
-        this.$store.state.info = res.data;
-      } catch (err) {
-        this.allAct = false;
-        // alert(err.result.data.error_message);
-      }
-    },
-    methods: {
-      async toCancel(ActId) {
-        const result = await axios.post(`/events/${ActId}/cancel`);
-        console.log(result.data);
-        alert("You have successfully cancel the activity!");
-        setTimeout(() => {
-            this.$router.push('/event');
-          }, 1000);
-      },
-    },
-  };
-  </script>
+  },
+};
+</script>
 
 <style lang="css" scoped>
-  .commentbox {
-    border-left: 6px solid #ff8686;
-    border-right: 6px solid #b6b6b6;
-    background: linear-gradient( 
-90deg
-, rgb(255 241 241) 0%, rgba(241, 187, 187, 1) 22%, rgb(215 83 83 / 75%) 90%, rgba(176, 68, 68, 0.5525560566023284) 100% );
+.commentbox {
+  border-left: 6px solid #ff8686;
+  border-right: 6px solid #b6b6b6;
+  background: linear-gradient(
+    90deg,
+    rgb(255 241 241) 0%,
+    rgba(241, 187, 187, 1) 22%,
+    rgb(215 83 83 / 75%) 90%,
+    rgba(176, 68, 68, 0.5525560566023284) 100%
+  );
   color: #ffffff;
   font-family: "THSarabanBold";
   margin-top: 15px;
