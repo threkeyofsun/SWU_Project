@@ -12,7 +12,7 @@ https://sean-app.netlify.app
 Developed by Mr.Wongsatorn : https://github.com/mwongsatorn/SEaN-backend/tree/main/
 
 
-### Compiles and hot-reloads for development
+
 ```
 npm run serve
 ```
