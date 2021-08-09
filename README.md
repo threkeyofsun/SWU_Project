@@ -1,6 +1,6 @@
 
 # Deployed
-https://sean-app.netlify.app/login
+https://sean-app.netlify.app
 
 ## Project setup
 ```
